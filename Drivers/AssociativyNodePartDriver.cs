@@ -5,7 +5,7 @@ using Associativy.Administration.Models;
 
 namespace Associativy.Administration.Drivers
 {
-    [OrchardFeature("Associativy")]
+    [OrchardFeature("Associativy.Administration")]
     public class AssociativyNodePartDriver : ContentPartDriver<AssociativyNodePart>
     {
         protected override string Prefix
