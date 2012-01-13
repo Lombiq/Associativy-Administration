@@ -1,0 +1,13 @@
+Name: Associativy Administration
+AntiForgery: enabled
+Author: Piedone
+Website: http://orchardproject.net
+Version: 1.0
+OrchardVersion: 1.3
+Description: Associativy Administration
+Features:
+	Associativy.Administration:
+		Name: Associativy Administration
+        Description: Associativy Administration
+		Category: Associativy
+		Dependencies: Associativy
