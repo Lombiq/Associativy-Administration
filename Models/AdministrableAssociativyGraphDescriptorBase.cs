@@ -22,7 +22,7 @@ namespace Associativy.Administration.Models
             }
         }
 
-        public AdministrableAssociativyGraphDescriptorBase(IResolve<IConnectionManager<TNodeToNodeConnectorRecord>> connectionManagerResolver)
+        protected AdministrableAssociativyGraphDescriptorBase(IResolve<IConnectionManager<TNodeToNodeConnectorRecord>> connectionManagerResolver)
             : base(connectionManagerResolver)
         {
         }
