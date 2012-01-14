@@ -88,9 +88,18 @@
     <Folder Include="Controllers\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Drivers\AssociativyNodePartDriver.cs" />
+    <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
+    <Compile Include="Migrations.cs" />
     <Compile Include="Models\AdministrableAssociativyGraphDescriptorBase.cs" />
-    <Compile Include="Models\AssociativyNodePart.cs" />
+    <Compile Include="Models\AssociativyNodeManagementPart.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Placement.info">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts\AssociativyNodeManagement.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

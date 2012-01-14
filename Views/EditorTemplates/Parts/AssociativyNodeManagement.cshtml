@@ -1,0 +1,59 @@
+﻿@model Associativy.Administration.Models.AssociativyNodeManagementPart
+@{
+    Script.Require("jQueryUI_Tabs").AtFoot();
+    Script.Require("AssociativyAutoComplete").AtFoot();
+    Style.Require("jQueryUI_Orchard");
+    var routeData = Html.ViewContext.RouteData.Values;
+}
+<fieldset>
+    <legend>@T("Graph settings")</legend>
+    <div id="associativy-tabs">
+        <ul>
+            @foreach (var descriptor in Model.GraphDescriptors)
+            {
+                <text><li><a href="#associativy-tabs-@descriptor.TechnicalGraphName">@descriptor.GraphName.Text</a></li></text>
+            }
+        </ul>
+        @{
+            int neighbourEditorIndex = 0;
+        }
+        @foreach (var neighbourLabels in Model.NeighbourLabels)
+        {
+            <text>
+            <div id="associativy-tabs-@neighbourLabels.Key">
+                <fieldset>
+                    <legend>@T("Edit connections")</legend>
+                    <ol>
+                        <li>
+                            @Html.Hidden("NeighbourLabels[" + neighbourEditorIndex + "].key", neighbourLabels.Key)
+                            @Html.Label("NeighbourLabels[" + neighbourEditorIndex + "]", T("Neighbours").Text)
+                            @Html.TextBox("NeighbourLabels[" + neighbourEditorIndex + "].value", neighbourLabels.Value, new { @class = "text large" })
+                        </li>
+                    </ol>
+                </fieldset>
+            </div>
+            @using (Script.Foot())
+            {
+                <script>
+                    $(function () {
+                        @*Is there a better way to get the textbox's id? *@
+                        $.associativyAutoComplete.terms($("#associativy-tabs-@neighbourLabels.Key").find("input[type=text]").attr("id"), "@Url.Action("FetchSimilarLabels", new { Controller = "Json", Area = "Associativy.FrontendEngines", TechnicalGraphName = neighbourLabels.Key })");
+                    });
+                </script>
+            }
+            </text>
+            neighbourEditorIndex++;
+        }
+    </div>
+</fieldset>
+@using (Script.Foot())
+{
+    <script>
+        $(function () {
+            $("#associativy-tabs").tabs();
+            @{
+                neighbourEditorIndex = 0;
+            }
+        });
+    </script>
+}
