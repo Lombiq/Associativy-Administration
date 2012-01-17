@@ -8,7 +8,7 @@ namespace Associativy.Administration.Models
     [OrchardFeature("Associativy.Administration")]
     public class AssociativyNodeManagementPart : ContentPart
     {
-        public IEnumerable<IAssociativyGraphDescriptor> GraphDescriptors { get; set; }
+        public IEnumerable<IGraphDescriptor> GraphDescriptors { get; set; }
         public Dictionary<string, string> NeighbourLabels { get; set; }
     }
 }

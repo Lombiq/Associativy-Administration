@@ -13,7 +13,7 @@ namespace Associativy.Administration.Drivers
     [OrchardFeature("Associativy.Administration")]
     public class AssociativyNodeManagementPartDriver : ContentPartDriver<AssociativyNodeManagementPart>
     {
-        private readonly IAssociativyGraphDescriptorLocator _graphDescriptorLocator;
+        private readonly IGraphDescriptorLocator _graphDescriptorLocator;
         private readonly IAssociativyServices _associativyServices;
 
         protected override string Prefix
@@ -22,7 +22,7 @@ namespace Associativy.Administration.Drivers
         }
 
         public AssociativyNodeManagementPartDriver(
-            IAssociativyGraphDescriptorLocator graphDescriptorLocator,
+            IGraphDescriptorLocator graphDescriptorLocator,
             IAssociativyServices associativyServices)
         {
             _graphDescriptorLocator = graphDescriptorLocator;

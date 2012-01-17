@@ -10,7 +10,7 @@ using Associativy.Services;
 namespace Associativy.Administration.Models
 {
     [OrchardFeature("Associativy.Administration")]
-    public abstract class AdministrableAssociativyGraphDescriptorBase<TNodeToNodeConnectorRecord> : AssociativyGraphDescriptorBase<TNodeToNodeConnectorRecord>
+    public abstract class AdministrableAssociativyGraphDescriptorBase<TNodeToNodeConnectorRecord> : GraphDescriptorBase<TNodeToNodeConnectorRecord>
         where TNodeToNodeConnectorRecord : INodeToNodeConnectorRecord, new()
     {
         public override string[] ContentTypes
