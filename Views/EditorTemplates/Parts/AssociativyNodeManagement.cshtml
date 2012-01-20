@@ -11,7 +11,7 @@
         <ul>
             @foreach (var descriptor in Model.GraphDescriptors)
             {
-                <text><li><a href="#associativy-tabs-@descriptor.TechnicalGraphName">@descriptor.GraphName.Text</a></li></text>
+                <text><li><a href="#associativy-tabs-@descriptor.GraphName">@descriptor.DisplayGraphName.Text</a></li></text>
             }
         </ul>
         @{

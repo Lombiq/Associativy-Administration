@@ -7,13 +7,14 @@ using Associativy.Models;
 using System.Linq;
 using System.Collections.Generic;
 using System;
+using Associativy.GraphDiscovery;
 
 namespace Associativy.Administration.Drivers
 {
     [OrchardFeature("Associativy.Administration")]
     public class AssociativyNodeManagementPartDriver : ContentPartDriver<AssociativyNodeManagementPart>
     {
-        private readonly IGraphDescriptorLocator _graphDescriptorLocator;
+        private readonly IGraphManager _graphManager;
         private readonly IAssociativyServices _associativyServices;
 
         protected override string Prefix
@@ -22,10 +23,10 @@ namespace Associativy.Administration.Drivers
         }
 
         public AssociativyNodeManagementPartDriver(
-            IGraphDescriptorLocator graphDescriptorLocator,
+            IGraphManager graphManager,
             IAssociativyServices associativyServices)
         {
-            _graphDescriptorLocator = graphDescriptorLocator;
+            _graphManager = graphManager;
             _associativyServices = associativyServices;
         }
 
@@ -39,10 +40,11 @@ namespace Associativy.Administration.Drivers
             FillGraphDescriptors(part);
 
             part.NeighbourLabels = new Dictionary<string, string>();
+            var context = new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } };
             foreach (var descriptor in part.GraphDescriptors)
             {
-                _associativyServices.GraphDescriptor = descriptor;
-                part.NeighbourLabels[descriptor.TechnicalGraphName] = String.Join(", ", _associativyServices.NodeManager.GetManyQuery(_associativyServices.ConnectionManager.GetNeighbourIds(part.Id)).Join<AssociativyNodeLabelPartRecord>().List().Select(node => node.As<AssociativyNodeLabelPart>().Label));
+                context.GraphName = descriptor.GraphName;
+                part.NeighbourLabels[descriptor.GraphName] = String.Join(", ", _associativyServices.NodeManager.GetManyContentQuery(context, descriptor.ConnectionManager.GetNeighbourIds(context, part.Id)).Join<AssociativyNodeLabelPartRecord>().List().Select(node => node.As<AssociativyNodeLabelPart>().Label));
             }
 
             return ContentShape("Parts_AssociativyNodeManagement",
@@ -58,31 +60,34 @@ namespace Associativy.Administration.Drivers
             updater.TryUpdateModel(part, Prefix, null, null);
 
             FillGraphDescriptors(part);
+            var context = new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } };
 
             foreach (var descriptor in part.GraphDescriptors)
             {
-                _associativyServices.GraphDescriptor = descriptor;
+                // descriptor.ProduceContext() could be erroneous as the context with only the current content type is needed,
+                // not all content types stored by the graph.
+                context.GraphName = descriptor.GraphName;
 
-                var newNeighbourLabels = part.NeighbourLabels[descriptor.TechnicalGraphName].Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim());
-                var newNeighbours = _associativyServices.NodeManager.GetMany(newNeighbourLabels);
+                var newNeighbourLabels = part.NeighbourLabels[descriptor.GraphName].Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim());
+                var newNeighbours = _associativyServices.NodeManager.GetMany(context, newNeighbourLabels);
                 
                 if (newNeighbourLabels.Count() == newNeighbours.Count()) // All nodes were found
                 {
                     var newNeighbourIds = newNeighbours.Select(node => node.Id).ToList();
-                    var oldNeighbourIds = _associativyServices.ConnectionManager.GetNeighbourIds(part.Id);
+                    var oldNeighbourIds = descriptor.ConnectionManager.GetNeighbourIds(context, part.Id);
 
                     foreach (var oldNeighbourId in oldNeighbourIds)
                     {
                         if (!newNeighbourIds.Contains(oldNeighbourId))
                         {
-                            _associativyServices.ConnectionManager.Disconnect(part.Id, oldNeighbourId);
+                            descriptor.ConnectionManager.Disconnect(context, part.Id, oldNeighbourId);
                         }
                         else newNeighbourIds.Remove(oldNeighbourId); // So newNeighbourIds will contain only really new node ids
                     }
 
                     foreach (var neighbourId in newNeighbourIds)
                     {
-                        _associativyServices.ConnectionManager.Connect(part.Id, neighbourId);
+                        descriptor.ConnectionManager.Connect(context, part.Id, neighbourId);
                     }
                 }
             }
@@ -96,7 +101,11 @@ namespace Associativy.Administration.Drivers
 
         private void FillGraphDescriptors(AssociativyNodeManagementPart part)
         {
-            part.GraphDescriptors = _graphDescriptorLocator.FindGraphDescriptorsForContentType(part.ContentItem.ContentType);
+            var graphDescriptors = _graphManager.FindDescriptors(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
+            if (graphDescriptors.Count() != 0)
+            {
+                part.GraphDescriptors = graphDescriptors;
+            }
         }
     }
 }

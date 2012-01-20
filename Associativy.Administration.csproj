@@ -90,7 +90,6 @@
   <ItemGroup>
     <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
     <Compile Include="Migrations.cs" />
-    <Compile Include="Models\AdministrableAssociativyGraphDescriptorBase.cs" />
     <Compile Include="Models\AssociativyNodeManagementPart.cs" />
   </ItemGroup>
   <ItemGroup>
