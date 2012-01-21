@@ -9,8 +9,8 @@ namespace Associativy.Administration.Models
     [OrchardFeature("Associativy.Administration")]
     public class AssociativyNodeManagementPart : ContentPart
     {
-        // Ide kellenének a base64 contextek
-        public IEnumerable<GraphDescriptor> GraphDescriptors { get; set; }
-        public Dictionary<string, string> NeighbourLabels { get; set; }
+        public IEnumerable<IGraphProvider> GraphProviders { get; set; }
+        public Dictionary<IGraphProvider, string> GraphContextBase64s { get; set; }
+        public List<string> NeighbourLabels { get; set; } // This is a simple list so model binding from POST works (doesn't with IGraphProvider as key)
     }
 }

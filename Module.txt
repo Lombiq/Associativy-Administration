@@ -10,4 +10,4 @@ Features:
 		Name: Associativy Administration
         Description: Associativy Administration
 		Category: Associativy
-		Dependencies: Associativy, Associativy.Frontends
+		Dependencies: Associativy.Frontends, Piedone.HelpfulLibraries.Serialization

@@ -3,31 +3,30 @@
     Script.Require("jQueryUI_Tabs").AtFoot();
     Script.Require("AssociativyAutoComplete").AtFoot();
     Style.Require("jQueryUI_Orchard");
-    var routeData = Html.ViewContext.RouteData.Values;
 }
 <fieldset>
     <legend>@T("Graph settings")</legend>
     <div id="associativy-tabs">
         <ul>
-            @foreach (var descriptor in Model.GraphDescriptors)
+            @foreach (var provider in Model.GraphProviders)
             {
-                <text><li><a href="#associativy-tabs-@descriptor.GraphName">@descriptor.DisplayGraphName.Text</a></li></text>
+                <text><li><a href="#associativy-tabs-@provider.GraphName">@provider.DisplayGraphName.Text</a></li></text>
             }
         </ul>
         @{
-            int neighbourEditorIndex = 0;
+            int labelsIndex = 0;
         }
-        @foreach (var neighbourLabels in Model.NeighbourLabels)
+        @foreach (var provider in Model.GraphProviders)
         {
             <text>
-            <div id="associativy-tabs-@neighbourLabels.Key">
+            <div id="associativy-tabs-@provider.GraphName">
                 <fieldset>
                     <legend>@T("Edit connections")</legend>
                     <ol>
                         <li>
-                            @Html.Hidden("NeighbourLabels[" + neighbourEditorIndex + "].key", neighbourLabels.Key)
-                            @Html.Label("NeighbourLabels[" + neighbourEditorIndex + "]", T("Neighbours").Text)
-                            @Html.TextBox("NeighbourLabels[" + neighbourEditorIndex + "].value", neighbourLabels.Value, new { @class = "text large" })
+@*                            @Html.Hidden("NeighbourLabels[" + labelsIndex + "].key", provider)*@
+                            @Html.Label("NeighbourLabels[" + labelsIndex + "]", T("Neighbours").Text)
+                            @Html.TextBox("NeighbourLabels[" + labelsIndex + "]", Model.NeighbourLabels[labelsIndex], new { @class = "text large" })
                         </li>
                     </ol>
                 </fieldset>
@@ -37,12 +36,12 @@
                 <script>
                     $(function () {
                         @*Is there a better way to get the textbox's id? *@
-                        $.associativyAutoComplete.terms($("#associativy-tabs-@neighbourLabels.Key").find("input[type=text]").attr("id"), "@Url.Action("FetchSimilarLabels", new { Controller = "Json", Area = "Associativy.Frontends", TechnicalGraphName = neighbourLabels.Key })");
+                        $.associativyAutoComplete.terms($("#associativy-tabs-@provider.GraphName").find("input[type=text]").attr("id"), "@Url.Action("FetchSimilarLabels", new { Controller = "Json", Area = "Associativy.Frontends", GraphContextBase64 = Model.GraphContextBase64s[provider] })");
                     });
                 </script>
             }
             </text>
-            neighbourEditorIndex++;
+            labelsIndex++;
         }
     </div>
 </fieldset>
@@ -51,9 +50,6 @@
     <script>
         $(function () {
             $("#associativy-tabs").tabs();
-            @{
-                neighbourEditorIndex = 0;
-            }
         });
     </script>
 }
