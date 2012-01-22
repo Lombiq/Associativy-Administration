@@ -115,7 +115,7 @@ namespace Associativy.Administration.Drivers
 
         private void FillGraphProviders(AssociativyNodeManagementPart part)
         {
-            var grapProviders = _graphManager.FindProviders(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
+            var grapProviders = _graphManager.FindLastProvidersByGraphs(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
             if (grapProviders.Count() != 0)
             {
                 part.GraphProviders = grapProviders;
