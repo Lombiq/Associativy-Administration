@@ -24,7 +24,6 @@
                     <legend>@T("Edit connections")</legend>
                     <ol>
                         <li>
-@*                            @Html.Hidden("NeighbourLabels[" + labelsIndex + "].key", provider)*@
                             @Html.Label("NeighbourLabels[" + labelsIndex + "]", T("Neighbours").Text)
                             @Html.TextBox("NeighbourLabels[" + labelsIndex + "]", Model.NeighbourLabels[labelsIndex], new { @class = "text large" })
                         </li>
@@ -36,7 +35,7 @@
                 <script>
                     $(function () {
                         @*Is there a better way to get the textbox's id? *@
-                        $.associativyAutoComplete.terms($("#associativy-tabs-@provider.GraphName").find("input[type=text]").attr("id"), "@Url.Action("FetchSimilarLabels", new { Controller = "Json", Area = "Associativy.Frontends", GraphContextBase64 = Model.GraphContextBase64s[provider] })");
+                        $.associativyAutoComplete.terms($("#associativy-tabs-@provider.GraphName").find("input[type=text]").attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { GraphContextBase64 = Model.GraphContextBase64s[provider] })");
                     });
                 </script>
             }
