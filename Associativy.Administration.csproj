@@ -75,6 +75,10 @@
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Associativy.Frontends\Associativy.Frontends.csproj">
+      <Project>{78ACE1AE-F7AE-4342-A83F-8FAB64514F52}</Project>
+      <Name>Associativy.Frontends</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Associativy\Associativy.csproj">
       <Project>{A8EE4964-4880-4EE1-AC0A-75492D89BBE8}</Project>
       <Name>Associativy</Name>

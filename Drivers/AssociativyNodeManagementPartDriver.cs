@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System;
 using Associativy.GraphDiscovery;
 using Piedone.HelpfulLibraries.Serialization;
+using Associativy.Frontends.Services;
 
 namespace Associativy.Administration.Drivers
 {
@@ -17,7 +18,6 @@ namespace Associativy.Administration.Drivers
     {
         private readonly IGraphManager _graphManager;
         private readonly IAssociativyServices _associativyServices;
-        private readonly ISimpleSerializer _simpleSerializer;
 
         protected override string Prefix
         {
@@ -26,12 +26,10 @@ namespace Associativy.Administration.Drivers
 
         public AssociativyNodeManagementPartDriver(
             IGraphManager graphManager,
-            IAssociativyServices associativyServices,
-            ISimpleSerializer simpleSerializer)
+            IAssociativyServices associativyServices)
         {
             _graphManager = graphManager;
             _associativyServices = associativyServices;
-            _simpleSerializer = simpleSerializer;
         }
 
         //protected override DriverResult Display(AssociativyNodeManagementPart part, string displayType, dynamic shapeHelper)
@@ -46,7 +44,7 @@ namespace Associativy.Administration.Drivers
                     {
                         FillGraphProviders(part);
 
-                        part.GraphContextBase64s = new Dictionary<IGraphProvider, string>();
+                        part.GraphContexts = new Dictionary<IGraphProvider, IGraphContext>();
                         part.NeighbourLabels = new List<string>();
 
                         var context = new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } };
@@ -54,7 +52,7 @@ namespace Associativy.Administration.Drivers
                         foreach (var provider in part.GraphProviders)
                         {
                             context.GraphName = provider.GraphName;
-                            part.GraphContextBase64s[provider] = _simpleSerializer.Base64Serialize(context);
+                            part.GraphContexts[provider] = context;
                             part.NeighbourLabels.Add(String.Join(", ", _associativyServices.NodeManager.GetManyContentQuery(context, provider.ConnectionManager.GetNeighbourIds(context, part.Id)).Join<AssociativyNodeLabelPartRecord>().List().Select(node => node.As<AssociativyNodeLabelPart>().Label)));
                         }
 

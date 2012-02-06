@@ -10,7 +10,7 @@ namespace Associativy.Administration.Models
     public class AssociativyNodeManagementPart : ContentPart
     {
         public IEnumerable<IGraphProvider> GraphProviders { get; set; }
-        public Dictionary<IGraphProvider, string> GraphContextBase64s { get; set; }
+        public Dictionary<IGraphProvider, IGraphContext> GraphContexts { get; set; }
         public List<string> NeighbourLabels { get; set; } // This is a simple list so model binding from POST works (doesn't with IGraphProvider as key)
     }
 }

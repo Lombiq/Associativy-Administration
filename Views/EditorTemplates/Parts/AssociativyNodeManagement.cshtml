@@ -1,4 +1,5 @@
-﻿@model Associativy.Administration.Models.AssociativyNodeManagementPart
+﻿@using Associativy.Frontends.Extensions
+@model Associativy.Administration.Models.AssociativyNodeManagementPart
 @{
     Script.Require("jQueryUI_Tabs").AtFoot();
     Script.Require("AssociativyAutoComplete").AtFoot();
@@ -35,7 +36,7 @@
                 <script>
                     $(function () {
                         @*Is there a better way to get the textbox's id? *@
-                        $.associativyAutoComplete.terms($("#associativy-tabs-@provider.GraphName").find("input[type=text]").attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { GraphContextBase64 = Model.GraphContextBase64s[provider] })");
+                        $.associativyAutoComplete.terms($("#associativy-tabs-@provider.GraphName").find("input[type=text]").attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { EncodedGraphContext = Html.EncodeGraphContext(Model.GraphContexts[provider]) })");
                     });
                 </script>
             }
