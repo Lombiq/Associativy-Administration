@@ -9,7 +9,7 @@
     <legend>@T("Associativy graph settings")</legend>
     <div id="associativy-tabs">
         <ul>
-            @foreach (var provider in Model.GraphProviders)
+            @foreach (var provider in Model.GraphDescriptors)
             {
                 <text><li><a href="#associativy-tabs-@provider.GraphName">@provider.DisplayGraphName.Text</a></li></text>
             }
@@ -17,7 +17,7 @@
         @{
             int labelsIndex = 0;
         }
-        @foreach (var provider in Model.GraphProviders)
+        @foreach (var provider in Model.GraphDescriptors)
         {
             <text>
             <div id="associativy-tabs-@provider.GraphName">

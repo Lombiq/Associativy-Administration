@@ -42,14 +42,14 @@ namespace Associativy.Administration.Drivers
             return ContentShape("Parts_AssociativyNodeManagement",
                 () =>
                     {
-                        FillGraphProviders(part);
+                        FillGraphDescriptors(part);
 
-                        part.GraphContexts = new Dictionary<IGraphProvider, IGraphContext>();
+                        part.GraphContexts = new Dictionary<GraphDescriptor, IGraphContext>();
                         part.NeighbourLabels = new List<string>();
 
                         var context = new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } };
 
-                        foreach (var provider in part.GraphProviders)
+                        foreach (var provider in part.GraphDescriptors)
                         {
                             context.GraphName = provider.GraphName;
                             part.GraphContexts[provider] = context;
@@ -68,11 +68,11 @@ namespace Associativy.Administration.Drivers
         {
             updater.TryUpdateModel(part, Prefix, null, null);
 
-            FillGraphProviders(part);
+            FillGraphDescriptors(part);
             var context = new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } };
 
             int labelsIndex = 0;
-            foreach (var provider in part.GraphProviders)
+            foreach (var provider in part.GraphDescriptors)
             {
                 // provider.ProduceContext() could be erroneous as the context with only the current content type is needed,
                 // not all content types stored by the graph.
@@ -111,13 +111,9 @@ namespace Associativy.Administration.Drivers
             //return Editor(part, shapeHelper);
         }
 
-        private void FillGraphProviders(AssociativyNodeManagementPart part)
+        private void FillGraphDescriptors(AssociativyNodeManagementPart part)
         {
-            var grapProviders = _graphManager.FindLastProvidersByGraphs(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
-            if (grapProviders.Count() != 0)
-            {
-                part.GraphProviders = grapProviders;
-            }
+            part.GraphDescriptors = _graphManager.FindDistinctGraphs(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
         }
     }
 }
