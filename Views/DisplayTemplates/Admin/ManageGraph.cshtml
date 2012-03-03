@@ -1,0 +1,22 @@
+﻿@model Associativy.Administration.ViewModels.GraphManagementViewModel
+@{
+    Layout.Title = Model.Graph.DisplayGraphName.ToString();
+}
+<div>
+    <h3>@T("Export")</h3>
+    @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.Graph.GraphName }, new { @class = "button" })
+    <span class="hint">@T("This only exports connection data. The nodes (i.e. the content items stored in the graph) have to be exported with the built-in Import/Export feature.")</span>
+</div>
+
+<div>
+    <h3>@T("Import")</h3>
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("ImportConnections", new { GraphName = Model.Graph.GraphName }), FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <fieldset>
+            @Html.Label("ConnectionsFile", T("Select a connections file").ToString())
+            <input type="file" name="ConnectionsFile" id="ConnectionsFile" size="64">
+            <span class="hint">@T("This only imports connections. Content items have to be be imported separately with the built-in Import/Export feature.")</span>
+        </fieldset>
+        <button type="submit" class="primaryAction">@T("Import connections")</button>
+    }
+</div>

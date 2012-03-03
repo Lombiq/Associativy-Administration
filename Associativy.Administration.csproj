@@ -89,12 +89,17 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Content Include="Views\DisplayTemplates\Admin\ManageGraph.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdminMenu.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AssociativyNodeManagementPart.cs" />
+    <Compile Include="Services\IImportExportService.cs" />
+    <Compile Include="Services\ImportExportService.cs" />
+    <Compile Include="ViewModels\GraphManagementViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info">
@@ -103,6 +108,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\EditorTemplates\Parts\AssociativyNodeManagement.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DisplayTemplates\Admin\Index.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
