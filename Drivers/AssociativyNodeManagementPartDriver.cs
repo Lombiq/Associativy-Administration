@@ -39,7 +39,7 @@ namespace Associativy.Administration.Drivers
         // GET
         protected override DriverResult Editor(AssociativyNodeManagementPart part, dynamic shapeHelper)
         {
-            return ContentShape("Parts_AssociativyNodeManagement",
+            return ContentShape("Parts_AssociativyNodeManagement_Edit",
                 () =>
                     {
                         FillGraphDescriptors(part);
@@ -57,7 +57,7 @@ namespace Associativy.Administration.Drivers
                         }
 
                         return shapeHelper.EditorTemplate(
-                                    TemplateName: "Parts/AssociativyNodeManagement",
+                                    TemplateName: "Parts.AssociativyNodeManagement",
                                     Model: part,
                                     Prefix: Prefix);
                     });
