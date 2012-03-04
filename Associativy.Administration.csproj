@@ -107,7 +107,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\EditorTemplates\Parts\AssociativyNodeManagement.cshtml" />
+    <Content Include="Views\EditorTemplates\Parts.AssociativyNodeManagement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DisplayTemplates\Admin\Index.cshtml" />
