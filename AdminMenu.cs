@@ -25,7 +25,7 @@ namespace Associativy.Administration
 
         public void GetNavigation(NavigationBuilder builder)
         {
-            builder/*.AddImageSet("addociativy")*/.Add(T("Associativy"), "1.5", BuildMenu);
+            builder/*.AddImageSet("associativy")*/.Add(T("Associativy"), "1.5", BuildMenu);
 
             // This is for tabs (LocalNav)
             //builder//.AddImageSet("addociativy")
@@ -38,6 +38,8 @@ namespace Associativy.Administration
         private void BuildMenu(NavigationItemBuilder menu)
         {
             menu.Action("Index", "Admin", new { area = "Associativy.Administration" }).Permission(StandardPermissions.SiteOwner);
+
+            menu.LinkToFirstChild(false);
 
             var graphs = _graphManager.FindGraphs(new GraphContext());
 
