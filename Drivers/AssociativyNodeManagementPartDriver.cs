@@ -53,7 +53,8 @@ namespace Associativy.Administration.Drivers
                         {
                             context.GraphName = provider.GraphName;
                             part.GraphContexts[provider] = context;
-                            part.NeighbourLabels.Add(String.Join(", ", _associativyServices.NodeManager.GetManyContentQuery(context, provider.ConnectionManager.GetNeighbourIds(context, part.Id)).Join<AssociativyNodeLabelPartRecord>().List().Select(node => node.As<AssociativyNodeLabelPart>().Label)));
+                            // TODO: The following line is still coupled with AssociativyNodeLabelPart.
+                            part.NeighbourLabels.Add(String.Join(", ", _associativyServices.NodeManager.GetManyContentQuery(context, provider.ConnectionManager.GetNeighbourIds(context, part.Id)).Join<AssociativyNodeLabelPartRecord>().List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
                         }
 
                         return shapeHelper.EditorTemplate(

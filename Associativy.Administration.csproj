@@ -95,10 +95,15 @@
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
+    <Compile Include="Handlers\AssociativyGraphHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AssociativyNodeManagementPart.cs" />
+    <Compile Include="Models\UserGraphNodeConnector.cs" />
+    <Compile Include="UserGraphRoutes.cs" />
     <Compile Include="Services\IImportExportService.cs" />
     <Compile Include="Services\ImportExportService.cs" />
+    <Compile Include="UserGraphMigrations.cs" />
+    <Compile Include="UserGraphProvider.cs" />
     <Compile Include="ViewModels\GraphManagementViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

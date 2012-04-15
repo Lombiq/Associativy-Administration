@@ -9,7 +9,7 @@ using Associativy.Administration.Models;
 namespace Associativy.Administration.Migrations
 {
     [OrchardFeature("Associativy.Administration")]
-    public class NotionMigrations : DataMigrationImpl
+    public class Migrations : DataMigrationImpl
     {
         public int Create()
         {
