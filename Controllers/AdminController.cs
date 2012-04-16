@@ -18,14 +18,15 @@ using System.Text;
 using Orchard;
 using Orchard.UI.Notify;
 using Associativy.Administration.Services;
+using Associativy.Controllers;
+using Associativy.Models.Mind;
 
 namespace Associativy.Administration.Controllers
 {
     [OrchardFeature("Associativy.Administration")]
     [Admin]
-    public class AdminController : Controller
+    public class AdminController : AssociativyControllerBase
     {
-        private readonly IGraphManager _graphManager;
         private readonly dynamic _shapeFactory;
         private readonly IOrchardServices _orchardServices;
         private readonly IImportExportService _importExportService;
@@ -33,12 +34,12 @@ namespace Associativy.Administration.Controllers
         public Localizer T { get; set; }
 
         public AdminController(
-            IGraphManager graphManager,
+            IAssociativyServices associativyServices,
             IShapeFactory shapeFactory,
             IOrchardServices orchardServices,
             IImportExportService importExportService)
+            : base(associativyServices)
         {
-            _graphManager = graphManager;
             _shapeFactory = shapeFactory;
             _orchardServices = orchardServices;
             _importExportService = importExportService;
@@ -64,13 +65,18 @@ namespace Associativy.Administration.Controllers
             if (!_orchardServices.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
 
+            var graphContext = MakeContext(graphName);
+            var graphContent = _mind.GetAllAssociations(graphContext, new MindSettings { ZoomLevel = int.MaxValue } );
+
             return new ShapeResult(
                 this,
                 _shapeFactory.DisplayTemplate(
                     TemplateName: "Admin/ManageGraph",
                     Model: new GraphManagementViewModel
                     {
-                        Graph = _graphManager.FindGraph(MakeContext(graphName))
+                        Graph = _graphManager.FindGraph(graphContext),
+                        NodeCount = graphContent.VertexCount,
+                        ConnectionCount = graphContent.EdgeCount
                     },
                     Prefix: null));
         }

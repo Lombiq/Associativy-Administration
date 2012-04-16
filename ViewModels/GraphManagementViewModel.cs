@@ -11,5 +11,7 @@ namespace Associativy.Administration.ViewModels
     public class GraphManagementViewModel
     {
         public GraphDescriptor Graph { get; set; }
+        public int NodeCount { get; set; }
+        public int ConnectionCount { get; set; }
     }
 }

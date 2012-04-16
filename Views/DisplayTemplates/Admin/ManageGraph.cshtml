@@ -2,6 +2,19 @@
 @{
     Layout.Title = Model.Graph.DisplayGraphName.ToString();
 }
+
+<div>
+    <h3>@T("Graph info")</h3>
+    
+    <p>
+    @Html.Link(T("View graph at default location").Text, Url.RouteUrl("Associativy.Administration.UserGraphs", new { GraphName = Model.Graph.GraphName, Action = "", Controller = "" }))
+    </p>
+
+    <p>
+        @T("Number of nodes in the graph: {0}", Model.NodeCount) @T("Number of connections: {0}", Model.ConnectionCount)
+    </p>
+</div>
+
 <div>
     <h3>@T("Export")</h3>
     @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.Graph.GraphName }, new { @class = "button" })

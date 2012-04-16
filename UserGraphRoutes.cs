@@ -11,11 +11,33 @@ using Orchard.ContentManagement;
 namespace Associativy.Administration
 {
     [OrchardFeature("Associativy.Administration.UserGraphs")]
-    public class UserGraphRoutes : FrontendsRoutesProviderBase
+    public class UserGraphRoutes : IRouteProvider
     {
-        public UserGraphRoutes()
+        public void GetRoutes(ICollection<RouteDescriptor> routes)
         {
-            //RegisterEngineRoute("Associativy/UserGraphs/{action}", "JIT", OrchardKnowledgeGraphProvider.DescribedGraphContext);
+        }
+
+        public IEnumerable<RouteDescriptor> GetRoutes()
+        {
+            return new[]
+            {
+                new RouteDescriptor
+                {
+                    Name = "Associativy.Administration.UserGraphs",
+                    Route = new Route(
+                        "AssociativyGraphs/{GraphName}/{controller}/{action}",
+                        new RouteValueDictionary {
+                                                    {"area", "Associativy.Frontends"},
+                                                    {"controller", "JITEngine"},
+                                                    {"action", "ShowWholeGraph"}
+                                                },
+                        new RouteValueDictionary(),
+                        new RouteValueDictionary {
+                                                    {"area", "Associativy.Frontends"}
+                                                },
+                        new MvcRouteHandler())
+                }
+            };
         }
     }
 }
