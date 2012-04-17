@@ -66,7 +66,7 @@ namespace Associativy.Administration.Controllers
                 return new HttpUnauthorizedResult();
 
             var graphContext = MakeContext(graphName);
-            var graphContent = _mind.GetAllAssociations(graphContext, new MindSettings { ZoomLevel = int.MaxValue } );
+            var graphContent = _mind.GetAllAssociations(graphContext, new MindSettings { ZoomLevelCount = 1 } );
 
             return new ShapeResult(
                 this,
