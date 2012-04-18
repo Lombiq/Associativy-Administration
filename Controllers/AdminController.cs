@@ -49,20 +49,21 @@ namespace Associativy.Administration.Controllers
 
         public ActionResult Index()
         {
-            if (!_orchardServices.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not allowed to manage Associativy settings.")))
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're You're not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
+
 
             return new ShapeResult(
                 this,
                 _shapeFactory.DisplayTemplate(
                     TemplateName: "Admin/Index",
-                    Model: null,
+                    Model: new AdminIndexViewModel { GraphCount = _graphManager.FindDistinctGraphs(new GraphContext()).Count() },
                     Prefix: null));
         }
 
         public ActionResult ManageGraph(string graphName)
         {
-            if (!_orchardServices.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not allowed to manage Associativy settings.")))
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
 
             var graphContext = MakeContext(graphName);
@@ -83,7 +84,7 @@ namespace Associativy.Administration.Controllers
 
         public ActionResult ExportConnections(string graphName)
         {
-            if (!_orchardServices.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not allowed to manage Associativy settings.")))
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
 
             try
@@ -103,7 +104,7 @@ namespace Associativy.Administration.Controllers
         [HttpPost]
         public ActionResult ImportConnections(string graphName)
         {
-            if (!_orchardServices.Authorizer.Authorize(StandardPermissions.SiteOwner, T("Not allowed to manage Associativy settings.")))
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
 
             if (String.IsNullOrEmpty(Request.Files["ConnectionsFile"].FileName))

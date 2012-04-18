@@ -103,11 +103,13 @@
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\AssociativyNodeManagementPart.cs" />
     <Compile Include="Models\UserGraphNodeConnector.cs" />
+    <Compile Include="Permissions.cs" />
     <Compile Include="UserGraphRoutes.cs" />
     <Compile Include="Services\IImportExportService.cs" />
     <Compile Include="Services\ImportExportService.cs" />
     <Compile Include="UserGraphMigrations.cs" />
     <Compile Include="UserGraphProvider.cs" />
+    <Compile Include="ViewModels\AdminIndexViewModel.cs" />
     <Compile Include="ViewModels\GraphManagementViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -1,3 +1,7 @@
-﻿@{
+﻿@model Associativy.Administration.ViewModels.AdminIndexViewModel
+
+@{
     Layout.Title = T("Associativy").ToString();
 }
+
+@T("There are currently {0} graphs registered.", Model.GraphCount)
