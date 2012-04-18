@@ -8,7 +8,6 @@ using Orchard.Environment.Extensions;
 using Associativy.Administration.Models;
 using Piedone.HelpfulLibraries.DependencyInjection;
 using Orchard.ContentManagement;
-using Piedone.HelpfulLibraries.Contents;
 using Orchard.Core.Common.Fields;
 
 namespace Associativy.Administration
@@ -32,10 +31,11 @@ namespace Associativy.Administration
 
             foreach (var graph in graphs)
             {
+                var graphPart = graph.As<AssociativyGraphPart>();
                 describeContext.DescribeGraph(
-                    graph.AsField<TextField>("AssociativyGraphFieldsPart", "GraphName").Value,
-                    T(graph.AsField<TextField>("AssociativyGraphFieldsPart", "DisplayGraphName").Value),
-                    graph.AsField<TextField>("AssociativyGraphFieldsPart", "ContentTypes").Value.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries),
+                    graphPart.GraphName,
+                    T(graphPart.DisplayGraphName),
+                    graphPart.ContentTypes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries),
                     ConnectionManager);
             }
         }

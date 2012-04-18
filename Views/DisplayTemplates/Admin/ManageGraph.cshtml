@@ -1,13 +1,13 @@
 ﻿@model Associativy.Administration.ViewModels.GraphManagementViewModel
 @{
-    Layout.Title = Model.Graph.DisplayGraphName.ToString();
+    Layout.Title = Model.GraphDescriptor.DisplayGraphName.ToString();
 }
 
 <div>
     <h3>@T("Graph info")</h3>
     
     <p>
-    @Html.Link(T("View graph at default location").Text, Url.RouteUrl("Associativy.Administration.UserGraphs", new { GraphName = Model.Graph.GraphName, Action = "", Controller = "" }))
+    @Html.Link(T("View graph at default location").Text, Url.RouteUrl("Associativy.Administration.UserGraphs", new { GraphName = Model.GraphDescriptor.GraphName, Action = "", Controller = "" }))
     </p>
 
     <p>
@@ -17,13 +17,13 @@
 
 <div>
     <h3>@T("Export")</h3>
-    @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.Graph.GraphName }, new { @class = "button" })
+    @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.GraphDescriptor.GraphName }, new { @class = "button" })
     <span class="hint">@T("This only exports connection data. The nodes (i.e. the content items stored in the graph) have to be exported with the built-in Import/Export feature.")</span>
 </div>
 
 <div>
     <h3>@T("Import")</h3>
-    @using (Html.BeginFormAntiForgeryPost(Url.Action("ImportConnections", new { GraphName = Model.Graph.GraphName }), FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginFormAntiForgeryPost(Url.Action("ImportConnections", new { GraphName = Model.GraphDescriptor.GraphName }), FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <fieldset>
             @Html.Label("ConnectionsFile", T("Select a connections file").ToString())

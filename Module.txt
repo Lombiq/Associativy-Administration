@@ -15,4 +15,4 @@ Features:
 		Name: Associativy User Graphs
         Description: Users can create simple graphs from the backend
 		Category: Associativy
-		Dependencies: Associativy.Administration, Piedone.HelpfulLibraries.Contents
+		Dependencies: Associativy.Administration

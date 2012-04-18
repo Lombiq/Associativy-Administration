@@ -1,3 +1,7 @@
 ﻿<Placement>
+  <!--Node management-->
   <Place Parts_AssociativyNodeManagement_Edit="Content:10"/>
+
+  <!--User graphs-->
+  <Place Parts_AssociativyGraph_Edit="Content:5"/>
 </Placement>

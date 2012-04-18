@@ -67,7 +67,7 @@ namespace Associativy.Administration.Controllers
                 return new HttpUnauthorizedResult();
 
             var graphContext = MakeContext(graphName);
-            var graphContent = _mind.GetAllAssociations(graphContext, new MindSettings { ZoomLevelCount = 1 } );
+            var graph = _mind.GetAllAssociations(graphContext, new MindSettings { ZoomLevelCount = 1 } );
 
             return new ShapeResult(
                 this,
@@ -75,9 +75,9 @@ namespace Associativy.Administration.Controllers
                     TemplateName: "Admin/ManageGraph",
                     Model: new GraphManagementViewModel
                     {
-                        Graph = _graphManager.FindGraph(graphContext),
-                        NodeCount = graphContent.VertexCount,
-                        ConnectionCount = graphContent.EdgeCount
+                        GraphDescriptor = _graphManager.FindGraph(graphContext),
+                        NodeCount = graph.VertexCount,
+                        ConnectionCount = graph.EdgeCount
                     },
                     Prefix: null));
         }

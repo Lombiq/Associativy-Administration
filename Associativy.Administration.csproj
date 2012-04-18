@@ -98,9 +98,12 @@
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Drivers\AssociativyGraphPartDriver.cs" />
     <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
-    <Compile Include="Handlers\AssociativyGraphHandler.cs" />
+    <Compile Include="Handlers\AssociativyGraphPartHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\AssociativyGraphPart.cs" />
+    <Compile Include="Models\AssociativyGraphPartRecord.cs" />
     <Compile Include="Models\AssociativyNodeManagementPart.cs" />
     <Compile Include="Models\UserGraphNodeConnector.cs" />
     <Compile Include="Permissions.cs" />
@@ -122,6 +125,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DisplayTemplates\Admin\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\EditorTemplates\Parts.AssociativyGraph.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Parts\Parts.AssociativyGraph.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

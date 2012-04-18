@@ -10,7 +10,7 @@ namespace Associativy.Administration.ViewModels
     [OrchardFeature("Associativy.Administration")]
     public class GraphManagementViewModel
     {
-        public GraphDescriptor Graph { get; set; }
+        public GraphDescriptor GraphDescriptor { get; set; }
         public int NodeCount { get; set; }
         public int ConnectionCount { get; set; }
     }

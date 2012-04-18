@@ -1,0 +1,22 @@
+﻿@model Associativy.Administration.Models.AssociativyGraphPart
+
+<fieldset>
+    <legend>@T("Graph settings")</legend>
+    <ol>
+        <li>
+            @Html.LabelFor(m => m.DisplayGraphName, T("Display graph name"))
+            @Html.TextBoxFor(m => m.DisplayGraphName, new { @class = "text textMedium" })
+            @Html.ValidationMessageFor(m => m.DisplayGraphName)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.GraphName, T("Technical graph name"))
+            @Html.TextBoxFor(m => m.GraphName, new { @class = "text textMedium" })
+            @Html.ValidationMessageFor(m => m.GraphName)
+        </li>
+        <li>
+            @Html.LabelFor(m => m.ContentTypes, T("Content types to store"))
+            @Html.TextBoxFor(m => m.ContentTypes, new { @class = "text textMedium" })
+            @Html.ValidationMessageFor(m => m.ContentTypes)
+        </li>
+    </ol>
+</fieldset>

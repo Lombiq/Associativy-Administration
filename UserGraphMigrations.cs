@@ -18,26 +18,18 @@ namespace Associativy.Administration
         {
             SchemaBuilder.CreateNodeToNodeConnectorRecordTable<UserGraphNodeConnector>();
 
-            ContentDefinitionManager.AlterPartDefinition("AssociativyGraphFieldsPart",
-                part => part
-                    .WithField("GraphName", field =>
-                    {
-                        field.OfType("TextField");
-                    })
-                    .WithField("DisplayGraphName", field =>
-                    {
-                        field.OfType("TextField");
-                    })
-                    .WithField("ContentTypes", field =>
-                    {
-                        field.OfType("TextField");
-                    })
+            SchemaBuilder.CreateTable(typeof(AssociativyGraphPartRecord).Name,
+                table => table
+                    .ContentPartRecord()
+                    .Column<string>("GraphName")
+                    .Column<string>("DisplayGraphName")
+                    .Column<string>("ContentTypes")
             );
 
             ContentDefinitionManager.AlterTypeDefinition("AssociativyGraph",
                 cfg => cfg
                     .WithPart("CommonPart")
-                    .WithPart("AssociativyGraphFieldsPart")
+                    .WithPart(typeof(AssociativyGraphPart).Name)
                     .Creatable()
             );
 
