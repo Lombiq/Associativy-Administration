@@ -5,6 +5,7 @@ using System.Web;
 using Orchard.Environment.Extensions;
 using Orchard.ContentManagement;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Script.Serialization;
 
 namespace Associativy.Administration.Models
 {
@@ -25,11 +26,24 @@ namespace Associativy.Administration.Models
             set { Record.DisplayGraphName = value; }
         }
 
-        [Required]
-        public string ContentTypes
+        private IList<string> _contentTypes;
+        public IList<string> ContentTypes
         {
-            get { return Record.ContentTypes; }
-            set { Record.ContentTypes = value; }
+            get
+            {
+                if (_contentTypes == null)
+                {
+                    _contentTypes = new JavaScriptSerializer().Deserialize<string[]>(Record.ContentTypes).ToList();
+                }
+
+                return _contentTypes;
+            }
+
+            set
+            {
+                _contentTypes = value;
+                Record.ContentTypes = new JavaScriptSerializer().Serialize(_contentTypes.ToArray());
+            }
         }
     }
 }

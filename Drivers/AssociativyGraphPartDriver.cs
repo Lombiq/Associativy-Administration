@@ -6,15 +6,23 @@ using Orchard.ContentManagement.Drivers;
 using Associativy.Administration.Models;
 using Orchard.Environment.Extensions;
 using Orchard.ContentManagement;
+using Orchard.ContentManagement.MetaData;
 
 namespace Associativy.Administration.Drivers
 {
     [OrchardFeature("Associativy.Administration.UserGraphs")]
     public class AssociativyGraphPartDriver : ContentPartDriver<AssociativyGraphPart>
     {
+        private readonly IContentDefinitionManager _contentDefinitionManager;
+
         protected override string Prefix
         {
             get { return "Associativy.Administration.UserGraph.AssociativyGraphPartDriver"; }
+        }
+
+        public AssociativyGraphPartDriver(IContentDefinitionManager contentDefinitionManager)
+        {
+            _contentDefinitionManager = contentDefinitionManager;
         }
 
         protected override DriverResult Display(AssociativyGraphPart part, string displayType, dynamic shapeHelper)

@@ -17,6 +17,16 @@
             @Html.LabelFor(m => m.ContentTypes, T("Content types to store"))
             @Html.TextBoxFor(m => m.ContentTypes, new { @class = "text textMedium" })
             @Html.ValidationMessageFor(m => m.ContentTypes)
+            <ul>
+            @for (int i = 0; i < Model.ContentTypes.Count; i++)
+            {
+                <li>
+                    @Html.HiddenFor(m => m.ContentTypes[i].Id)
+                    @Html.CheckBoxFor(m => m.ContentTypes[i].IsAttached)
+                    <label for="@Html.FieldIdFor(m => m.ContentTypes[i].IsAttached)" class="forcheckbox">@Model.ContentTypes[i]</label>
+                </li>
+            }
+            </ul
         </li>
     </ol>
 </fieldset>
