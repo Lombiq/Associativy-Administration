@@ -13,22 +13,9 @@ namespace Associativy.Administration.Drivers
     [OrchardFeature("Associativy.Administration.UserGraphs")]
     public class AssociativyGraphPartDriver : ContentPartDriver<AssociativyGraphPart>
     {
-        private readonly IContentDefinitionManager _contentDefinitionManager;
-
         protected override string Prefix
         {
             get { return "Associativy.Administration.UserGraph.AssociativyGraphPartDriver"; }
-        }
-
-        public AssociativyGraphPartDriver(IContentDefinitionManager contentDefinitionManager)
-        {
-            _contentDefinitionManager = contentDefinitionManager;
-        }
-
-        protected override DriverResult Display(AssociativyGraphPart part, string displayType, dynamic shapeHelper)
-        {
-            return ContentShape("Parts_AssociativyGraph",
-                () => shapeHelper.Parts_AssociativyGraph());
         }
 
         // GET
@@ -45,6 +32,8 @@ namespace Associativy.Administration.Drivers
         protected override DriverResult Editor(AssociativyGraphPart part, IUpdateModel updater, dynamic shapeHelper)
         {
             updater.TryUpdateModel(part, Prefix, null, null);
+
+            part.ContainedContentTypes = part.AllContentTypes.Where(type => type.IsContained).Select(type => type.Name).ToList();
 
             return Editor(part, shapeHelper);
         }

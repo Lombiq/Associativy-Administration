@@ -12,6 +12,6 @@ namespace Associativy.Administration.Models
     {
         public virtual string GraphName { get; set; }
         public virtual string DisplayGraphName { get; set; }
-        public virtual string ContentTypes { get; set; }
+        public virtual string ContainedContentTypes { get; set; }
     }
 }

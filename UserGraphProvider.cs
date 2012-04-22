@@ -49,7 +49,7 @@ namespace Associativy.Administration
                 describeContext.DescribeGraph(
                     graphPart.GraphName,
                     T(graphPart.DisplayGraphName),
-                    graphPart.ContentTypes.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries),
+                    graphPart.ContainedContentTypes,
                     ConnectionManager);
             }
         }
