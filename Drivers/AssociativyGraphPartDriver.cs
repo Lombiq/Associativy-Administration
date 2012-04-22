@@ -31,7 +31,9 @@ namespace Associativy.Administration.Drivers
         // POST
         protected override DriverResult Editor(AssociativyGraphPart part, IUpdateModel updater, dynamic shapeHelper)
         {
+            var name = part.GraphName;
             updater.TryUpdateModel(part, Prefix, null, null);
+            if (!String.IsNullOrWhiteSpace(name) && part.GraphName != name) part.GraphName = name; // This is to prevent modification of the name
 
             part.ContainedContentTypes = part.AllContentTypes.Where(type => type.IsContained).Select(type => type.Name).ToList();
 
