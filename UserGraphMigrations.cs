@@ -23,7 +23,7 @@ namespace Associativy.Administration
                     .ContentPartRecord()
                     .Column<string>("GraphName")
                     .Column<string>("DisplayGraphName")
-                    .Column<string>("ContentTypes")
+                    .Column<string>("ContentTypes", column => column.Unlimited())
             );
 
             ContentDefinitionManager.AlterTypeDefinition("AssociativyGraph",
