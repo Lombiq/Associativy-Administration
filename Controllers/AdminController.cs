@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using Orchard.Mvc;
 using Orchard.DisplayManagement;
 using Associativy.GraphDiscovery;
-using Associativy.Administration.ViewModels;
 using Orchard.Security;
 using Orchard.Localization;
 using Piedone.HelpfulLibraries.Serialization;
@@ -20,6 +19,8 @@ using Orchard.UI.Notify;
 using Associativy.Administration.Services;
 using Associativy.Controllers;
 using Associativy.Models.Mind;
+using Associativy.Administration.EventHandlers;
+using Orchard.ContentManagement;
 
 namespace Associativy.Administration.Controllers
 {
@@ -27,21 +28,21 @@ namespace Associativy.Administration.Controllers
     [Admin]
     public class AdminController : AssociativyControllerBase
     {
-        private readonly dynamic _shapeFactory;
         private readonly IOrchardServices _orchardServices;
+        private readonly IAdminEventHandler _eventHandler;
         private readonly IImportExportService _importExportService;
 
         public Localizer T { get; set; }
 
         public AdminController(
             IAssociativyServices associativyServices,
-            IShapeFactory shapeFactory,
             IOrchardServices orchardServices,
+            IAdminEventHandler eventHandler,
             IImportExportService importExportService)
             : base(associativyServices)
         {
-            _shapeFactory = shapeFactory;
             _orchardServices = orchardServices;
+            _eventHandler = eventHandler;
             _importExportService = importExportService;
 
             T = NullLocalizer.Instance;
@@ -52,34 +53,21 @@ namespace Associativy.Administration.Controllers
             if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're You're not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
 
+            var page = NewPage("Index");
+            _eventHandler.OnPageBuilt(page);
 
-            return new ShapeResult(
-                this,
-                _shapeFactory.DisplayTemplate(
-                    TemplateName: "Admin/Index",
-                    Model: new AdminIndexViewModel { GraphCount = _graphManager.FindDistinctGraphs(new GraphContext()).Count() },
-                    Prefix: null));
+            return PageResult(page);
         }
 
-        public ActionResult ManageGraph(string graphName)
+        public ActionResult ManageGraph()
         {
             if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
 
-            var graphContext = MakeContext(graphName);
-            var graph = _mind.GetAllAssociations(graphContext, new MindSettings { ZoomLevelCount = 1 } );
+            var page = NewPage("ManageGraph");
+            _eventHandler.OnPageBuilt(page);
 
-            return new ShapeResult(
-                this,
-                _shapeFactory.DisplayTemplate(
-                    TemplateName: "Admin/ManageGraph",
-                    Model: new GraphManagementViewModel
-                    {
-                        GraphDescriptor = _graphManager.FindGraph(graphContext),
-                        NodeCount = graph.VertexCount,
-                        ConnectionCount = graph.EdgeCount
-                    },
-                    Prefix: null));
+            return PageResult(page);
         }
 
         public ActionResult ExportConnections(string graphName)
@@ -132,6 +120,21 @@ namespace Associativy.Administration.Controllers
         private GraphContext MakeContext(string graphName)
         {
             return new GraphContext { GraphName = graphName };
+        }
+
+        private IContent NewPage(string pageName)
+        {
+            var page = _orchardServices.ContentManager.New("Associativy.Administration " + pageName);
+
+            _eventHandler.OnPageInitializing(page);
+            _eventHandler.OnPageInitialized(page);
+
+            return page;
+        }
+
+        private ShapeResult PageResult(IContent page)
+        {
+            return new ShapeResult(this, _orchardServices.ContentManager.BuildDisplay(page));
         }
     }
 }

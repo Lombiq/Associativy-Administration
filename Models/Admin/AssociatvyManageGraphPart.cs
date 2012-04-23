@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using Orchard.Environment.Extensions;
+using Orchard.ContentManagement;
 using Associativy.GraphDiscovery;
+using Orchard.Environment.Extensions;
 
-namespace Associativy.Administration.ViewModels
+namespace Associativy.Administration.Models.Admin
 {
     [OrchardFeature("Associativy.Administration")]
-    public class GraphManagementViewModel
+    public class AssociatvyManageGraphPart : ContentPart
     {
         public GraphDescriptor GraphDescriptor { get; set; }
         public int NodeCount { get; set; }
