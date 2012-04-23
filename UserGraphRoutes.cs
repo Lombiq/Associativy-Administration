@@ -3,10 +3,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using Orchard.Environment.Extensions;
 using Orchard.Mvc.Routes;
-using Associativy.Models;
-using Associativy.GraphDiscovery;
-using Associativy.Frontends;
-using Orchard.ContentManagement;
 
 namespace Associativy.Administration
 {

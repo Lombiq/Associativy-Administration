@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Associativy.Administration.Models;
 using Associativy.GraphDiscovery;
 using Associativy.Services;
-using Orchard.Environment.Extensions;
-using Associativy.Administration.Models;
-using Piedone.HelpfulLibraries.DependencyInjection;
-using Orchard.ContentManagement;
-using Orchard.Core.Common.Fields;
-using Orchard.ContentManagement.Handlers;
 using Orchard.Caching;
+using Orchard.ContentManagement;
+using Orchard.ContentManagement.Handlers;
+using Orchard.Environment.Extensions;
+using Piedone.HelpfulLibraries.DependencyInjection;
 
 namespace Associativy.Administration
 {

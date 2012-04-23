@@ -1,10 +1,8 @@
-using Associativy.Extensions;
-using Associativy.Models;
+using Associativy.Administration.Models;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
-using Associativy.Administration.Models;
 
 namespace Associativy.Administration.Migrations
 {

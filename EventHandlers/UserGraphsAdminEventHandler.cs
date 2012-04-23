@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.Environment.Extensions;
+﻿using Associativy.Administration.Models.Admin;
 using Orchard.ContentManagement;
-using Associativy.Administration.Models.Admin;
+using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.EventHandlers
 {

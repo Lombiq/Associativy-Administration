@@ -1,14 +1,10 @@
-﻿using Orchard.ContentManagement;
+﻿using System.Linq;
+using Associativy.Administration.Models;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
+using Orchard.ContentManagement.MetaData;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
-using Orchard.Localization;
-using Orchard.Core.Common.Fields;
-using Piedone.HelpfulLibraries.Contents;
-using Associativy.Administration.Models;
-using Orchard.ContentManagement.MetaData;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Associativy.Administration
 {

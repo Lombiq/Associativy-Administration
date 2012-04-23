@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using Orchard.ContentManagement.Drivers;
 using Associativy.Administration.Models;
-using Orchard.Environment.Extensions;
 using Orchard.ContentManagement;
-using Orchard.ContentManagement.MetaData;
+using Orchard.ContentManagement.Drivers;
+using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Drivers
 {

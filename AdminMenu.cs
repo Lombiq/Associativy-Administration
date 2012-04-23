@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.UI.Navigation;
+﻿using Associativy.GraphDiscovery;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using Orchard.Security;
-using Associativy.GraphDiscovery;
+using Orchard.UI.Navigation;
 
 namespace Associativy.Administration
 {
