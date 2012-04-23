@@ -29,7 +29,7 @@ namespace Associativy.Administration
                         new RouteValueDictionary {
                                                     {"area", "Associativy.Frontends"},
                                                     {"controller", "JITEngine"},
-                                                    {"action", "ShowWholeGraph"}
+                                                    {"action", "WholeGraph"}
                                                 },
                         new RouteValueDictionary(),
                         new RouteValueDictionary {
