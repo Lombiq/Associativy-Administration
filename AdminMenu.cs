@@ -2,6 +2,7 @@
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.UI.Navigation;
+using System.Linq;
 
 namespace Associativy.Administration
 {
@@ -36,7 +37,7 @@ namespace Associativy.Administration
 
             menu.LinkToFirstChild(false);
 
-            var graphs = _graphManager.FindDistinctGraphs(new GraphContext());
+            var graphs = _graphManager.FindDistinctGraphs(new GraphContext()).OrderBy(descriptor => descriptor.DisplayGraphName.Text);
 
             int i = 0;
             foreach (var graph in graphs)
