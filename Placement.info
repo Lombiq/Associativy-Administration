@@ -6,7 +6,7 @@
   <Place Parts_AssociativyGraph_Edit="Content:5"/>
   
   <!--Admin pages-->
-  <Place AssociativyIndex="Content:5"/>
-  <Place AssociatvyManageGraph="Content:5"/>
-  <Place AssociativyManageGraphUserGraph="Content:6"/>
+  <Place Pages_AssociativyIndex="Content:5"/>
+  <Place Pages_AssociativyManageGraphUserGraph="Content:5"/>
+  <Place Pages_AssociatvyManageGraph="Content:6"/>
 </Placement>

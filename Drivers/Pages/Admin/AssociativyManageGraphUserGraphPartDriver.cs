@@ -1,12 +1,12 @@
 ﻿using System.Linq;
 using Associativy.Administration.Models;
-using Associativy.Administration.Models.Admin;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
+using Associativy.Administration.Models.Pages.Admin;
 
-namespace Associativy.Administration.Drivers.Admin
+namespace Associativy.Administration.Drivers.Pages.Admin
 {
     [OrchardFeature("Associativy.Administration.UserGraphs")]
     public class AssociativyManageGraphUserGraphPartDriver : ContentPartDriver<AssociativyManageGraphUserGraphPart>
@@ -24,7 +24,7 @@ namespace Associativy.Administration.Drivers.Admin
 
         protected override DriverResult Display(AssociativyManageGraphUserGraphPart part, string displayType, dynamic shapeHelper)
         {
-            return ContentShape("AssociativyManageGraphUserGraph",
+            return ContentShape("Pages_AssociativyManageGraphUserGraph",
             () =>
             {
                 part.UserGraph = _contentManager
@@ -34,7 +34,7 @@ namespace Associativy.Administration.Drivers.Admin
                     .First();
 
                 return shapeHelper.DisplayTemplate(
-                            TemplateName: "Admin/ManageGraphUserGraph",
+                            TemplateName: "Pages/Admin/ManageGraphUserGraph",
                             Model: part,
                             Prefix: Prefix);
             });

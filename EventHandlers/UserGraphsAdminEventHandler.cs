@@ -1,6 +1,6 @@
-﻿using Associativy.Administration.Models.Admin;
-using Orchard.ContentManagement;
+﻿using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
+using Associativy.Administration.Models.Pages.Admin;
 
 namespace Associativy.Administration.EventHandlers
 {

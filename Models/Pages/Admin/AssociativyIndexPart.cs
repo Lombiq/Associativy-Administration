@@ -1,7 +1,7 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 
-namespace Associativy.Administration.Models.Admin
+namespace Associativy.Administration.Models.Pages.Admin
 {
     [OrchardFeature("Associativy.Administration")]
     public class AssociativyIndexPart : ContentPart

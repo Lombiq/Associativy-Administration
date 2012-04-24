@@ -1,12 +1,12 @@
-﻿using Associativy.Administration.Models.Admin;
-using Associativy.GraphDiscovery;
+﻿using Associativy.GraphDiscovery;
 using Associativy.Models.Mind;
 using Associativy.Services;
 using Orchard;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
+using Associativy.Administration.Models.Pages.Admin;
 
-namespace Associativy.Administration.Drivers.Admin
+namespace Associativy.Administration.Drivers.Pages.Admin
 {
     [OrchardFeature("Associativy.Administration")]
     public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
@@ -24,7 +24,7 @@ namespace Associativy.Administration.Drivers.Admin
 
         protected override DriverResult Display(AssociatvyManageGraphPart part, string displayType, dynamic shapeHelper)
         {
-            return ContentShape("AssociatvyManageGraph",
+            return ContentShape("Pages_AssociatvyManageGraph",
             () =>
             {
                 var graphContext = new GraphContext { GraphName = _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"] };
@@ -35,7 +35,7 @@ namespace Associativy.Administration.Drivers.Admin
                 part.ConnectionCount = graph.EdgeCount;
 
                 return shapeHelper.DisplayTemplate(
-                            TemplateName: "Admin/ManageGraph",
+                            TemplateName: "Pages/Admin/ManageGraph",
                             Model: part,
                             Prefix: Prefix);
             });

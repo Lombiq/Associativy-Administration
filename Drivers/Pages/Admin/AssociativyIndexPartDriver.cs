@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using Associativy.Administration.Models.Admin;
 using Associativy.GraphDiscovery;
 using Associativy.Services;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
+using Associativy.Administration.Models.Pages.Admin;
 
-namespace Associativy.Administration.Drivers.Admin
+namespace Associativy.Administration.Drivers.Pages.Admin
 {
     [OrchardFeature("Associativy.Administration")]
     public class AssociativyIndexPartDriver : ContentPartDriver<AssociativyIndexPart>
@@ -19,13 +19,13 @@ namespace Associativy.Administration.Drivers.Admin
 
         protected override DriverResult Display(AssociativyIndexPart part, string displayType, dynamic shapeHelper)
         {
-            return ContentShape("AssociativyIndex",
+            return ContentShape("Pages_AssociativyIndex",
             () =>
             {
                 part.GraphCount = _associativyServices.GraphManager.FindDistinctGraphs(new GraphContext()).Count();
 
                 return shapeHelper.DisplayTemplate(
-                            TemplateName: "Admin/Index",
+                            TemplateName: "Pages/Admin/Index",
                             Model: part,
                             Prefix: Prefix);
             });
