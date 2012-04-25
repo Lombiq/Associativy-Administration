@@ -13,6 +13,10 @@ namespace Associativy.Administration.EventHandlers
             {
                 page.ContentItem.Weld(new AssociativyManageGraphUserGraphPart());
             }
+            else if (page.IsPage("Index"))
+            {
+                page.ContentItem.Weld(new AssociativyIndexUserGraphPart());
+            }
         }
 
         public void OnPageInitialized(IContent page)

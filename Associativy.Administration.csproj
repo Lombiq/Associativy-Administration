@@ -104,6 +104,7 @@
     <Compile Include="Drivers\AssociativyGraphPartDriver.cs" />
     <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociatvyManageGraphPartDriver.cs" />
+    <Compile Include="Drivers\Pages\Admin\AssociativyIndexUserGraphPartDriver.cs" />
     <Compile Include="EventHandlers\ContentExtensions.cs" />
     <Compile Include="EventHandlers\DefaultAdminEventHandler.cs" />
     <Compile Include="EventHandlers\IAdminEventHandler.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Models\AssociativyGraphPartRecord.cs" />
     <Compile Include="Models\AssociativyNodeManagementPart.cs" />
     <Compile Include="Models\Pages\Admin\AssociatvyManageGraphPart.cs" />
+    <Compile Include="Models\Pages\Admin\AssociativyIndexUserGraphPart.cs" />
     <Compile Include="Models\UserGraphNodeConnector.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="UserGraphRoutes.cs" />
@@ -123,6 +125,7 @@
     <Compile Include="Services\ImportExportService.cs" />
     <Compile Include="UserGraphMigrations.cs" />
     <Compile Include="UserGraphProvider.cs" />
+    <None Include="Views\DisplayTemplates\Pages\Admin\IndexUserGraph.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info">

@@ -1,7 +1,9 @@
 ﻿@model Associativy.Administration.Models.Pages.Admin.AssociativyIndexPart
-
+           
 @{
     Layout.Title = T("Associativy").ToString();
 }
 
-@T("There are currently {0} graphs registered.", Model.GraphCount)
+<div>
+    @T("There are currently {0} graphs registered.", Model.GraphCount)
+</div>
