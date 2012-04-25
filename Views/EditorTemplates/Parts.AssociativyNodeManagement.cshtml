@@ -35,7 +35,7 @@
                 <script type="text/javascript">
                     $(function () {
                         @*Is there a better way to get the textbox's id? *@
-                        $.associativyAutoComplete.terms($("#associativy-tabs-@provider.GraphName").find("input[type=text]").attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { GraphName = provider.GraphName })");
+                        $.associativy.autoComplete.labels($("#associativy-tabs-@provider.GraphName").find("input[type=text]").attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { GraphName = provider.GraphName })");
                     });
                 </script>
             }
