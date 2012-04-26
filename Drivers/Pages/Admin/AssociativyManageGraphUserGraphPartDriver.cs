@@ -31,7 +31,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
                     .Query("AssociativyGraph")
                     .Where<AssociativyGraphPartRecord>(record => record.GraphName == _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"])
                     .List()
-                    .First();
+                    .FirstOrDefault();
 
                 return shapeHelper.DisplayTemplate(
                             TemplateName: "Pages/Admin/ManageGraphUserGraph",
