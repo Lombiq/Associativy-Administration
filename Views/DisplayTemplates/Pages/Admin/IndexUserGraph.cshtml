@@ -2,6 +2,6 @@
 
 <div>
     @*Html.RouteLink seems not to work properly...*@
-    @Html.Link(T("Create a graph").Text, Url.RouteUrl(Model.CreateUserGraphRouteValues), new { @class = "button" })
+    @Html.Link(T("Create graph").Text, Url.RouteUrl(Model.CreateUserGraphRouteValues), new { @class = "button" })
     <span class="hint">@T("Graphs created from the dashboard are easy to create but customization is limited. Full customization can be done from a graph provider.")</span>
 </div>

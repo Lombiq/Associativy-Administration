@@ -5,6 +5,7 @@ using Orchard;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
 using Associativy.Administration.Models.Pages.Admin;
+using Associativy.Frontends.EngineDiscovery;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
 {
@@ -12,13 +13,16 @@ namespace Associativy.Administration.Drivers.Pages.Admin
     public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
     {
         private readonly IAssociativyServices _associativyServices;
+        private readonly IEngineManager _engineManager;
         private readonly IWorkContextAccessor _workContextAccessor;
 
         public AssociatvyMageGraphPartDriver(
             IAssociativyServices associativyServices,
+            IEngineManager engineManager,
             IWorkContextAccessor workContextAccessor)
         {
             _associativyServices = associativyServices;
+            _engineManager = engineManager;
             _workContextAccessor = workContextAccessor;
         }
 
@@ -33,6 +37,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
                 part.GraphDescriptor = _associativyServices.GraphManager.FindGraph(graphContext);
                 part.NodeCount = graph.VertexCount;
                 part.ConnectionCount = graph.EdgeCount;
+                part.FrontendEngines = _engineManager.GetEngines();
 
                 return shapeHelper.DisplayTemplate(
                             TemplateName: "Pages/Admin/ManageGraph",

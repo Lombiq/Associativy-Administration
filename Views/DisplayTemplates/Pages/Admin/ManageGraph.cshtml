@@ -1,4 +1,5 @@
 ﻿@model Associativy.Administration.Models.Pages.Admin.AssociatvyManageGraphPart
+@using Associativy.Frontends.Extensions
            
 @{
     Layout.Title = Model.GraphDescriptor.DisplayGraphName.ToString();
@@ -8,12 +9,20 @@
     <h3>@T("Graph info")</h3>
     
     <p>
-    @Html.Link(T("View graph at default location").Text, Url.RouteUrl("Associativy.Administration.UserGraphs", new { GraphName = Model.GraphDescriptor.GraphName, Action = "", Controller = "" }))
-    </p>
-
-    <p>
         @T("Number of nodes in the graph: {0}", Model.NodeCount) @T("Number of connections: {0}", Model.ConnectionCount)
     </p>
+</div>
+
+<div>
+    <h3>@T("View graph")</h3>
+    <ul>
+    @foreach (var engine in Model.FrontendEngines)
+    {
+        <li>
+            @Html.Link(T("View with the {0} frontend engine", engine.DisplayEngineName.Text).Text, @Url.RouteEngineUrl(engine, Model.GraphDescriptor.GraphName))
+        </li>
+    }
+    </ul>
 </div>
 
 <div>

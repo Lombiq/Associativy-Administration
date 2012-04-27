@@ -120,7 +120,6 @@
     <Compile Include="Models\Pages\Admin\AssociativyIndexUserGraphPart.cs" />
     <Compile Include="Models\UserGraphNodeConnector.cs" />
     <Compile Include="Permissions.cs" />
-    <Compile Include="UserGraphRoutes.cs" />
     <Compile Include="Services\IImportExportService.cs" />
     <Compile Include="Services\ImportExportService.cs" />
     <Compile Include="UserGraphMigrations.cs" />
