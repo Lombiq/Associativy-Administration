@@ -18,23 +18,18 @@ using Orchard.UI.Notify;
 namespace Associativy.Administration.Controllers
 {
     [Admin, OrchardFeature("Associativy.Administration")]
-    public class AdminController : AssociativyControllerBase
+    public class AdminController : AdminControllerBase
     {
-        private readonly IOrchardServices _orchardServices;
-        private readonly IAdminEventHandler _eventHandler;
         private readonly IImportExportService _importExportService;
 
         public Localizer T { get; set; }
 
         public AdminController(
-            IAssociativyServices associativyServices,
             IOrchardServices orchardServices,
             IAdminEventHandler eventHandler,
             IImportExportService importExportService)
-            : base(associativyServices)
+            : base(orchardServices, eventHandler)
         {
-            _orchardServices = orchardServices;
-            _eventHandler = eventHandler;
             _importExportService = importExportService;
 
             T = NullLocalizer.Instance;
@@ -112,21 +107,6 @@ namespace Associativy.Administration.Controllers
         private GraphContext MakeContext(string graphName)
         {
             return new GraphContext { GraphName = graphName };
-        }
-
-        private IContent NewPage(string pageName)
-        {
-            var page = _orchardServices.ContentManager.New("Associativy.Administration " + pageName);
-
-            _eventHandler.OnPageInitializing(page);
-            _eventHandler.OnPageInitialized(page);
-
-            return page;
-        }
-
-        private ShapeResult PageResult(IContent page)
-        {
-            return new ShapeResult(this, _orchardServices.ContentManager.BuildDisplay(page));
         }
     }
 }

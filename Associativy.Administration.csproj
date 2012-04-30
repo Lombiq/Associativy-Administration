@@ -88,6 +88,10 @@
       <Project>{A8EE4964-4880-4EE1-AC0A-75492D89BBE8}</Project>
       <Name>Associativy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Orchard.Roles\Orchard.Roles.csproj">
+      <Project>{D10AD48F-407D-4DB5-A328-173EC7CB010F}</Project>
+      <Name>Orchard.Roles</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Piedone.HelpfulLibraries\Piedone.HelpfulLibraries.csproj">
       <Project>{EA61AD10-39D6-41A9-B12B-227F50C54158}</Project>
       <Name>Piedone.HelpfulLibraries</Name>
@@ -99,19 +103,27 @@
   <ItemGroup>
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminControllerBase.cs" />
+    <Compile Include="Controllers\AuthorizationAdminController.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexPartDriver.cs" />
+    <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphAuthorizationPartDiver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphUserGraphPartDriver.cs" />
     <Compile Include="Drivers\AssociativyGraphPartDriver.cs" />
     <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociatvyManageGraphPartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexUserGraphPartDriver.cs" />
+    <Compile Include="EventHandlers\AuthorizationAdminEventHandler.cs" />
+    <Compile Include="EventHandlers\AuthorizationFrontendEngineEventHandler.cs" />
     <Compile Include="EventHandlers\ContentExtensions.cs" />
     <Compile Include="EventHandlers\DefaultAdminEventHandler.cs" />
     <Compile Include="EventHandlers\IAdminEventHandler.cs" />
     <Compile Include="EventHandlers\UserGraphsAdminEventHandler.cs" />
     <Compile Include="Handlers\AssociativyGraphPartHandler.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Migrations\FrontendAuthorizationMigrations.cs" />
+    <Compile Include="Models\FrontendAuthorizationRecord.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyIndexPart.cs" />
+    <Compile Include="Models\Pages\Admin\AssociativyManageGraphAuthorizationPart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyManageGraphUserGraphPart.cs" />
     <Compile Include="Models\AssociativyGraphPart.cs" />
     <Compile Include="Models\AssociativyGraphPartRecord.cs" />
@@ -120,11 +132,14 @@
     <Compile Include="Models\Pages\Admin\AssociativyIndexUserGraphPart.cs" />
     <Compile Include="Models\UserGraphNodeConnector.cs" />
     <Compile Include="Permissions.cs" />
+    <Compile Include="Services\FrontendAuthorizer.cs" />
+    <Compile Include="Services\IFrontendAuthorizer.cs" />
     <Compile Include="Services\IImportExportService.cs" />
     <Compile Include="Services\ImportExportService.cs" />
     <Compile Include="UserGraphMigrations.cs" />
     <Compile Include="UserGraphProvider.cs" />
     <None Include="Views\DisplayTemplates\Pages\Admin\IndexUserGraph.cshtml" />
+    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraphAuthorization.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info">

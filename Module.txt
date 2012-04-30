@@ -16,3 +16,8 @@ Features:
         Description: Users can create simple graphs from the backend
 		Category: Associativy
 		Dependencies: Associativy.Administration
+	Associativy.Administration.FrontendAuthorization:
+		Name: Associativy Frontend Authorization Administration
+        Description: Administrate who can view graphs with the frontend engines
+		Category: Associativy
+		Dependencies: Associativy.Administration, Orchard.Roles
