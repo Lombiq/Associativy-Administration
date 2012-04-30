@@ -5,7 +5,7 @@ using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
 
-namespace Associativy.Administration
+namespace Associativy.Administration.Migrations
 {
     [OrchardFeature("Associativy.Administration.UserGraphs")]
     public class UserGraphMigrations : DataMigrationImpl

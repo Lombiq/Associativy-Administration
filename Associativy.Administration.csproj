@@ -119,7 +119,7 @@
     <Compile Include="EventHandlers\IAdminEventHandler.cs" />
     <Compile Include="EventHandlers\UserGraphsAdminEventHandler.cs" />
     <Compile Include="Handlers\AssociativyGraphPartHandler.cs" />
-    <Compile Include="Migrations.cs" />
+    <Compile Include="Migrations\BaseMigrations.cs" />
     <Compile Include="Migrations\FrontendAuthorizationMigrations.cs" />
     <Compile Include="Models\FrontendAuthorizationRecord.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyIndexPart.cs" />
@@ -136,7 +136,7 @@
     <Compile Include="Services\IFrontendAuthorizer.cs" />
     <Compile Include="Services\IImportExportService.cs" />
     <Compile Include="Services\ImportExportService.cs" />
-    <Compile Include="UserGraphMigrations.cs" />
+    <Compile Include="Migrations\UserGraphMigrations.cs" />
     <Compile Include="UserGraphProvider.cs" />
     <None Include="Views\DisplayTemplates\Pages\Admin\IndexUserGraph.cshtml" />
     <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraphAuthorization.cshtml" />
