@@ -17,8 +17,7 @@ using Orchard.UI.Notify;
 
 namespace Associativy.Administration.Controllers
 {
-    [OrchardFeature("Associativy.Administration")]
-    [Admin]
+    [Admin, OrchardFeature("Associativy.Administration")]
     public class AdminController : AssociativyControllerBase
     {
         private readonly IOrchardServices _orchardServices;
