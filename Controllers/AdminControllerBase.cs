@@ -8,6 +8,7 @@ using Associativy.Administration.EventHandlers;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Mvc;
+using Orchard.Localization;
 
 namespace Associativy.Administration.Controllers
 {
@@ -17,12 +18,16 @@ namespace Associativy.Administration.Controllers
         protected readonly IOrchardServices _orchardServices;
         protected readonly IAdminEventHandler _eventHandler;
 
+        public Localizer T { get; set; }
+
         protected AdminControllerBase(
             IOrchardServices orchardServices,
             IAdminEventHandler eventHandler)
         {
             _orchardServices = orchardServices;
             _eventHandler = eventHandler;
+
+            T = NullLocalizer.Instance;
         }
 
         protected IContent NewPage(string pageName)

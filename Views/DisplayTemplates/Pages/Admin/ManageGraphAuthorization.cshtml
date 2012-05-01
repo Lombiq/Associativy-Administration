@@ -13,8 +13,7 @@
                         var url = '@Url.Action("SaveRoles", new { Controller = "AuthorizationAdmin", Area = "Associativy.Administration", GraphName = ViewContext.RequestContext.HttpContext.Request.QueryString["GraphName"] })';
                         var postData = { __RequestVerificationToken: "@Html.AntiForgeryTokenValueOrchard()" };
                         $.post(url, $("#associativy-graph-roles").serialize(), function (response) {
-                            alert("@T("Roles saved.")");
-                            $("#button\\.SaveFrontendAuthorizationRoles").removeAttr("disabled");
+                            window.location.reload();
                         });
                     }
                 }

@@ -10,6 +10,7 @@ using Associativy.Administration.Services;
 using Orchard.ContentManagement;
 using Orchard.Localization;
 using Associativy.Administration.EventHandlers;
+using Orchard.UI.Notify;
 
 namespace Associativy.Administration.Controllers
 {
@@ -28,14 +29,20 @@ namespace Associativy.Administration.Controllers
         }
 
         [HttpPost]
-        public ActionResult SaveRoles()
+        public void SaveRoles()
         {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs))
-                return new HttpUnauthorizedResult();
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs)) return;
 
             _orchardServices.ContentManager.UpdateEditor(NewPage("ManageGraph"), this);
 
-            return null;
+            if (ModelState.IsValid)
+            {
+                _orchardServices.Notifier.Information(T("Roles saved successfully."));
+            }
+            else
+            {
+                _orchardServices.Notifier.Information(T("There was some error, roles weren't saved."));
+            }
         }
 
         bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)

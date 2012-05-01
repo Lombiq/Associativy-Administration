@@ -22,8 +22,6 @@ namespace Associativy.Administration.Controllers
     {
         private readonly IImportExportService _importExportService;
 
-        public Localizer T { get; set; }
-
         public AdminController(
             IOrchardServices orchardServices,
             IAdminEventHandler eventHandler,
@@ -31,8 +29,6 @@ namespace Associativy.Administration.Controllers
             : base(orchardServices, eventHandler)
         {
             _importExportService = importExportService;
-
-            T = NullLocalizer.Instance;
         }
 
         public ActionResult Index()
