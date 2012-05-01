@@ -6,7 +6,7 @@ namespace Associativy.Administration
 {
     public class Permissions : IPermissionProvider
     {
-        public static readonly Permission ManageAssociativyGraphs = new Permission { Description = "Manage Associativy graphs", Name = "ManageAssociativyGraphs" };
+        public static readonly Permission ManageAssociativyGraphs = new Permission { Category = "Associativy", Description = "Manage Associativy graphs", Name = "ManageAssociativyGraphs" };
 
         public virtual Feature Feature { get; set; }
 
