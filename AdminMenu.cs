@@ -35,8 +35,6 @@ namespace Associativy.Administration
         {
             menu.Action("Index", "Admin", new { area = "Associativy.Administration" }).Permission(Permissions.ManageAssociativyGraphs);
 
-            menu.LinkToFirstChild(false);
-
             var graphs = _graphManager.FindDistinctGraphs(new GraphContext()).OrderBy(descriptor => descriptor.DisplayGraphName.Text);
 
             int i = 0;
