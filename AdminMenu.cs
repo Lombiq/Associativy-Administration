@@ -33,6 +33,7 @@ namespace Associativy.Administration
 
         private void BuildMenu(NavigationItemBuilder menu)
         {
+            menu.LinkToFirstChild(false); // See: http://orchard.codeplex.com/workitem/18807
             menu.Action("Index", "Admin", new { area = "Associativy.Administration" }).Permission(Permissions.ManageAssociativyGraphs);
 
             var graphs = _graphManager.FindDistinctGraphs(new GraphContext()).OrderBy(descriptor => descriptor.DisplayGraphName.Text);
