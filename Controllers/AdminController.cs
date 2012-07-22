@@ -14,6 +14,7 @@ using Orchard.Localization;
 using Orchard.Mvc;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
+using Orchard.Exceptions;
 
 namespace Associativy.Administration.Controllers
 {
@@ -67,6 +68,7 @@ namespace Associativy.Administration.Controllers
             }
             catch (Exception ex)
             {
+                if (ex.IsFatal()) throw;
                 _orchardServices.Notifier.Error(T("Export failed: {0}", ex.Message));
                 return RedirectToAction("ManageGraph", new { GraphName = graphName });
             }
@@ -92,6 +94,7 @@ namespace Associativy.Administration.Controllers
                 }
                 catch (Exception ex)
                 {
+                    if (ex.IsFatal()) throw;
                     _orchardServices.Notifier.Error(T("Import failed: {0}", ex.Message));
                     return RedirectToAction("ManageGraph", new { GraphName = graphName });
                 }
