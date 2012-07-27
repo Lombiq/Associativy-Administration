@@ -4,6 +4,7 @@ using Associativy.Administration.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
+using Orchard.ContentManagement.Handlers;
 
 namespace Associativy.Administration.Drivers
 {
@@ -35,6 +36,24 @@ namespace Associativy.Administration.Drivers
             part.ContainedContentTypes = part.AllContentTypes.Where(type => type.IsContained).Select(type => type.Name).ToList();
 
             return Editor(part, shapeHelper);
+        }
+
+        protected override void Exporting(AssociativyGraphPart part, ExportContentContext context)
+        {
+            var element = context.Element(part.PartDefinition.Name);
+
+            element.SetAttributeValue("GraphName", part.GraphName);
+            element.SetAttributeValue("DisplayGraphName", part.DisplayGraphName);
+            element.SetAttributeValue("ContainedContentTypes", part.Record.ContainedContentTypes);
+        }
+
+        protected override void Importing(AssociativyGraphPart part, ImportContentContext context)
+        {
+            var partName = part.PartDefinition.Name;
+
+            context.ImportAttribute(partName, "GraphName", value => part.GraphName = value);
+            context.ImportAttribute(partName, "DisplayGraphName", value => part.DisplayGraphName = value);
+            context.ImportAttribute(partName, "ContainedContentTypes", value => part.Record.ContainedContentTypes = value);
         }
     }
 }
