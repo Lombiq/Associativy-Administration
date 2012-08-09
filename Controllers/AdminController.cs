@@ -34,7 +34,7 @@ namespace Associativy.Administration.Controllers
 
         public ActionResult Index()
         {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're You're not allowed to manage Associativy settings.")))
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
 
             var page = NewPage("Index");
