@@ -28,6 +28,7 @@
                             @Html.TextBox("NeighbourLabels[" + labelsIndex + "]", Model.NeighbourLabels[labelsIndex], new { @class = "text large" })
                         </li>
                     </ol>
+                    <span class="hint">@T("Type labels of neighbours here, separate by commas. After the first few letters the labels are auto-completed.")</span>
                 </fieldset>
             </div>
             @using (Script.Foot())

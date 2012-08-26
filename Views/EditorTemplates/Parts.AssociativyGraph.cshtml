@@ -12,7 +12,7 @@
             @Html.LabelFor(m => m.GraphName, T("Technical graph name"))
             @Html.TextBoxFor(m => m.GraphName, !String.IsNullOrEmpty(Model.GraphName) ? (object)new { @class = "text textMedium", disabled = "disabled" } : new { @class = "text textMedium" })
             @Html.ValidationMessageFor(m => m.GraphName)
-            <span class="hint">@T("Once set the technical graph name can't be changed.")</span>
+            <span class="hint">@T("The technical name is used internally to identify the graph. Once set it can't be changed.")</span>
         </li>
         <li>
             <span class="hint">@T("Choose content types that will be contained by this graph:")</span>
