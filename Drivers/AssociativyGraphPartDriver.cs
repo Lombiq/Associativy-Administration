@@ -5,12 +5,21 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
 using Orchard.ContentManagement.Handlers;
+using Orchard.ContentManagement.MetaData;
+using Associativy.Models;
 
 namespace Associativy.Administration.Drivers
 {
     [OrchardFeature("Associativy.Administration.AdhocGraphs")]
     public class AssociativyGraphPartDriver : ContentPartDriver<AssociativyGraphPart>
     {
+        private readonly IContentDefinitionManager _contentDefinitionManager;
+
+        public AssociativyGraphPartDriver(IContentDefinitionManager contentDefinitionManager)
+        {
+            _contentDefinitionManager = contentDefinitionManager;
+        }
+
         protected override string Prefix
         {
             get { return "Associativy.Administration.AdhocGraph.AssociativyGraphPartDriver"; }
@@ -34,6 +43,16 @@ namespace Associativy.Administration.Drivers
             if (!String.IsNullOrWhiteSpace(name) && part.GraphName != name) part.GraphName = name; // This is to prevent modification of the name
 
             part.ContainedContentTypes = part.AllContentTypes.Where(type => type.IsContained).Select(type => type.Name).ToList();
+
+
+            foreach (var type in part.ContainedContentTypes)
+            {
+                _contentDefinitionManager.AlterTypeDefinition(type,
+                    cfg => cfg
+                        .WithPart(typeof(AssociativyNodeManagementPart).Name)
+                        .WithPart(typeof(AssociativyNodeLabelPart).Name)
+                    );
+            }
 
             return Editor(part, shapeHelper);
         }
