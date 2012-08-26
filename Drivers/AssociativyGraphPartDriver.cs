@@ -8,12 +8,12 @@ using Orchard.ContentManagement.Handlers;
 
 namespace Associativy.Administration.Drivers
 {
-    [OrchardFeature("Associativy.Administration.UserGraphs")]
+    [OrchardFeature("Associativy.Administration.AdhocGraphs")]
     public class AssociativyGraphPartDriver : ContentPartDriver<AssociativyGraphPart>
     {
         protected override string Prefix
         {
-            get { return "Associativy.Administration.UserGraph.AssociativyGraphPartDriver"; }
+            get { return "Associativy.Administration.AdhocGraph.AssociativyGraphPartDriver"; }
         }
 
         // GET

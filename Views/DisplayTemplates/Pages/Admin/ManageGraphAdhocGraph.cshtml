@@ -1,0 +1,9 @@
+﻿@model Associativy.Administration.Models.Pages.Admin.AssociativyManageGraphAdhocGraphPart
+           
+@if (Model.IsAdhocGraph)
+{
+    <div>
+        <h3>@T("User Graph")</h3>
+        @Html.Link(T("Edit graph").Text, Url.ItemEditUrl(Model.AdhocGraph))
+    </div>
+}

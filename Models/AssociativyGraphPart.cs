@@ -8,7 +8,7 @@ using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Models
 {
-    [OrchardFeature("Associativy.Administration.UserGraphs")]
+    [OrchardFeature("Associativy.Administration.AdhocGraphs")]
     public class AssociativyGraphPart : ContentPart<AssociativyGraphPartRecord>
     {
         [Required]

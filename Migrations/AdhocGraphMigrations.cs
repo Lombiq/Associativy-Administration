@@ -7,12 +7,12 @@ using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Migrations
 {
-    [OrchardFeature("Associativy.Administration.UserGraphs")]
-    public class UserGraphMigrations : DataMigrationImpl
+    [OrchardFeature("Associativy.Administration.AdhocGraphs")]
+    public class AdhocGraphMigrations : DataMigrationImpl
     {
         public int Create()
         {
-            SchemaBuilder.CreateNodeToNodeConnectorRecordTable<UserGraphNodeConnector>();
+            SchemaBuilder.CreateNodeToNodeConnectorRecordTable<AdhocGraphNodeConnector>();
 
             SchemaBuilder.CreateTable(typeof(AssociativyGraphPartRecord).Name,
                 table => table

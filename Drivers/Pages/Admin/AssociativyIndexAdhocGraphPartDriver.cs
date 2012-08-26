@@ -8,25 +8,25 @@ using Orchard.ContentManagement;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
 {
-    [OrchardFeature("Associativy.Administration.UserGraphs")]
-    public class AssociativyIndexUserGraphPartDriver : ContentPartDriver<AssociativyIndexUserGraphPart>
+    [OrchardFeature("Associativy.Administration.AdhocGraphs")]
+    public class AssociativyIndexAdhocGraphPartDriver : ContentPartDriver<AssociativyIndexAdhocGraphPart>
     {
         private readonly IContentManager _contentManager;
 
-        public AssociativyIndexUserGraphPartDriver(IContentManager contentManager)
+        public AssociativyIndexAdhocGraphPartDriver(IContentManager contentManager)
         {
             _contentManager = contentManager;
         }
 
-        protected override DriverResult Display(AssociativyIndexUserGraphPart part, string displayType, dynamic shapeHelper)
+        protected override DriverResult Display(AssociativyIndexAdhocGraphPart part, string displayType, dynamic shapeHelper)
         {
-            return ContentShape("Pages_AssociativyIndexUserGraph",
+            return ContentShape("Pages_AssociativyIndexAdhocGraph",
             () =>
             {
-                part.CreateUserGraphRouteValues = _contentManager.GetItemMetadata(_contentManager.New("AssociativyGraph")).CreateRouteValues;
+                part.CreateAdhocGraphRouteValues = _contentManager.GetItemMetadata(_contentManager.New("AssociativyGraph")).CreateRouteValues;
 
                 return shapeHelper.DisplayTemplate(
-                            TemplateName: "Pages/Admin/IndexUserGraph",
+                            TemplateName: "Pages/Admin/IndexAdhocGraph",
                             Model: part,
                             Prefix: Prefix);
             });

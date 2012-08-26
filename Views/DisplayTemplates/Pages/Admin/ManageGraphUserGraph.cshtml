@@ -1,9 +1,0 @@
-﻿@model Associativy.Administration.Models.Pages.Admin.AssociativyManageGraphUserGraphPart
-           
-@if (Model.IsUserGraph)
-{
-    <div>
-        <h3>@T("User Graph")</h3>
-        @Html.Link(T("Edit graph").Text, Url.ItemEditUrl(Model.UserGraph))
-    </div>
-}

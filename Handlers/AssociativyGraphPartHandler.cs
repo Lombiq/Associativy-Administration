@@ -9,7 +9,7 @@ using Orchard.Environment;
 
 namespace Associativy.Administration
 {
-    [OrchardFeature("Associativy.Administration.UserGraphs")]
+    [OrchardFeature("Associativy.Administration.AdhocGraphs")]
     public class AssociativyGrapParthHandler : ContentHandler
     {
         public AssociativyGrapParthHandler(

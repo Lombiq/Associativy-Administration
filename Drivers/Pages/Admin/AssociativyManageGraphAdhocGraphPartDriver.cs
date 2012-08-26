@@ -8,13 +8,13 @@ using Associativy.Administration.Models.Pages.Admin;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
 {
-    [OrchardFeature("Associativy.Administration.UserGraphs")]
-    public class AssociativyManageGraphUserGraphPartDriver : ContentPartDriver<AssociativyManageGraphUserGraphPart>
+    [OrchardFeature("Associativy.Administration.AdhocGraphs")]
+    public class AssociativyManageGraphAdhocGraphPartDriver : ContentPartDriver<AssociativyManageGraphAdhocGraphPart>
     {
         private readonly IContentManager _contentManager;
         private readonly IWorkContextAccessor _workContextAccessor;
 
-        public AssociativyManageGraphUserGraphPartDriver(
+        public AssociativyManageGraphAdhocGraphPartDriver(
             IContentManager contentManager,
             IWorkContextAccessor workContextAccessor)
         {
@@ -22,19 +22,19 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             _workContextAccessor = workContextAccessor;
         }
 
-        protected override DriverResult Display(AssociativyManageGraphUserGraphPart part, string displayType, dynamic shapeHelper)
+        protected override DriverResult Display(AssociativyManageGraphAdhocGraphPart part, string displayType, dynamic shapeHelper)
         {
-            return ContentShape("Pages_AssociativyManageGraphUserGraph",
+            return ContentShape("Pages_AssociativyManageGraphAdhocGraph",
             () =>
             {
-                part.UserGraph = _contentManager
+                part.AdhocGraph = _contentManager
                     .Query("AssociativyGraph")
                     .Where<AssociativyGraphPartRecord>(record => record.GraphName == _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"])
                     .List()
                     .FirstOrDefault();
 
                 return shapeHelper.DisplayTemplate(
-                            TemplateName: "Pages/Admin/ManageGraphUserGraph",
+                            TemplateName: "Pages/Admin/ManageGraphAdhocGraph",
                             Model: part,
                             Prefix: Prefix);
             });

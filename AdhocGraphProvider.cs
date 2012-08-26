@@ -9,17 +9,17 @@ using Piedone.HelpfulLibraries.DependencyInjection;
 
 namespace Associativy.Administration
 {
-    [OrchardFeature("Associativy.Administration.UserGraphs")]
-    public class UserGraphProvider : GraphProviderBase<IDatabaseConnectionManager<UserGraphNodeConnector>>, IContentHandler
+    [OrchardFeature("Associativy.Administration.AdhocGraphs")]
+    public class AdhocGraphProvider : GraphProviderBase<IDatabaseConnectionManager<AdhocGraphNodeConnector>>, IContentHandler
     {
         private readonly IContentManager _contentManager;
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
 
-        private const string _graphChangedSignal = "Associativy.Administration.UserGraphs.GraphsChanged";
+        private const string _graphChangedSignal = "Associativy.Administration.AdhocGraphs.GraphsChanged";
 
-        public UserGraphProvider(
-            IResolve<IDatabaseConnectionManager<UserGraphNodeConnector>> connectionManagerResolver,
+        public AdhocGraphProvider(
+            IResolve<IDatabaseConnectionManager<AdhocGraphNodeConnector>> connectionManagerResolver,
             IContentManager contentManager,
             ICacheManager cacheManager,
             ISignals signals)
@@ -32,7 +32,7 @@ namespace Associativy.Administration
 
         public override void Describe(DescribeContext describeContext)
         {
-            var graphs = _cacheManager.Get("Associativy.Administration.UserGraph", ctx =>
+            var graphs = _cacheManager.Get("Associativy.Administration.AdhocGraph", ctx =>
             {
                 ctx.Monitor(_signals.When(_graphChangedSignal));
                 return _contentManager.Query("AssociativyGraph").List();
