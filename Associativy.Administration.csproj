@@ -137,9 +137,9 @@
     <Compile Include="Services\ImportExportService.cs" />
     <Compile Include="Migrations\AdhocGraphMigrations.cs" />
     <Compile Include="AdhocGraphProvider.cs" />
-    <None Include="Views\DisplayTemplates\Pages\Admin\IndexAdhocGraph.cshtml" />
+    <Content Include="Views\DisplayTemplates\Pages\Admin\IndexAdhocGraph.cshtml" />
     <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraphAuthorization.cshtml" />
-    <Content Include="Views\PageWrapper.Associativy.Administration.ManageGraph.cshtml" />
+    <Content Include="Views\PageWrapper.Associativy.Administration.ManageGraphPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info">
