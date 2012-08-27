@@ -10,7 +10,7 @@ using Orchard;
 namespace Associativy.Administration.EventHandlers
 {
     [OrchardFeature("Associativy.Administration.FrontendAuthorization")]
-    public class AuthorizationFrontendEngineEventHandler : IFrontendEngineEventHandler
+    public class AuthorizationFrontendEngineEventHandler : IAssociativyFrontendEngineEventHandler
     {
         private readonly IFrontendAuthorizer _frontendAuthorizationService;
         private readonly IWorkContextAccessor _workContextAccessor;

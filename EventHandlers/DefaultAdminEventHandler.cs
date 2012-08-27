@@ -1,11 +1,12 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Associativy.Administration.Models.Pages.Admin;
+using Piedone.HelpfulLibraries.Contents.DynamicPages;
 
 namespace Associativy.Administration.EventHandlers
 {
     [OrchardFeature("Associativy.Administration")]
-    public class DefaultAdminEventHandler : IAdminEventHandler
+    public class DefaultAdminEventHandler : IAssociativyAdminEventHandler
     {
         public void OnPageInitializing(IContent page)
         {
@@ -30,6 +31,10 @@ namespace Associativy.Administration.EventHandlers
         private bool IsPage(IContent page, string pageName)
         {
             return page.ContentItem.ContentType.EndsWith(pageName);
+        }
+
+        public void OnAuthorization(PageAutorizationContext authorizationContext)
+        {
         }
     }
 }

@@ -1,0 +1,7 @@
+﻿<div id="associativy-administration-manage-graph-container">
+    @using (Html.BeginFormAntiForgeryPost())
+    {
+        @Display(Model.Child)
+        @Display.Content_SaveButton()
+    }
+</div>

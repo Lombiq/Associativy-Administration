@@ -3,9 +3,15 @@
            
 @{
     Layout.Title = Model.GraphDescriptor.DisplayGraphName.ToString();
+    Script.Require("jQuery").AtFoot();
 }
 
-<div>
+<h2>
+    @T("Graph management")
+</h2>
+
+
+<div id="associativy-administration-graph-info-container">
     <h3>@T("Graph info")</h3>
     
     <p>
@@ -13,7 +19,7 @@
     </p>
 </div>
 
-<div>
+<div id="associativy-administration-frontend-engines-container">
     <h3>@T("View graph")</h3>
     <ul>
     @foreach (var engine in Model.FrontendEngines)
@@ -25,21 +31,58 @@
     </ul>
 </div>
 
-<div>
+<div id="associativy-administration-export-container">
     <h3>@T("Export")</h3>
     @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.GraphDescriptor.GraphName }, new { @class = "button" })
     <span class="hint">@T("This only exports connection data. The nodes (i.e. the content items stored in the graph) have to be exported with the built-in Import/Export feature.")</span>
 </div>
 
-<div>
-    <h3>@T("Import")</h3>
-    @using (Html.BeginFormAntiForgeryPost(Url.Action("ImportConnections", new { GraphName = Model.GraphDescriptor.GraphName }), FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
+<div id="associativy-administration-import-container">
         <fieldset>
+            <legend>@T("Import")</legend>
             @Html.Label("ConnectionsFile", T("Select a connections file").ToString())
-            <input type="file" name="ConnectionsFile" id="ConnectionsFile" size="64">
+            @Html.TextBox("ConnectionsFile", "", new { type = "file", @class = "text" })
             <span class="hint">@T("This only imports connections. Content items have to be be imported separately with the built-in Import/Export feature.")</span>
         </fieldset>
-        <button type="submit" class="primaryAction">@T("Import connections")</button>
+        <button type="submit" name="submit.ImportConnections" class="button" value="yes please">@T("Import connections")</button>
+    @*Trick taken from Contrib.FileField*@
+    @using (Script.Foot())
+    {
+        <script type="text/javascript">
+            (function ($) {
+                $(document).ready(function () {
+                    $($("button[name='submit.ImportConnections']")[0].form)
+		                .attr('enctype', 'multipart/form-data')
+		                .attr('encoding', 'multipart/form-data'); // ie issue
+                });
+            })(jQuery);
+        </script>
     }
+</div>
+
+<div id="associativy-administration-graph-settings-container">
+        <fieldset>
+            <legend>@T("Graph settings")</legend>
+            <ol>
+                <li>
+                    @Html.CheckBoxFor(m => m.UseCache, T("Use caching"))
+                    <label for="@Html.FieldIdFor(m => m.UseCache)" class="forcheckbox">@T("Use cache")</label>
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.InitialZoomLevel, T("Initial zoom level"))
+                    @Html.TextBoxFor(m => m.InitialZoomLevel, new { @class = "text text-small" })
+                    <span class="hint">@T("The zoom level the graph is initially displayed on (should be zoom level count - 1).")</span>
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.ZoomLevelCount, T("Zoom level count"))
+                    @Html.TextBoxFor(m => m.ZoomLevelCount, new { @class = "text text-small" })
+                    <span class="hint">@T("The number of zoom levels for the graph.")</span>
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.MaxDistance, T("Maximal distance"))
+                    @Html.TextBoxFor(m => m.MaxDistance, new { @class = "text text-small" })
+                    <span class="hint">@T("Maximal distance (in hops) between two nodes that should be considered in an associativy connection.")</span>
+                </li>
+            </ol>
+        </fieldset>
 </div>

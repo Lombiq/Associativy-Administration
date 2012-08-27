@@ -10,7 +10,7 @@ Features:
 		Name: Associativy Administration
         Description: Associativy Administration
 		Category: Associativy
-		Dependencies: Associativy.Frontends, Piedone.HelpfulLibraries.Serialization
+		Dependencies: Associativy.Frontends, Piedone.HelpfulLibraries.Serialization, Piedone.HelpfulLibraries.Contents
 	Associativy.Administration.AdhocGraphs:
 		Name: Associativy Ad-hoc Graphs
         Description: Users can create simple graphs from the backend

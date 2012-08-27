@@ -20,6 +20,11 @@ namespace Associativy.Administration.Drivers.Pages.Admin
         private readonly IRoleService _roleService;
         private readonly IWorkContextAccessor _workContextAccessor;
 
+        protected override string Prefix
+        {
+            get { return "Associativy.Administration.AssociativyManageGraphAuthorizationPart"; }
+        }
+
         public AssociativyManageGraphAuthorizationPartDiver(
             IFrontendAuthorizer frontendAuthorizer,
             IRoleService roleService,

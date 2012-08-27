@@ -1,31 +1,8 @@
 ﻿@model Associativy.Administration.Models.Pages.Admin.AssociativyManageGraphAuthorizationPart
-@{
-    Script.Require("jQuery").AtFoot();
-}
-@using (Script.Foot())
-{
-    <script type="text/javascript">
-        (function ($) {
-            $.extend(true, {
-                associativy: {
-                    saveFrontendAuthorizationRoles: function () {
-                        $("#button\\.SaveFrontendAuthorizationRoles").attr("disabled", "disabled");
-                        var url = '@Url.Action("SaveRoles", new { Controller = "AuthorizationAdmin", Area = "Associativy.Administration", GraphName = ViewContext.RequestContext.HttpContext.Request.QueryString["GraphName"] })';
-                        var postData = { __RequestVerificationToken: "@Html.AntiForgeryTokenValueOrchard()" };
-                        $.post(url, $("#associativy-graph-roles").serialize(), function (response) {
-                            window.location.reload();
-                        });
-                    }
-                }
-            });
-        })(jQuery);
-    </script>
-}
-<div>
-    <h3>@T("Users authorized to view the graph")</h3>
-    @using (Html.BeginFormAntiForgeryPost("", FormMethod.Post, new { id = "associativy-graph-roles" }))
-    {
+
+<div id="associativy-administration-authorization-container">
     <fieldset>
+        <legend>@T("Users authorized to view the graph")</legend>
         <ol>
             <li><span class="hint">@T("Only users having the selected roles will be able to view the graph through frontend engines:")</span>
                 <ul>
@@ -40,8 +17,5 @@
                 </ul>
             </li>
         </ol>
-        <button type="button" id="button.SaveFrontendAuthorizationRoles" name="button.SaveFrontendAuthorizationRoles"
-            value="SaveFrontendAuthorizationRoles" onclick="$.associativy.saveFrontendAuthorizationRoles(); return false;">@T("Save roles")</button>
     </fieldset>
-    }
 </div>

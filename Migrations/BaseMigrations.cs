@@ -14,15 +14,23 @@ namespace Associativy.Administration.Migrations
             ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
                 builder => builder.Attachable());
 
+            SchemaBuilder.CreateTable(typeof(GraphSettingsRecord).Name,
+                table => table
+                    .Column<int>("Id", column => column.PrimaryKey().Identity())
+                    .Column<string>("GraphName", column => column.NotNull().Unique().WithLength(1024))
+                    .Column<bool>("UseCache")
+                    .Column<int>("InitialZoomLevel")
+                    .Column<int>("ZoomLevelCount")
+                    .Column<int>("MaxDistance")
+            );
+
+            SchemaBuilder.AlterTable(typeof(GraphSettingsRecord).Name,
+                table => table
+                    .CreateIndex("GraphName", new string[] { "GraphName" })
+            );
+
 
             return 1;
         }
-
-        //public int UpdateFrom1()
-        //{
-
-
-        //    return 2;
-        //}
     }
 }

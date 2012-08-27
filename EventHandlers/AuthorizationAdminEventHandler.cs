@@ -5,11 +5,12 @@ using System.Web;
 using Orchard.Environment.Extensions;
 using Orchard.ContentManagement;
 using Associativy.Administration.Models.Pages.Admin;
+using Piedone.HelpfulLibraries.Contents.DynamicPages;
 
 namespace Associativy.Administration.EventHandlers
 {
     [OrchardFeature("Associativy.Administration.FrontendAuthorization")]
-    public class AuthorizationAdminEventHandler : IAdminEventHandler
+    public class AuthorizationAdminEventHandler : IAssociativyAdminEventHandler
     {
         public void OnPageInitializing(IContent page)
         {
@@ -24,6 +25,10 @@ namespace Associativy.Administration.EventHandlers
         }
 
         public void OnPageBuilt(IContent page)
+        {
+        }
+
+        public void OnAuthorization(PageAutorizationContext authorizationContext)
         {
         }
     }

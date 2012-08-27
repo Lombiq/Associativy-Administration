@@ -1,11 +1,12 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Associativy.Administration.Models.Pages.Admin;
+using Piedone.HelpfulLibraries.Contents.DynamicPages;
 
 namespace Associativy.Administration.EventHandlers
 {
     [OrchardFeature("Associativy.Administration.AdhocGraphs")]
-    public class AdhocGraphsAdminEventHandler : IAdminEventHandler
+    public class AdhocGraphsAdminEventHandler : IAssociativyAdminEventHandler
     {
         public void OnPageInitializing(IContent page)
         {
@@ -24,6 +25,10 @@ namespace Associativy.Administration.EventHandlers
         }
 
         public void OnPageBuilt(IContent page)
+        {
+        }
+
+        public void OnAuthorization(PageAutorizationContext authorizationContext)
         {
         }
     }

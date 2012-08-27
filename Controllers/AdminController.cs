@@ -15,21 +15,33 @@ using Orchard.Mvc;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
 using Orchard.Exceptions;
+using Piedone.HelpfulLibraries.Contents.DynamicPages;
+using Orchard.Core.Contents.Controllers;
+using System.Web;
 
 namespace Associativy.Administration.Controllers
 {
     [Admin, OrchardFeature("Associativy.Administration")]
-    public class AdminController : AdminControllerBase
+    public class AdminController : Controller, IUpdateModel
     {
+        private readonly IOrchardServices _orchardServices;
+        private readonly IContentManager _contentManager;
+        private readonly IAssociativyAdminEventHandler _eventHandler;
         private readonly IImportExportService _importExportService;
+
+        public Localizer T { get; set; }
 
         public AdminController(
             IOrchardServices orchardServices,
-            IAdminEventHandler eventHandler,
+            IAssociativyAdminEventHandler eventHandler,
             IImportExportService importExportService)
-            : base(orchardServices, eventHandler)
         {
+            _orchardServices = orchardServices;
+            _contentManager = orchardServices.ContentManager;
+            _eventHandler = eventHandler;
             _importExportService = importExportService;
+
+            T = NullLocalizer.Instance;
         }
 
         public ActionResult Index()
@@ -54,6 +66,20 @@ namespace Associativy.Administration.Controllers
             return PageResult(page);
         }
 
+        [HttpPost, ActionName("ManageGraph")]
+        [FormValueRequired("submit.Save")]
+        public ActionResult ManageGraphPost()
+        {
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
+                return new HttpUnauthorizedResult();
+
+            var page = NewPage("ManageGraph");
+            _eventHandler.OnPageBuilt(page);
+            _contentManager.UpdateEditor(page, this);
+
+            return Refresh();
+        }
+
         public ActionResult ExportConnections(string graphName)
         {
             if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
@@ -74,38 +100,67 @@ namespace Associativy.Administration.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult ImportConnections(string graphName)
+        [HttpPost, ActionName("ManageGraph")]
+        [FormValueRequired("submit.ImportConnections")]
+        public ActionResult ImportConnections(string graphName, HttpPostedFileBase connectionsFile)
         {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
-                return new HttpUnauthorizedResult();
-
-            if (String.IsNullOrEmpty(Request.Files["ConnectionsFile"].FileName))
+            if (connectionsFile != null)
             {
-                _orchardServices.Notifier.Error(T("Please choose a connections file to import."));
-            }
-            else if (ModelState.IsValid)
-            {
-                try
-                {
-                    _importExportService.ImportConnections(MakeContext(graphName), new StreamReader(Request.Files["ConnectionsFile"].InputStream).ReadToEnd());
+                if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
+                    return new HttpUnauthorizedResult();
 
-                    _orchardServices.Notifier.Information(T("The connections were successfully imported."));
-                }
-                catch (Exception ex)
+                if (String.IsNullOrEmpty(connectionsFile.FileName))
                 {
-                    if (ex.IsFatal()) throw;
-                    _orchardServices.Notifier.Error(T("Import failed: {0}", ex.Message));
-                    return RedirectToAction("ManageGraph", new { GraphName = graphName });
+                    _orchardServices.Notifier.Error(T("Please choose a connections file to import."));
                 }
+                else if (ModelState.IsValid)
+                {
+                    try
+                    {
+                        _importExportService.ImportConnections(MakeContext(graphName), new StreamReader(connectionsFile.InputStream).ReadToEnd());
+
+                        _orchardServices.Notifier.Information(T("The connections were successfully imported."));
+                    }
+                    catch (Exception ex)
+                    {
+                        if (ex.IsFatal()) throw;
+                        _orchardServices.Notifier.Error(T("Import failed: {0}", ex.Message));
+                        return RedirectToAction("ManageGraph", new { GraphName = graphName });
+                    }
+                } 
             }
 
             return RedirectToAction("ManageGraph", new { GraphName = graphName });
         }
 
+        bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)
+        {
+            return TryUpdateModel(model, prefix, includeProperties, excludeProperties);
+        }
+
+        void IUpdateModel.AddModelError(string key, LocalizedString errorMessage)
+        {
+            ModelState.AddModelError(key, errorMessage.ToString());
+        }
+
+        private IContent NewPage(string pageName)
+        {
+            return _contentManager.NewPage("Associativy.Administration." + pageName, _eventHandler);
+        }
+
+        private ShapeResult PageResult(IContent page)
+        {
+            return new ShapeResult(this, _contentManager.BuildPageDisplay(page));
+        }
+
         private GraphContext MakeContext(string graphName)
         {
             return new GraphContext { GraphName = graphName };
+        }
+
+        private RedirectResult Refresh()
+        {
+            return Redirect(_orchardServices.WorkContext.HttpContext.Request.RawUrl);
         }
     }
 }
