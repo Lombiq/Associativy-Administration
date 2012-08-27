@@ -6,6 +6,9 @@ using Associativy.Frontends.EventHandlers;
 using Orchard.Environment.Extensions;
 using Associativy.Administration.Services;
 using Orchard;
+using Orchard.ContentManagement;
+using Piedone.HelpfulLibraries.Contents.DynamicPages;
+using Associativy.Frontends.Models;
 
 namespace Associativy.Administration.EventHandlers
 {
@@ -23,23 +26,23 @@ namespace Associativy.Administration.EventHandlers
             _workContextAccessor = workContextAccessor;
         }
 
-        public void OnPageInitializing(FrontendEventContext frontendEventContext)
+        public void OnPageInitializing(IContent page)
         {
         }
 
-        public void OnPageInitialized(FrontendEventContext frontendEventContext)
+        public void OnPageInitialized(IContent page)
         {
         }
 
-        public void OnPageBuilt(FrontendEventContext frontendEventContext)
+        public void OnPageBuilt(IContent page)
         {
         }
 
-        public void OnAuthorization(FrontendAuthorizationEventContext frontendAuthorizationEventContext)
+        public void OnAuthorization(PageAutorizationContext authorizationContext)
         {
-            frontendAuthorizationEventContext.Granted = _frontendAuthorizationService.IsAuthorizedToView(
+            authorizationContext.Granted = _frontendAuthorizationService.IsAuthorizedToView(
                 _workContextAccessor.GetContext().CurrentUser,
-                frontendAuthorizationEventContext.GraphContext);
+                authorizationContext.Page.As<IEngineConfigurationAspect>().GraphContext);
         }
     }
 }

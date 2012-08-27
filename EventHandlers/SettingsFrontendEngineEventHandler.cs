@@ -8,6 +8,7 @@ using Orchard.Data;
 using Associativy.Administration.Models;
 using Orchard.ContentManagement;
 using Associativy.Frontends.Models.Pages.Frontends;
+using Piedone.HelpfulLibraries.Contents.DynamicPages;
 
 namespace Associativy.Administration.EventHandlers
 {
@@ -21,13 +22,13 @@ namespace Associativy.Administration.EventHandlers
             _settingsRepository = settingsRepository;
         }
 
-        public void OnPageInitializing(FrontendEventContext frontendEventContext)
+        public void OnPageInitializing(IContent page)
         {
         }
 
-        public void OnPageInitialized(FrontendEventContext frontendEventContext)
+        public void OnPageInitialized(IContent page)
         {
-            var commonPart = frontendEventContext.Page.As<AssociativyFrontendCommonPart>();
+            var commonPart = page.As<AssociativyFrontendCommonPart>();
             var settings = _settingsRepository.Fetch(record => record.GraphName == commonPart.GraphContext.GraphName).SingleOrDefault();
             if (settings == null) return;
             var customMindSettings = settings.AsMindSettings();
@@ -37,11 +38,11 @@ namespace Associativy.Administration.EventHandlers
             commonPart.MindSettings.MaxDistance = customMindSettings.MaxDistance;
         }
 
-        public void OnPageBuilt(FrontendEventContext frontendEventContext)
+        public void OnPageBuilt(IContent page)
         {
         }
 
-        public void OnAuthorization(FrontendAuthorizationEventContext frontendAuthorizationEventContext)
+        public void OnAuthorization(PageAutorizationContext authorizationContext)
         {
         }
     }

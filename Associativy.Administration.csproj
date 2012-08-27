@@ -112,7 +112,6 @@
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexAdhocGraphPartDriver.cs" />
     <Compile Include="EventHandlers\AuthorizationAdminEventHandler.cs" />
     <Compile Include="EventHandlers\AuthorizationFrontendEngineEventHandler.cs" />
-    <Compile Include="EventHandlers\ContentExtensions.cs" />
     <Compile Include="EventHandlers\DefaultAdminEventHandler.cs" />
     <Compile Include="EventHandlers\IAssociativyAdminEventHandler.cs" />
     <Compile Include="EventHandlers\AdhocGraphsAdminEventHandler.cs" />

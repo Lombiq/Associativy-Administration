@@ -10,11 +10,11 @@ namespace Associativy.Administration.EventHandlers
     {
         public void OnPageInitializing(IContent page)
         {
-            if (IsPage(page, "ManageGraph"))
+            if (page.IsPage("ManageGraph"))
             {
                 page.ContentItem.Weld(new AssociatvyManageGraphPart()); 
             }
-            else if (IsPage(page, "Index"))
+            else if (page.IsPage("Index"))
             {
                 page.ContentItem.Weld(new AssociativyIndexPart()); 
             }
@@ -26,11 +26,6 @@ namespace Associativy.Administration.EventHandlers
 
         public void OnPageBuilt(IContent page)
         {
-        }
-
-        private bool IsPage(IContent page, string pageName)
-        {
-            return page.ContentItem.ContentType.EndsWith(pageName);
         }
 
         public void OnAuthorization(PageAutorizationContext authorizationContext)
