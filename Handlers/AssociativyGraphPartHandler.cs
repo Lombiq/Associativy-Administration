@@ -4,8 +4,8 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Data;
-using Orchard.Environment.Extensions;
 using Orchard.Environment;
+using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration
 {

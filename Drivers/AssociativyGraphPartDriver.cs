@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using Associativy.Administration.Models;
+using Associativy.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.Environment.Extensions;
 using Orchard.ContentManagement.Handlers;
 using Orchard.ContentManagement.MetaData;
-using Associativy.Models;
+using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Drivers
 {

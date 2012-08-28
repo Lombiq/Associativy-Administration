@@ -1,6 +1,6 @@
-﻿using Orchard.ContentManagement;
+﻿using Associativy.Administration.Models.Pages.Admin;
+using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
-using Associativy.Administration.Models.Pages.Admin;
 using Piedone.HelpfulLibraries.Contents.DynamicPages;
 
 namespace Associativy.Administration.EventHandlers

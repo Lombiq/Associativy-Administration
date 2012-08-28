@@ -1,8 +1,8 @@
-﻿using Associativy.GraphDiscovery;
+﻿using System.Linq;
+using Associativy.GraphDiscovery;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Orchard.UI.Navigation;
-using System.Linq;
 
 namespace Associativy.Administration
 {
