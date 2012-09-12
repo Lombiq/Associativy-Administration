@@ -48,7 +48,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
                 part.GraphDescriptor = _associativyServices.GraphManager.FindGraph(graphContext);
                 part.NodeCount = graph.VertexCount;
-                part.ConnectionCount = graph.EdgeCount;
+                part.ConnectionCount = graph.EdgeCount / 2;
                 part.FrontendEngines = _engineManager.GetEngines();
 
                 SetupSettingsLoader(part);
