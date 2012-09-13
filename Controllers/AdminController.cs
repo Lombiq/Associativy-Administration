@@ -24,14 +24,14 @@ namespace Associativy.Administration.Controllers
     {
         private readonly IOrchardServices _orchardServices;
         private readonly IContentManager _contentManager;
-        private readonly IAssociativyAdminEventHandler _eventHandler;
+        private readonly IPageEventHandler _eventHandler;
         private readonly IImportExportService _importExportService;
 
         public Localizer T { get; set; }
 
         public AdminController(
             IOrchardServices orchardServices,
-            IAssociativyAdminEventHandler eventHandler,
+            IPageEventHandler eventHandler,
             IImportExportService importExportService)
         {
             _orchardServices = orchardServices;
@@ -46,9 +46,9 @@ namespace Associativy.Administration.Controllers
         {
             if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
-
+            
             var page = NewPage("Index");
-            _eventHandler.OnPageBuilt(page);
+            _eventHandler.OnPageBuilt(new PageContext(page, AdministrationPageConfigs.Group));
 
             return PageResult(page);
         }
@@ -59,7 +59,7 @@ namespace Associativy.Administration.Controllers
                 return new HttpUnauthorizedResult();
 
             var page = NewPage("ManageGraph");
-            _eventHandler.OnPageBuilt(page);
+            _eventHandler.OnPageBuilt(new PageContext(page, AdministrationPageConfigs.Group));
 
             return PageResult(page);
         }
@@ -72,7 +72,7 @@ namespace Associativy.Administration.Controllers
                 return new HttpUnauthorizedResult();
 
             var page = NewPage("ManageGraph");
-            _eventHandler.OnPageBuilt(page);
+            _eventHandler.OnPageBuilt(new PageContext(page, AdministrationPageConfigs.Group));
             _contentManager.UpdateEditor(page, this);
 
             return Refresh();
@@ -143,7 +143,7 @@ namespace Associativy.Administration.Controllers
 
         private IContent NewPage(string pageName)
         {
-            return _contentManager.NewPage("Associativy.Administration." + pageName, _eventHandler);
+            return _contentManager.NewPage(pageName, AdministrationPageConfigs.Group, _eventHandler);
         }
 
         private ShapeResult PageResult(IContent page)

@@ -6,25 +6,29 @@ using Piedone.HelpfulLibraries.Contents.DynamicPages;
 namespace Associativy.Administration.EventHandlers
 {
     [OrchardFeature("Associativy.Administration.AdhocGraphs")]
-    public class AdhocGraphsAdminEventHandler : IAssociativyAdminEventHandler
+    public class AdhocGraphsAdminEventHandler : IPageEventHandler
     {
-        public void OnPageInitializing(IContent page)
+        public void OnPageInitializing(PageContext pageContext)
         {
-            if (page.IsPage("ManageGraph"))
+            if (pageContext.Group != AdministrationPageConfigs.Group) return;
+
+            var page = pageContext.Page;
+
+            if (page.IsPage("ManageGraph", pageContext.Group))
             {
                 page.ContentItem.Weld(new AssociativyManageGraphAdhocGraphPart());
             }
-            else if (page.IsPage("Index"))
+            else if (page.IsPage("Index", pageContext.Group))
             {
                 page.ContentItem.Weld(new AssociativyIndexAdhocGraphPart());
             }
         }
 
-        public void OnPageInitialized(IContent page)
+        public void OnPageInitialized(PageContext pageContext)
         {
         }
 
-        public void OnPageBuilt(IContent page)
+        public void OnPageBuilt(PageContext pageContext)
         {
         }
 

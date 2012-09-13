@@ -6,11 +6,12 @@ using Orchard.ContentManagement;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Piedone.HelpfulLibraries.Contents.DynamicPages;
+using Associativy.Frontends;
 
 namespace Associativy.Administration.EventHandlers
 {
     [OrchardFeature("Associativy.Administration")]
-    public class SettingsFrontendEngineEventHandler : IAssociativyFrontendEngineEventHandler
+    public class SettingsFrontendEngineEventHandler : IPageEventHandler
     {
         private readonly IRepository<GraphSettingsRecord> _settingsRepository;
 
@@ -19,13 +20,15 @@ namespace Associativy.Administration.EventHandlers
             _settingsRepository = settingsRepository;
         }
 
-        public void OnPageInitializing(IContent page)
+        public void OnPageInitializing(PageContext pageContext)
         {
         }
 
-        public void OnPageInitialized(IContent page)
+        public void OnPageInitialized(PageContext pageContext)
         {
-            var commonPart = page.As<AssociativyFrontendCommonPart>();
+            if (pageContext.Group != FrontendsPageConfigs.Group) return;
+
+            var commonPart = pageContext.Page.As<AssociativyFrontendCommonPart>();
             var settings = _settingsRepository.Fetch(record => record.GraphName == commonPart.GraphContext.GraphName).SingleOrDefault();
             if (settings == null) return;
             var customMindSettings = settings.AsMindSettings();
@@ -35,7 +38,7 @@ namespace Associativy.Administration.EventHandlers
             commonPart.MindSettings.MaxDistance = customMindSettings.MaxDistance;
         }
 
-        public void OnPageBuilt(IContent page)
+        public void OnPageBuilt(PageContext pageContext)
         {
         }
 

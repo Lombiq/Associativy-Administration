@@ -101,6 +101,7 @@
     <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdministrationPageConfigs.cs" />
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexPartDriver.cs" />
@@ -113,7 +114,6 @@
     <Compile Include="EventHandlers\AuthorizationAdminEventHandler.cs" />
     <Compile Include="EventHandlers\AuthorizationFrontendEngineEventHandler.cs" />
     <Compile Include="EventHandlers\DefaultAdminEventHandler.cs" />
-    <Compile Include="EventHandlers\IAssociativyAdminEventHandler.cs" />
     <Compile Include="EventHandlers\AdhocGraphsAdminEventHandler.cs" />
     <Compile Include="EventHandlers\SettingsFrontendEngineEventHandler.cs" />
     <Compile Include="Handlers\AssociativyGraphPartHandler.cs" />
@@ -139,7 +139,7 @@
     <Compile Include="AdhocGraphProvider.cs" />
     <Content Include="Views\DisplayTemplates\Pages\Admin\IndexAdhocGraph.cshtml" />
     <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraphAuthorization.cshtml" />
-    <Content Include="Views\PageWrapper.Associativy.Administration.ManageGraphPage.cshtml" />
+    <Content Include="Views\PageWrapper.AssociativyAdministrationManageGraphPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info">

@@ -5,11 +5,12 @@ using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Piedone.HelpfulLibraries.Contents.DynamicPages;
+using Associativy.Frontends;
 
 namespace Associativy.Administration.EventHandlers
 {
     [OrchardFeature("Associativy.Administration.FrontendAuthorization")]
-    public class AuthorizationFrontendEngineEventHandler : IAssociativyFrontendEngineEventHandler
+    public class AuthorizationFrontendEngineEventHandler : IPageEventHandler
     {
         private readonly IFrontendAuthorizer _frontendAuthorizationService;
         private readonly IWorkContextAccessor _workContextAccessor;
@@ -22,20 +23,22 @@ namespace Associativy.Administration.EventHandlers
             _workContextAccessor = workContextAccessor;
         }
 
-        public void OnPageInitializing(IContent page)
+        public void OnPageInitializing(PageContext pageContext)
         {
         }
 
-        public void OnPageInitialized(IContent page)
+        public void OnPageInitialized(PageContext pageContext)
         {
         }
 
-        public void OnPageBuilt(IContent page)
+        public void OnPageBuilt(PageContext pageContext)
         {
         }
 
         public void OnAuthorization(PageAutorizationContext authorizationContext)
         {
+            if (authorizationContext.Group != FrontendsPageConfigs.Group) return;
+
             authorizationContext.Granted = _frontendAuthorizationService.IsAuthorizedToView(
                 _workContextAccessor.GetContext().CurrentUser,
                 authorizationContext.Page.As<IEngineConfigurationAspect>().GraphContext);

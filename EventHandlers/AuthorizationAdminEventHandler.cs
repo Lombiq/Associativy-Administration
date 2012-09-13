@@ -6,21 +6,24 @@ using Piedone.HelpfulLibraries.Contents.DynamicPages;
 namespace Associativy.Administration.EventHandlers
 {
     [OrchardFeature("Associativy.Administration.FrontendAuthorization")]
-    public class AuthorizationAdminEventHandler : IAssociativyAdminEventHandler
+    public class AuthorizationAdminEventHandler : IPageEventHandler
     {
-        public void OnPageInitializing(IContent page)
+        public void OnPageInitializing(PageContext pageContext)
         {
-            if (page.IsPage("ManageGraph"))
+            if (pageContext.Group != AdministrationPageConfigs.Group) return;
+
+            var page = pageContext.Page;
+            if (page.IsPage("ManageGraph", pageContext.Group))
             {
                 page.ContentItem.Weld(new AssociativyManageGraphAuthorizationPart());
             }
         }
 
-        public void OnPageInitialized(IContent page)
+        public void OnPageInitialized(PageContext pageContext)
         {
         }
 
-        public void OnPageBuilt(IContent page)
+        public void OnPageBuilt(PageContext pageContext)
         {
         }
 
