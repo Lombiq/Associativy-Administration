@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
-using Associativy.Administration.EventHandlers;
 using Associativy.Administration.Services;
 using Associativy.GraphDiscovery;
 using Orchard;
