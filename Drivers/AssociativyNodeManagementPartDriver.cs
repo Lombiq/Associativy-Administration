@@ -51,7 +51,7 @@ namespace Associativy.Administration.Drivers
                         {
                             context.GraphName = provider.GraphName;
                             part.GraphContexts[provider] = context;
-                            part.NeighbourLabels.Add(String.Join(", ", _associativyServices.NodeManager.GetManyContentQuery(context, provider.ConnectionManager.GetNeighbourIds(context, part.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
+                            part.NeighbourLabels.Add(String.Join(", ", _associativyServices.NodeManager.GetManyContentQuery(context, provider.PathServices.ConnectionManager.GetNeighbourIds(context, part.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
                         }
 
                         return shapeHelper.EditorTemplate(
@@ -82,20 +82,20 @@ namespace Associativy.Administration.Drivers
                 if (newNeighbourLabels.Count() == newNeighbours.Count()) // All nodes were found
                 {
                     var newNeighbourIds = newNeighbours.Select(node => node.Id).ToList();
-                    var oldNeighbourIds = provider.ConnectionManager.GetNeighbourIds(context, part.Id);
+                    var oldNeighbourIds = provider.PathServices.ConnectionManager.GetNeighbourIds(context, part.Id);
 
                     foreach (var oldNeighbourId in oldNeighbourIds)
                     {
                         if (!newNeighbourIds.Contains(oldNeighbourId))
                         {
-                            provider.ConnectionManager.Disconnect(context, part.Id, oldNeighbourId);
+                            provider.PathServices.ConnectionManager.Disconnect(context, part.Id, oldNeighbourId);
                         }
                         else newNeighbourIds.Remove(oldNeighbourId); // So newNeighbourIds will contain only really new node ids
                     }
 
                     foreach (var neighbourId in newNeighbourIds)
                     {
-                        provider.ConnectionManager.Connect(context, part.Id, neighbourId);
+                        provider.PathServices.ConnectionManager.Connect(context, part.Id, neighbourId);
                     }
                 }
 

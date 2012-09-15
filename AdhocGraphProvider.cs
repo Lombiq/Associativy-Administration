@@ -6,31 +6,40 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Piedone.HelpfulLibraries.DependencyInjection;
+using Orchard.Environment;
+using System;
+using Orchard.Localization;
 
 namespace Associativy.Administration
 {
     [OrchardFeature("Associativy.Administration.AdhocGraphs")]
-    public class AdhocGraphProvider : GraphProviderBase<IDatabaseConnectionManager<AdhocGraphNodeConnector>>, IContentHandler
+    public class AdhocGraphProvider : IGraphProvider, IContentHandler
     {
+        private readonly Func<IPathServices> _pathServicesFactory;
         private readonly IContentManager _contentManager;
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
 
         private const string _graphChangedSignal = "Associativy.Administration.AdhocGraphs.GraphsChanged";
 
+        public Localizer T { get; set; }
+
         public AdhocGraphProvider(
-            IResolve<IDatabaseConnectionManager<AdhocGraphNodeConnector>> connectionManagerResolver,
+            Work<ISqlConnectionManager<AdhocGraphNodeConnector>> connectionManagerWork, 
+            Work<IPathFinder> pathFinderWork,
             IContentManager contentManager,
             ICacheManager cacheManager,
             ISignals signals)
-            : base(connectionManagerResolver)
         {
+            _pathServicesFactory = () => new PathServices(connectionManagerWork.Value, pathFinderWork.Value);
             _contentManager = contentManager;
             _cacheManager = cacheManager;
             _signals = signals;
+
+            T = NullLocalizer.Instance;
         }
 
-        public override void Describe(DescribeContext describeContext)
+        public void Describe(DescribeContext describeContext)
         {
             var graphs = _cacheManager.Get("Associativy.Administration.AdhocGraph", ctx =>
             {
@@ -45,7 +54,7 @@ namespace Associativy.Administration
                     graphPart.GraphName,
                     T(graphPart.DisplayGraphName),
                     graphPart.ContainedContentTypes,
-                    ConnectionManager);
+                    _pathServicesFactory);
             }
         }
 
