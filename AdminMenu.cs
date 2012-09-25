@@ -24,7 +24,7 @@ namespace Associativy.Administration
             builder/*.AddImageSet("associativy")*/.Add(T("Associativy"), "1.5", BuildMenu);
 
             // This is for tabs (LocalNav)
-            //builder//.AddImageSet("addociativy")
+            //builder//.AddImageSet("associativy")
             //    .Add(T("Associativy"), "5",
             //        menu => menu.Action("Index", "Admin", new { area = "Associativy.Administration" }).Permission(Permissions.ManageAssociativyGraphs)
             //            .Add(T("Associativy"), "1.0", item => item.Action("Index", "Admin", new { area = "Associativy.Administration" })
