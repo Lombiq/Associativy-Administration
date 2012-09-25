@@ -4,16 +4,16 @@ Author: Piedone
 Website: http://associativy.com
 Version: 1.0
 OrchardVersion: 1.5.1
-Description: Associativy Administration
+Description: Dashboard-based administration tools for Associativy
 Features:
 	Associativy.Administration:
 		Name: Associativy Administration
-        Description: Associativy Administration
+        Description: Dashboard-based administration tools for Associativy
 		Category: Associativy
 		Dependencies: Associativy.Frontends, Piedone.HelpfulLibraries.Serialization, Piedone.HelpfulLibraries.Contents
 	Associativy.Administration.AdhocGraphs:
 		Name: Associativy Ad-hoc Graphs
-        Description: Users can create simple graphs from the backend
+        Description: Users can create simple Associativy graphs from the backend
 		Category: Associativy
 		Dependencies: Associativy.Administration
 	Associativy.Administration.FrontendAuthorization:
