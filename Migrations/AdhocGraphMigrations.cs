@@ -26,7 +26,6 @@ namespace Associativy.Administration.Migrations
                 cfg => cfg
                     .WithPart("CommonPart")
                     .WithPart(typeof(AssociativyGraphPart).Name)
-                    .Creatable()
             );
 
 
