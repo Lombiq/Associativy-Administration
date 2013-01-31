@@ -12,7 +12,17 @@ namespace Associativy.Administration.Migrations
     {
         public int Create()
         {
-            SchemaBuilder.CreateNodeToNodeConnectorRecordTable<AdhocGraphNodeConnector>();
+            SchemaBuilder.CreateTable(typeof(AdhocGraphNodeConnector).Name,
+                table => table
+                    .NodeConnectorRecord()
+                    .Column<string>("GraphName")
+                );
+
+            // TODO: TEST INDICES as data grows
+            SchemaBuilder.AlterTable(typeof(AdhocGraphNodeConnector).Name,
+                table => table
+                    .CreateIndex("Connection", "GraphName", "Node1Id", "Node2Id")
+                );
 
             SchemaBuilder.CreateTable(typeof(AssociativyGraphPartRecord).Name,
                 table => table
@@ -29,7 +39,22 @@ namespace Associativy.Administration.Migrations
             );
 
 
-            return 1;
+            return 2;
+        }
+
+        public int UpdateFrom1()
+        {
+
+            SchemaBuilder.AlterTable(typeof(AdhocGraphNodeConnector).Name,
+                table =>
+                {
+                    table.AddColumn<string>("GraphName");
+                    table.DropIndex("Connection");
+                    table.CreateIndex("Connection", "GraphName", "Node1Id", "Node2Id");
+                });
+
+
+            return 2;
         }
     }
 }

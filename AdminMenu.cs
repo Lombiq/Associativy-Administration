@@ -14,10 +14,12 @@ namespace Associativy.Administration
         public Localizer T { get; set; }
         public string MenuName { get { return "admin"; } }
 
+
         public AdminMenu(IGraphManager graphManager)
         {
             _graphManager = graphManager;
         }
+
 
         public void GetNavigation(NavigationBuilder builder)
         {

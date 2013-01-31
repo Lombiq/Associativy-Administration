@@ -11,6 +11,7 @@ namespace Associativy.Administration.Services
         private readonly IGraphManager _graphManager;
         private readonly ISimpleSerializer _simpleSerializer;
 
+
         public ImportExportService(
             IGraphManager graphManager,
             ISimpleSerializer simpleSerializer)
@@ -18,6 +19,7 @@ namespace Associativy.Administration.Services
             _graphManager = graphManager;
             _simpleSerializer = simpleSerializer;
         }
+
 
         public string ExportAllConnections(IGraphContext graphContext)
         {

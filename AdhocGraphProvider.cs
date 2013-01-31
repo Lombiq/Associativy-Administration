@@ -8,6 +8,7 @@ using Orchard.ContentManagement.Handlers;
 using Orchard.Environment;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using Associativy.Administration.Services;
 
 namespace Associativy.Administration
 {
@@ -23,8 +24,9 @@ namespace Associativy.Administration
 
         public Localizer T { get; set; }
 
+
         public AdhocGraphProvider(
-            Work<ISqlConnectionManager<AdhocGraphNodeConnector>> connectionManagerWork, 
+            Work<IAdhocGraphConnectionManager> connectionManagerWork, 
             Work<IPathFinder> pathFinderWork,
             IContentManager contentManager,
             ICacheManager cacheManager,
@@ -37,6 +39,7 @@ namespace Associativy.Administration
 
             T = NullLocalizer.Instance;
         }
+
 
         public void Describe(DescribeContext describeContext)
         {
@@ -170,6 +173,7 @@ namespace Associativy.Administration
         public void UpdateEditor(UpdateEditorContext context)
         {
         }
+
 
         private void TriggerIfGraph(ContentContextBase context)
         {

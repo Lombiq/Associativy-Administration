@@ -16,10 +16,13 @@ namespace Associativy.Administration.Services
     {
         private readonly IRepository<FrontendAuthorizationRecord> _repository;
 
+
         public FrontendAuthorizer(IRepository<FrontendAuthorizationRecord> repository)
         {
             _repository = repository;
+        
         }
+
 
         public void SetAuthorizedToView(IGraphContext graphContext, IEnumerable<string> roles)
         {

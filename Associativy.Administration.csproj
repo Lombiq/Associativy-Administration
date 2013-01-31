@@ -21,6 +21,10 @@
     </UpgradeBackupLocation>
     <TargetFrameworkProfile />
     <UseIISExpress>false</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -133,7 +137,9 @@
     <Compile Include="Models\Pages\Admin\AssociativyIndexAdhocGraphPart.cs" />
     <Compile Include="Models\AdhocGraphNodeConnector.cs" />
     <Compile Include="Permissions.cs" />
+    <Compile Include="Services\AdhocGraphConnectionManager.cs" />
     <Compile Include="Services\FrontendAuthorizer.cs" />
+    <Compile Include="Services\IAdhocGraphConnectionManager.cs" />
     <Compile Include="Services\IFrontendAuthorizer.cs" />
     <Compile Include="Services\IImportExportService.cs" />
     <Compile Include="Services\ImportExportService.cs" />
