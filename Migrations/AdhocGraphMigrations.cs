@@ -38,7 +38,7 @@ namespace Associativy.Administration.Migrations
             // TODO: TEST INDICES as data grows
             SchemaBuilder.AlterTable(typeof(AdhocGraphNodeConnector).Name,
                 table => table
-                    .CreateIndex("Connection", "GraphName", "Node1Id", "Node2Id")
+                    .CreateIndex("ConnectionsForGraph", "GraphName")
                 );
 
             SchemaBuilder.CreateTable(typeof(AssociativyGraphPartRecord).Name,
@@ -67,7 +67,7 @@ namespace Associativy.Administration.Migrations
                 {
                     table.AddColumn<string>("GraphName");
                     table.DropIndex("Connection");
-                    table.CreateIndex("Connection", "GraphName", "Node1Id", "Node2Id");
+                    table.CreateIndex("ConnectionsForGraph", "GraphName");
                 });
 
 
