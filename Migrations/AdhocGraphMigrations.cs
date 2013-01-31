@@ -56,7 +56,7 @@ namespace Associativy.Administration.Migrations
             );
 
 
-            return 2;
+            return 3;
         }
 
         public int UpdateFrom1()
@@ -70,7 +70,14 @@ namespace Associativy.Administration.Migrations
                     table.CreateIndex("Connection", "GraphName", "Node1Id", "Node2Id");
                 });
 
-            #region Existing graphs migration
+
+            return 2;
+        }
+
+        public int UpdateFrom2()
+        {
+            // Migrating existing graphs
+            // This can't be in UpdateFrom1 as the schema change is not yet persisted and can't be used in the same migration step.
             var graphs = _contentManagerWork.Value.Query("AssociativyGraph").List();
             if (graphs.Any())
             {
@@ -81,10 +88,9 @@ namespace Associativy.Administration.Migrations
                     connection.GraphName = graphName;
                 }
             } 
-            #endregion
 
 
-            return 2;
+            return 3;
         }
     }
 }
