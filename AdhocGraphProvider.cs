@@ -46,7 +46,7 @@ namespace Associativy.Administration
             var graphs = _cacheManager.Get("Associativy.Administration.AdhocGraph", ctx =>
             {
                 ctx.Monitor(_signals.When(_graphChangedSignal));
-                return _contentManager.Query("AssociativyGraph").List();
+                return _contentManager.Query("AssociativyGraph").Join<AssociativyGraphPartRecord>().List();
             });
 
             foreach (var graph in graphs)
