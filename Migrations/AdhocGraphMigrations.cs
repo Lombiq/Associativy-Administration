@@ -14,19 +14,6 @@ namespace Associativy.Administration.Migrations
     [OrchardFeature("Associativy.Administration.AdhocGraphs")]
     public class AdhocGraphMigrations : DataMigrationImpl
     {
-        private readonly Work<IRepository<AdhocGraphNodeConnector>> _connectorRepository;
-        private readonly Work<IContentManager> _contentManagerWork;
-
-
-        public AdhocGraphMigrations(
-            Work<IRepository<AdhocGraphNodeConnector>> connectorRepository,
-            Work<IContentManager> contentManagerWork)
-        {
-            _connectorRepository = connectorRepository;
-            _contentManagerWork = contentManagerWork;
-        }
-
-
         public int Create()
         {
             SchemaBuilder.CreateTable(typeof(AdhocGraphNodeConnector).Name,
@@ -56,7 +43,7 @@ namespace Associativy.Administration.Migrations
             );
 
 
-            return 3;
+            return 2;
         }
 
         public int UpdateFrom1()
@@ -72,25 +59,6 @@ namespace Associativy.Administration.Migrations
 
 
             return 2;
-        }
-
-        public int UpdateFrom2()
-        {
-            // Migrating existing graphs
-            // This can't be in UpdateFrom1 as the schema change is not yet persisted and can't be used in the same migration step.
-            var graphs = _contentManagerWork.Value.Query("AssociativyGraph").List();
-            if (graphs.Any())
-            {
-                // Dealing with only one ad-hoc graph for now
-                var graphName = graphs.First().As<AssociativyGraphPart>().GraphName;
-                foreach (var connection in _connectorRepository.Value.Table)
-                {
-                    connection.GraphName = graphName;
-                }
-            } 
-
-
-            return 3;
         }
     }
 }

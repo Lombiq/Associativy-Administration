@@ -109,6 +109,7 @@
   <ItemGroup>
     <Compile Include="AdministrationPageConfigs.cs" />
     <Compile Include="AdminMenu.cs" />
+    <Compile Include="Controllers\AdhocMigrationsController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexPartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphAuthorizationPartDiver.cs" />
