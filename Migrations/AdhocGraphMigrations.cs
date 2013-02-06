@@ -17,17 +17,17 @@ namespace Associativy.Administration.Migrations
     {
         private readonly IMappingsManager _mappingsManager;
         private readonly IRepository<AdhocGraphNodeConnector> _connectorRepository;
-        private readonly IContentManager _contentManager;
+        private readonly IRepository<AssociativyGraphPartRecord> _graphPartRepository;
 
 
         public AdhocGraphMigrations(
             IMappingsManager mappingsManager,
             IRepository<AdhocGraphNodeConnector> connectorRepository,
-            IContentManager contentManager)
+            IRepository<AssociativyGraphPartRecord> graphPartRepository)
         {
             _mappingsManager = mappingsManager;
             _connectorRepository = connectorRepository;
-            _contentManager = contentManager;
+            _graphPartRepository = graphPartRepository;
         }
 
 
@@ -86,11 +86,11 @@ namespace Associativy.Administration.Migrations
             // Somehow mappings.bin is stale at this point...
             _mappingsManager.Clear();
 
-            var graphs = _contentManager.Query("AssociativyGraph").List();
+            var graphs = _graphPartRepository.Table;
             if (graphs.Any())
             {
                 // Dealing with only one ad-hoc graph for now
-                var graphName = graphs.First().As<AssociativyGraphPart>().GraphName;
+                var graphName = graphs.First().GraphName;
                 foreach (var connection in _connectorRepository.Table)
                 {
                     connection.GraphName = graphName;
