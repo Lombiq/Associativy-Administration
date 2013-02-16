@@ -51,7 +51,7 @@ namespace Associativy.Administration.Drivers
                         {
                             context.GraphName = provider.GraphName;
                             part.GraphContexts[provider] = context;
-                            part.NeighbourLabels.Add(String.Join(", ", _associativyServices.NodeManager.GetManyContentQuery(context, provider.PathServices.ConnectionManager.GetNeighbourIds(context, part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
+                            part.NeighbourLabels.Add(String.Join(", ", _associativyServices.NodeManager.GetManyQuery(context, provider.PathServices.ConnectionManager.GetNeighbourIds(context, part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
                         }
 
                         return shapeHelper.EditorTemplate(
@@ -77,11 +77,11 @@ namespace Associativy.Administration.Drivers
                 context.GraphName = provider.GraphName;
 
                 var newNeighbourLabels = part.NeighbourLabels[labelsIndex].Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim());
-                var newNeighbours = _associativyServices.NodeManager.GetMany(context, newNeighbourLabels);
+                var newNeighbours = _associativyServices.NodeManager.GetManySimilarNodesQuery(context, newNeighbourLabels).List();
                 
                 if (newNeighbourLabels.Count() == newNeighbours.Count()) // All nodes were found
                 {
-                    var newNeighbourIds = newNeighbours.Select(node => node.ContentItem.Id).ToList();
+                    var newNeighbourIds = new HashSet<int>(newNeighbours.Select(node => node.Id));
                     var oldNeighbourIds = provider.PathServices.ConnectionManager.GetNeighbourIds(context, part.ContentItem.Id);
 
                     foreach (var oldNeighbourId in oldNeighbourIds)
