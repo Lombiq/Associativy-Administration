@@ -12,10 +12,12 @@ namespace Associativy.Administration.Drivers.Pages.Admin
     {
         private readonly IAssociativyServices _associativyServices;
 
+
         public AssociativyIndexPartDriver(IAssociativyServices associativyServices)
         {
             _associativyServices = associativyServices;
         }
+
 
         protected override DriverResult Display(AssociativyIndexPart part, string displayType, dynamic shapeHelper)
         {

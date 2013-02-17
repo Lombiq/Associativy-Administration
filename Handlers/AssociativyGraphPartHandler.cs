@@ -29,6 +29,7 @@ namespace Associativy.Administration
                 });
         }
 
+
         protected override void GetItemMetadata(GetContentItemMetadataContext context)
         {
             if (context.ContentItem.ContentType != "AssociativyGraph")

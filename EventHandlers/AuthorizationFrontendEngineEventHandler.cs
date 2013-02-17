@@ -14,6 +14,7 @@ namespace Associativy.Administration.EventHandlers
         private readonly IFrontendAuthorizer _frontendAuthorizationService;
         private readonly IWorkContextAccessor _workContextAccessor;
 
+
         public AuthorizationFrontendEngineEventHandler(
             IFrontendAuthorizer frontendAuthorizationService,
             IWorkContextAccessor workContextAccessor)
@@ -21,6 +22,7 @@ namespace Associativy.Administration.EventHandlers
             _frontendAuthorizationService = frontendAuthorizationService;
             _workContextAccessor = workContextAccessor;
         }
+
 
         public void OnPageInitializing(PageContext pageContext)
         {

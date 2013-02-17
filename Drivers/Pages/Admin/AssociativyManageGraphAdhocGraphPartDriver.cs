@@ -14,6 +14,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
         private readonly IContentManager _contentManager;
         private readonly IWorkContextAccessor _workContextAccessor;
 
+
         public AssociativyManageGraphAdhocGraphPartDriver(
             IContentManager contentManager,
             IWorkContextAccessor workContextAccessor)
@@ -21,6 +22,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             _contentManager = contentManager;
             _workContextAccessor = workContextAccessor;
         }
+
 
         protected override DriverResult Display(AssociativyManageGraphAdhocGraphPart part, string displayType, dynamic shapeHelper)
         {

@@ -28,6 +28,7 @@ namespace Associativy.Administration.Controllers
 
         public Localizer T { get; set; }
 
+
         public AdminController(
             IOrchardServices orchardServices,
             IPageEventHandler eventHandler,
@@ -40,6 +41,7 @@ namespace Associativy.Administration.Controllers
 
             T = NullLocalizer.Instance;
         }
+
 
         public ActionResult Index()
         {

@@ -14,10 +14,12 @@ namespace Associativy.Administration.EventHandlers
     {
         private readonly IRepository<GraphSettingsRecord> _settingsRepository;
 
+
         public SettingsFrontendEngineEventHandler(IRepository<GraphSettingsRecord> settingsRepository)
         {
             _settingsRepository = settingsRepository;
         }
+
 
         public void OnPageInitializing(PageContext pageContext)
         {

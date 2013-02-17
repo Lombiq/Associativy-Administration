@@ -26,6 +26,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             get { return "Associativy.Administration.AssociatvyManageGraphPart"; }
         }
 
+
         public AssociatvyMageGraphPartDriver(
             IAssociativyServices associativyServices,
             IEngineManager engineManager,
@@ -37,6 +38,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             _workContextAccessor = workContextAccessor;
             _settingsRepository = settingsRepository;
         }
+
 
         protected override DriverResult Display(AssociatvyManageGraphPart part, string displayType, dynamic shapeHelper)
         {

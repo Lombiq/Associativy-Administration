@@ -22,6 +22,7 @@ namespace Associativy.Administration.Drivers
             get { return "Associativy.AssociativyNodeManagementPart"; }
         }
 
+
         public AssociativyNodeManagementPartDriver(
             IGraphManager graphManager,
             IAssociativyServices associativyServices)
@@ -29,6 +30,7 @@ namespace Associativy.Administration.Drivers
             _graphManager = graphManager;
             _associativyServices = associativyServices;
         }
+
 
         //protected override DriverResult Display(AssociativyNodeManagementPart part, string displayType, dynamic shapeHelper)
         //{

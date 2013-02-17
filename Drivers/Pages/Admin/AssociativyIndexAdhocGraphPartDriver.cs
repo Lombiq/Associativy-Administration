@@ -10,10 +10,12 @@ namespace Associativy.Administration.Drivers.Pages.Admin
     {
         private readonly IContentManager _contentManager;
 
+
         public AssociativyIndexAdhocGraphPartDriver(IContentManager contentManager)
         {
             _contentManager = contentManager;
         }
+
 
         protected override DriverResult Display(AssociativyIndexAdhocGraphPart part, string displayType, dynamic shapeHelper)
         {

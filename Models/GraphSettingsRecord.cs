@@ -15,6 +15,7 @@ namespace Associativy.Administration.Models
         public virtual int ZoomLevelCount { get; set; }
         public virtual int MaxDistance { get; set; }
 
+
         public GraphSettingsRecord()
         {
             UseCache = true;

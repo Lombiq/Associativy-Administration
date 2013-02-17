@@ -22,6 +22,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             get { return "Associativy.Administration.AssociativyManageGraphAuthorizationPart"; }
         }
 
+
         public AssociativyManageGraphAuthorizationPartDiver(
             IFrontendAuthorizer frontendAuthorizer,
             IRoleService roleService,
@@ -31,6 +32,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             _roleService = roleService;
             _workContextAccessor = workContextAccessor;
         }
+
 
         protected override DriverResult Display(AssociativyManageGraphAuthorizationPart part, string displayType, dynamic shapeHelper)
         {

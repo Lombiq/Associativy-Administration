@@ -15,10 +15,12 @@ namespace Associativy.Administration.Drivers
     {
         private readonly IContentDefinitionManager _contentDefinitionManager;
 
+
         public AssociativyGraphPartDriver(IContentDefinitionManager contentDefinitionManager)
         {
             _contentDefinitionManager = contentDefinitionManager;
         }
+
 
         protected override string Prefix
         {
