@@ -79,7 +79,7 @@ namespace Associativy.Administration.Drivers
                 context.GraphName = provider.GraphName;
 
                 var newNeighbourLabels = part.NeighbourLabels[labelsIndex].Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim());
-                var newNeighbours = _associativyServices.NodeManager.GetManySimilarNodesQuery(context, newNeighbourLabels).List();
+                var newNeighbours = _associativyServices.NodeManager.GetManyByLabelQuery(context, newNeighbourLabels).List();
                 
                 if (newNeighbourLabels.Count() == newNeighbours.Count()) // All nodes were found
                 {
