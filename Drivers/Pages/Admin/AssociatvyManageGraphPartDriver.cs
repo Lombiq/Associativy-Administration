@@ -45,15 +45,17 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             return ContentShape("Pages_AssociatvyManageGraph",
             () =>
             {
+                SetupSettingsLoader(part);
+
                 var graphContext = GetGraphContext();
                 var graph = _associativyServices.Mind.GetAllAssociations(graphContext, new MindSettings { ZoomLevelCount = 1 });
 
                 part.GraphDescriptor = _associativyServices.GraphManager.FindGraph(graphContext);
-                part.NodeCount = graph.VertexCount;
-                part.ConnectionCount = graph.EdgeCount;
+                part.GraphInfo.NodeCount = graph.VertexCount;
+                part.GraphInfo.ConnectionCount = graph.EdgeCount;
+                part.GraphInfo.ActualZoomLevelCount = _associativyServices.GraphEditor.CalculateZoomLevelCount(graph, part.ZoomLevelCount);
                 part.FrontendEngines = _engineManager.GetEngines();
-
-                SetupSettingsLoader(part);
+                
 
                 return shapeHelper.DisplayTemplate(
                             TemplateName: "Pages/Admin/ManageGraph",
