@@ -22,15 +22,25 @@ namespace Associativy.Administration.Migrations
                     .Column<int>("InitialZoomLevel")
                     .Column<int>("ZoomLevelCount")
                     .Column<int>("MaxDistance")
-            );
-
-            SchemaBuilder.AlterTable(typeof(GraphSettingsRecord).Name,
+                    .Column<int>("MaxNodeCount")
+            ).AlterTable(typeof(GraphSettingsRecord).Name,
                 table => table
                     .CreateIndex("GraphName", new string[] { "GraphName" })
             );
 
 
-            return 1;
+            return 2;
+        }
+
+        public int UpdateFrom1()
+        {
+            SchemaBuilder.AlterTable(typeof(GraphSettingsRecord).Name,
+                table => table
+                    .AddColumn<int>("MaxNodeCount")
+            );
+
+
+            return 2;
         }
     }
 }

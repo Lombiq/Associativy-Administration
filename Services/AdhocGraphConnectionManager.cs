@@ -13,7 +13,7 @@ using System.Web;
 namespace Associativy.Administration.Services
 {
     [OrchardFeature("Associativy.Administration.AdhocGraphs")]
-    public class AdhocGraphConnectionManager : IAdhocGraphConnectionManager
+    public class AdhocGraphConnectionManager : GraphServiceBase, IAdhocGraphConnectionManager
     {
         protected readonly IRepository<AdhocGraphNodeConnector> _nodeToNodeRecordRepository;
         protected readonly IMemoryConnectionManager _memoryConnectionManager;
@@ -21,9 +21,11 @@ namespace Associativy.Administration.Services
 
 
         public AdhocGraphConnectionManager(
+            IGraphDescriptor graphDescriptor,
             IRepository<AdhocGraphNodeConnector> nodeToNodeRecordRepository,
             IMemoryConnectionManager memoryConnectionManager,
             IGraphEventHandler graphEventHandler)
+            : base(graphDescriptor)
         {
             _nodeToNodeRecordRepository = nodeToNodeRecordRepository;
             _memoryConnectionManager = memoryConnectionManager;
@@ -31,90 +33,91 @@ namespace Associativy.Administration.Services
         }
 
 
-        public void TryLoadConnections(IGraphContext graphContext)
+        public void TryLoadConnections()
         {
-            if (_memoryConnectionManager.GetConnectionCount(graphContext) != 0) return;
+            if (_memoryConnectionManager.GetConnectionCount() != 0) return;
 
-            foreach (var connector in _nodeToNodeRecordRepository.Table.Where(record => record.GraphName == graphContext.GraphName))
+            foreach (var connector in _nodeToNodeRecordRepository.Table.Where(record => record.GraphName == _graphDescriptor.Name))
             {
-                _memoryConnectionManager.Connect(graphContext, connector.Node1Id, connector.Node2Id);
+                _memoryConnectionManager.Connect(connector.Node1Id, connector.Node2Id);
             }
         }
 
-        public virtual bool AreNeighbours(IGraphContext graphContext, int node1Id, int node2Id)
+        public virtual bool AreNeighbours(int node1Id, int node2Id)
         {
-            TryLoadConnections(graphContext);
+            TryLoadConnections();
 
-            return _memoryConnectionManager.AreNeighbours(graphContext, node1Id, node2Id);
+            return _memoryConnectionManager.AreNeighbours(node1Id, node2Id);
         }
 
-        public virtual void Connect(IGraphContext graphContext, int node1Id, int node2Id)
+        public virtual void Connect(int node1Id, int node2Id)
         {
-            TryLoadConnections(graphContext);
+            TryLoadConnections();
 
-            if (AreNeighbours(graphContext, node1Id, node2Id)) return;
+            if (AreNeighbours(node1Id, node2Id)) return;
 
-            var connector = new AdhocGraphNodeConnector() { Node1Id = node1Id, Node2Id = node2Id, GraphName = graphContext.GraphName };
+            var connector = new AdhocGraphNodeConnector() { Node1Id = node1Id, Node2Id = node2Id, GraphName = _graphDescriptor.Name };
             _nodeToNodeRecordRepository.Create(connector);
-            _memoryConnectionManager.Connect(graphContext, node1Id, node2Id);
-            _graphEventHandler.ConnectionAdded(graphContext, node1Id, node2Id);
+            _memoryConnectionManager.Connect(node1Id, node2Id);
+            _graphEventHandler.ConnectionAdded(_graphDescriptor, node1Id, node2Id);
         }
 
-        public virtual void DeleteFromNode(IGraphContext graphContext, int nodeId)
+        public virtual void DeleteFromNode(int nodeId)
         {
-            TryLoadConnections(graphContext);
+            TryLoadConnections();
 
             // Since there is no cummulative delete...
             var connectionsToBeDeleted = _nodeToNodeRecordRepository.Fetch(
-                    connector => (connector.Node1Id == nodeId || connector.Node2Id == nodeId) && connector.GraphName == graphContext.GraphName);
+                    connector => (connector.Node1Id == nodeId || connector.Node2Id == nodeId) && connector.GraphName == _graphDescriptor.Name);
 
             foreach (var connector in connectionsToBeDeleted)
             {
                 _nodeToNodeRecordRepository.Delete(connector);
             }
 
-            _memoryConnectionManager.DeleteFromNode(graphContext, nodeId);
+            _memoryConnectionManager.DeleteFromNode(nodeId);
 
-            _graphEventHandler.ConnectionsDeletedFromNode(graphContext, nodeId);
+            _graphEventHandler.ConnectionsDeletedFromNode(_graphDescriptor, nodeId);
         }
 
-        public virtual void Disconnect(IGraphContext graphContext, int node1Id, int node2Id)
+        public virtual void Disconnect(int node1Id, int node2Id)
         {
-            TryLoadConnections(graphContext);
+            TryLoadConnections();
 
             var connectorRecord = 
                 _nodeToNodeRecordRepository.Fetch(
                     connector =>
                         (connector.Node1Id == node1Id && connector.Node2Id == node2Id || connector.Node1Id == node2Id && connector.Node2Id == node1Id) &&
-                        connector.GraphName == graphContext.GraphName
+                        connector.GraphName == _graphDescriptor.Name
                 ).FirstOrDefault();
 
             if (connectorRecord == null) return;
 
             _nodeToNodeRecordRepository.Delete(connectorRecord);
 
-            _memoryConnectionManager.Disconnect(graphContext, node1Id, node2Id);
+            _memoryConnectionManager.Disconnect(node1Id, node2Id);
 
-            _graphEventHandler.ConnectionDeleted(graphContext, node1Id, node2Id);
+            _graphEventHandler.ConnectionDeleted(_graphDescriptor, node1Id, node2Id);
         }
 
-        public virtual IEnumerable<INodeToNodeConnector> GetAll(IGraphContext graphContext)
-        {
-            TryLoadConnections(graphContext);
 
-            return _memoryConnectionManager.GetAll(graphContext);
+        public virtual IEnumerable<INodeToNodeConnector> GetAll()
+        {
+            TryLoadConnections();
+
+            return _memoryConnectionManager.GetAll();
         }
 
-        public virtual IEnumerable<int> GetNeighbourIds(IGraphContext graphContext, int nodeId)
+        public virtual IEnumerable<int> GetNeighbourIds(int nodeId)
         {
-            TryLoadConnections(graphContext);
+            TryLoadConnections();
 
-            return _memoryConnectionManager.GetNeighbourIds(graphContext, nodeId);
+            return _memoryConnectionManager.GetNeighbourIds(nodeId);
         }
 
-        public virtual int GetNeighbourCount(IGraphContext graphContext, int nodeId)
+        public virtual int GetNeighbourCount(int nodeId)
         {
-            return _memoryConnectionManager.GetNeighbourCount(graphContext, nodeId);
+            return _memoryConnectionManager.GetNeighbourCount(nodeId);
         }
     }
 }

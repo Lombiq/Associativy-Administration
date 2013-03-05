@@ -44,16 +44,16 @@ namespace Associativy.Administration.Drivers
                     {
                         FillGraphDescriptors(part);
 
-                        part.GraphContexts = new Dictionary<GraphDescriptor, IGraphContext>();
+                        part.GraphContexts = new Dictionary<IGraphDescriptor, IGraphContext>();
                         part.NeighbourLabels = new List<string>();
 
                         var context = new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } };
 
-                        foreach (var provider in part.GraphDescriptors)
+                        foreach (var descriptor in part.GraphDescriptors)
                         {
-                            context.GraphName = provider.GraphName;
-                            part.GraphContexts[provider] = context;
-                            part.NeighbourLabels.Add(String.Join(", ", _associativyServices.NodeManager.GetManyQuery(context, provider.PathServices.ConnectionManager.GetNeighbourIds(context, part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
+                            context.Name = descriptor.Name;
+                            part.GraphContexts[descriptor] = context;
+                            part.NeighbourLabels.Add(String.Join(", ", descriptor.Services.NodeManager.GetManyQuery(descriptor.Services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
                         }
 
                         return shapeHelper.EditorTemplate(
@@ -72,32 +72,32 @@ namespace Associativy.Administration.Drivers
             var context = new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } };
 
             int labelsIndex = 0;
-            foreach (var provider in part.GraphDescriptors)
+            foreach (var descriptor in part.GraphDescriptors)
             {
                 // provider.ProduceContext() could be erroneous as the context with only the current content type is needed,
                 // not all content types stored by the graph.
-                context.GraphName = provider.GraphName;
+                context.Name = descriptor.Name;
 
                 var newNeighbourLabels = part.NeighbourLabels[labelsIndex].Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim());
-                var newNeighbours = _associativyServices.NodeManager.GetManyByLabelQuery(context, newNeighbourLabels).List();
+                var newNeighbours = descriptor.Services.NodeManager.GetManyByLabelQuery(newNeighbourLabels).List();
                 
                 if (newNeighbourLabels.Count() == newNeighbours.Count()) // All nodes were found
                 {
                     var newNeighbourIds = new HashSet<int>(newNeighbours.Select(node => node.Id));
-                    var oldNeighbourIds = provider.PathServices.ConnectionManager.GetNeighbourIds(context, part.ContentItem.Id);
+                    var oldNeighbourIds = descriptor.Services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id);
 
                     foreach (var oldNeighbourId in oldNeighbourIds)
                     {
                         if (!newNeighbourIds.Contains(oldNeighbourId))
                         {
-                            provider.PathServices.ConnectionManager.Disconnect(context, part.ContentItem.Id, oldNeighbourId);
+                            descriptor.Services.ConnectionManager.Disconnect(part.ContentItem.Id, oldNeighbourId);
                         }
                         else newNeighbourIds.Remove(oldNeighbourId); // So newNeighbourIds will contain only really new node ids
                     }
 
                     foreach (var neighbourId in newNeighbourIds)
                     {
-                        provider.PathServices.ConnectionManager.Connect(context, part.ContentItem.Id, neighbourId);
+                        descriptor.Services.ConnectionManager.Connect(part.ContentItem.Id, neighbourId);
                     }
                 }
 

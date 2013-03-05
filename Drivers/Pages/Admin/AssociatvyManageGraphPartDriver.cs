@@ -3,7 +3,7 @@ using Associativy.Administration.Models;
 using Associativy.Administration.Models.Pages.Admin;
 using Associativy.Frontends.EngineDiscovery;
 using Associativy.GraphDiscovery;
-using Associativy.Models.Mind;
+using Associativy.Models.Services;
 using Associativy.Services;
 using Orchard;
 using Orchard.ContentManagement;
@@ -16,7 +16,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
     [OrchardFeature("Associativy.Administration")]
     public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
     {
-        private readonly IAssociativyServices _associativyServices;
+        private readonly IGraphManager _graphManager;
         private readonly IEngineManager _engineManager;
         private readonly IWorkContextAccessor _workContextAccessor;
         private readonly IRepository<GraphSettingsRecord> _settingsRepository;
@@ -28,12 +28,12 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
 
         public AssociatvyMageGraphPartDriver(
-            IAssociativyServices associativyServices,
+            IGraphManager graphManager,
             IEngineManager engineManager,
             IWorkContextAccessor workContextAccessor,
             IRepository<GraphSettingsRecord> settingsRepository)
         {
-            _associativyServices = associativyServices;
+            _graphManager = graphManager;
             _engineManager = engineManager;
             _workContextAccessor = workContextAccessor;
             _settingsRepository = settingsRepository;
@@ -48,12 +48,8 @@ namespace Associativy.Administration.Drivers.Pages.Admin
                 SetupSettingsLoader(part);
 
                 var graphContext = GetGraphContext();
-                var graph = _associativyServices.Mind.GetAllAssociations(graphContext, new MindSettings { ZoomLevelCount = 1 });
 
-                part.GraphDescriptor = _associativyServices.GraphManager.FindGraph(graphContext);
-                part.GraphInfo.NodeCount = graph.VertexCount;
-                part.GraphInfo.ConnectionCount = graph.EdgeCount;
-                part.GraphInfo.ActualZoomLevelCount = _associativyServices.GraphEditor.CalculateZoomLevelCount(graph, part.ZoomLevelCount);
+                part.GraphDescriptor = _graphManager.FindGraph(graphContext);
                 part.FrontendEngines = _engineManager.GetEngines();
                 
 
@@ -77,14 +73,14 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         private GraphContext GetGraphContext()
         {
-            return new GraphContext { GraphName = _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"] };
+            return new GraphContext { Name = _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"] };
         }
 
         private void SetupSettingsLoader(AssociatvyManageGraphPart part)
         {
             part.SettingsRecordField.Loader(() =>
             {
-                var graphName = GetGraphContext().GraphName;
+                var graphName = GetGraphContext().Name;
                 var settings = _settingsRepository.Fetch(record => record.GraphName == graphName).SingleOrDefault();
                 if (settings == null)
                 {

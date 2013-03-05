@@ -29,7 +29,7 @@ namespace Associativy.Administration.Services
             var record = GetByGraphContext(graphContext);
             if (record == null)
             {
-                record = new FrontendAuthorizationRecord { GraphName = graphContext.GraphName };
+                record = new FrontendAuthorizationRecord { GraphName = graphContext.Name };
                 _repository.Create(record);
             }
             record.RolesDefinition = new JavaScriptSerializer().Serialize(roles);
@@ -52,7 +52,7 @@ namespace Associativy.Administration.Services
 
         private FrontendAuthorizationRecord GetByGraphContext(IGraphContext graphContext)
         {
-            return _repository.Fetch(r => r.GraphName == graphContext.GraphName).FirstOrDefault();
+            return _repository.Fetch(r => r.GraphName == graphContext.Name).FirstOrDefault();
         }
 
         private IEnumerable<string> GetRoles(FrontendAuthorizationRecord record)

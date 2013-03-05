@@ -2,8 +2,9 @@
 @using Associativy.Frontends.Extensions
            
 @{
-    Layout.Title = Model.GraphDescriptor.DisplayGraphName.ToString();
+    Layout.Title = Model.GraphDescriptor.DisplayName.ToString();
     Script.Require("jQuery").AtFoot();
+    var graphInfo = Model.GraphDescriptor.Services.GraphStatisticsService.GetGraphInfo();
 }
 
 <h2>
@@ -15,7 +16,7 @@
     <h3>@T("Graph info")</h3>
     
     <p>
-        @T("Number of nodes in the graph: {0}", Model.GraphInfo.NodeCount) @T("Number of connections: {0}", Model.GraphInfo.ConnectionCount) @T("Actual number of zoom levels: {0}", Model.GraphInfo.ActualZoomLevelCount)
+        @T("Number of nodes in the graph: {0}", graphInfo.NodeCount) @T("Number of connections: {0}", graphInfo.ConnectionCount)
     </p>
 </div>
 
@@ -25,7 +26,7 @@
     @foreach (var engine in Model.FrontendEngines)
     {
         <li>
-            @Html.Link(T("View with the {0} frontend engine", engine.DisplayEngineName.Text).Text, @Url.RouteEngineUrl(engine, Model.GraphDescriptor.GraphName))
+            @Html.Link(T("View with the {0} frontend engine", engine.DisplayEngineName.Text).Text, @Url.RouteEngineUrl(engine, Model.GraphDescriptor.Name))
         </li>
     }
     </ul>
@@ -33,7 +34,7 @@
 
 <div id="associativy-administration-export-container">
     <h3>@T("Export")</h3>
-    @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.GraphDescriptor.GraphName }, new { @class = "button" })
+    @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.GraphDescriptor.Name }, new { @class = "button" })
     <span class="hint">@T("This only exports connection data. The nodes (i.e. the content items stored in the graph) have to be exported with the built-in Import/Export feature.")</span>
 </div>
 
@@ -82,6 +83,11 @@
                     @Html.LabelFor(m => m.MaxDistance, T("Maximal distance"))
                     @Html.TextBoxFor(m => m.MaxDistance, new { @class = "text text-small" })
                     <span class="hint">@T("Maximal distance (in hops) between two nodes that should be considered in an associativy connection.")</span>
+                </li>
+                <li>
+                    @Html.LabelFor(m => m.MaxNodeCount, T("Maximal node count"))
+                    @Html.TextBoxFor(m => m.MaxNodeCount, new { @class = "text text-small" })
+                    <span class="hint">@T("Maximal number of nodes displayed from the graph.")</span>
                 </li>
             </ol>
         </fieldset>

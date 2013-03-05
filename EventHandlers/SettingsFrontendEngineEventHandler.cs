@@ -30,7 +30,7 @@ namespace Associativy.Administration.EventHandlers
             if (pageContext.Group != FrontendsPageConfigs.Group) return;
 
             var commonPart = pageContext.Page.As<AssociativyFrontendCommonPart>();
-            var settings = _settingsRepository.Fetch(record => record.GraphName == commonPart.GraphContext.GraphName).SingleOrDefault();
+            var settings = _settingsRepository.Fetch(record => record.GraphName == commonPart.GraphContext.Name).SingleOrDefault();
             if (settings == null) return;
             var customMindSettings = settings.AsMindSettings();
             commonPart.MindSettings.UseCache = customMindSettings.UseCache;

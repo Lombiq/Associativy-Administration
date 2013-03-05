@@ -15,7 +15,7 @@ namespace Associativy.Administration
     [OrchardFeature("Associativy.Administration.AdhocGraphs")]
     public class AdhocGraphProvider : IGraphProvider, IContentHandler
     {
-        private readonly Func<IPathServices> _pathServicesFactory;
+        private readonly IGraphServicesFactory _graphServicesFactory;
         private readonly IContentManager _contentManager;
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
@@ -26,13 +26,12 @@ namespace Associativy.Administration
 
 
         public AdhocGraphProvider(
-            Work<IAdhocGraphConnectionManager> connectionManagerWork, 
-            Work<IPathFinder> pathFinderWork,
+            IGraphServicesFactory<IStandardMind, IAdhocGraphConnectionManager, IStandardPathFinder, IStandardNodeManager, IStandardGraphStatisticsService> graphServicesFactory,
             IContentManager contentManager,
             ICacheManager cacheManager,
             ISignals signals)
         {
-            _pathServicesFactory = () => new PathServices(connectionManagerWork.Value, pathFinderWork.Value);
+            _graphServicesFactory = graphServicesFactory;
             _contentManager = contentManager;
             _cacheManager = cacheManager;
             _signals = signals;
@@ -56,7 +55,7 @@ namespace Associativy.Administration
                     graphPart.GraphName,
                     T(graphPart.DisplayGraphName),
                     graphPart.ContainedContentTypes,
-                    _pathServicesFactory);
+                    _graphServicesFactory.Factory);
             }
         }
 

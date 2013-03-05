@@ -154,7 +154,7 @@ namespace Associativy.Administration.Controllers
 
         private GraphContext MakeContext(string graphName)
         {
-            return new GraphContext { GraphName = graphName };
+            return new GraphContext { Name = graphName };
         }
 
         private RedirectResult Refresh()

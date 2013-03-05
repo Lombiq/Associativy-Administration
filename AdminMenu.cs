@@ -38,13 +38,13 @@ namespace Associativy.Administration
             menu.LinkToFirstChild(false); // See: http://orchard.codeplex.com/workitem/18807
             menu.Action("Index", "Admin", new { area = "Associativy.Administration" }).Permission(Permissions.ManageAssociativyGraphs);
 
-            var graphs = _graphManager.FindDistinctGraphs(GraphContext.Empty).OrderBy(descriptor => descriptor.DisplayGraphName.Text);
+            var graphs = _graphManager.FindDistinctGraphs(GraphContext.Empty).OrderBy(descriptor => descriptor.DisplayName.Text);
 
             int i = 0;
             foreach (var graph in graphs)
             {
-                menu.Add(graph.DisplayGraphName, i.ToString(),
-                     item => item.Action("ManageGraph", "Admin", new { area = "Associativy.Administration", GraphName = graph.GraphName }).Permission(Permissions.ManageAssociativyGraphs));
+                menu.Add(graph.DisplayName, i.ToString(),
+                     item => item.Action("ManageGraph", "Admin", new { area = "Associativy.Administration", GraphName = graph.Name }).Permission(Permissions.ManageAssociativyGraphs));
                 i++;
             }
         }

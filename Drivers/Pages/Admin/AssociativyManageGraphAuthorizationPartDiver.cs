@@ -61,7 +61,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         private IGraphContext CurrentContext()
         {
-            return new GraphContext { GraphName = _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"] };
+            return new GraphContext { Name = _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"] };
         }
     }
 }
