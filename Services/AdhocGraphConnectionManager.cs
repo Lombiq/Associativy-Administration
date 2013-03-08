@@ -101,18 +101,18 @@ namespace Associativy.Administration.Services
         }
 
 
-        public virtual IEnumerable<INodeToNodeConnector> GetAll()
+        public virtual IEnumerable<INodeToNodeConnector> GetAll(int skip, int count)
         {
             TryLoadConnections();
 
-            return _memoryConnectionManager.GetAll();
+            return _memoryConnectionManager.GetAll(skip, count);
         }
 
-        public virtual IEnumerable<int> GetNeighbourIds(int nodeId)
+        public virtual IEnumerable<int> GetNeighbourIds(int nodeId, int skip, int count)
         {
             TryLoadConnections();
 
-            return _memoryConnectionManager.GetNeighbourIds(nodeId);
+            return _memoryConnectionManager.GetNeighbourIds(nodeId, skip, count);
         }
 
         public virtual int GetNeighbourCount(int nodeId)

@@ -23,7 +23,7 @@ namespace Associativy.Administration.Services
 
         public string ExportAllConnections(IGraphContext graphContext)
         {
-            var connections = _graphManager.FindGraph(graphContext).Services.ConnectionManager.GetAll();
+            var connections = _graphManager.FindGraph(graphContext).Services.ConnectionManager.GetAll(0, int.MaxValue);
             var serializableConnections = new List<int[]>();
             foreach (var connection in connections)
             {
