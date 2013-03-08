@@ -53,7 +53,7 @@ namespace Associativy.Administration.Drivers
                         {
                             context.Name = descriptor.Name;
                             part.GraphContexts[descriptor] = context;
-                            part.NeighbourLabels.Add(String.Join(", ", descriptor.Services.NodeManager.GetManyQuery(descriptor.Services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id, 0, int.MaxValue)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
+                            part.NeighbourLabels.Add(String.Join(", ", descriptor.Services.NodeManager.GetManyQuery(descriptor.Services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
                         }
 
                         return shapeHelper.EditorTemplate(
@@ -84,7 +84,7 @@ namespace Associativy.Administration.Drivers
                 if (newNeighbourLabels.Count() == newNeighbours.Count()) // All nodes were found
                 {
                     var newNeighbourIds = new HashSet<int>(newNeighbours.Select(node => node.Id));
-                    var oldNeighbourIds = descriptor.Services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id, 0, int.MaxValue);
+                    var oldNeighbourIds = descriptor.Services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id);
 
                     foreach (var oldNeighbourId in oldNeighbourIds)
                     {
