@@ -14,7 +14,7 @@ namespace Associativy.Administration.Models
         public virtual int InitialZoomLevel { get; set; }
         public virtual int ZoomLevelCount { get; set; }
         public virtual int MaxDistance { get; set; }
-        public virtual int MaxNodeCount { get; set; }
+        public virtual int MaxConnectionCount { get; set; }
 
 
         public GraphSettingsRecord()
@@ -22,26 +22,9 @@ namespace Associativy.Administration.Models
             var def = MindSettings.Default;
 
             UseCache = true;
-            InitialZoomLevel = def.ZoomLevel;
-            ZoomLevelCount = def.ZoomLevelCount;
+            InitialZoomLevel = 0;
+            ZoomLevelCount = 10;
             MaxDistance = def.MaxDistance;
-            MaxNodeCount = def.MaxNodeCount;
-        }
-    }
-
-    [OrchardFeature("Associativy.Administration")]
-    public static class GraphSettingsExtensions
-    {
-        public static IMindSettings AsMindSettings(this GraphSettingsRecord record)
-        {
-            return new MindSettings
-            {
-                UseCache = record.UseCache,
-                ZoomLevel = record.InitialZoomLevel,
-                ZoomLevelCount = record.ZoomLevelCount,
-                MaxDistance = record.MaxDistance,
-                MaxNodeCount = record.MaxNodeCount
-            };
         }
     }
 }

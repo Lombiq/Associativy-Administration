@@ -1,6 +1,7 @@
 ﻿using Associativy.Administration.Services;
 using Associativy.Frontends;
 using Associativy.Frontends.Models;
+using Associativy.GraphDiscovery;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
@@ -42,7 +43,7 @@ namespace Associativy.Administration.EventHandlers
 
             authorizationContext.Granted = _frontendAuthorizationService.IsAuthorizedToView(
                 _workContextAccessor.GetContext().CurrentUser,
-                authorizationContext.Page.As<IEngineConfigurationAspect>().GraphContext);
+                authorizationContext.Page.As<IEngineConfigurationAspect>().GraphDescriptor.MaximalContext());
         }
     }
 }

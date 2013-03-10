@@ -11,7 +11,7 @@ namespace Associativy.Administration.Models.Pages.Admin
     public class AssociatvyManageGraphPart : ContentPart
     {
         public IGraphDescriptor GraphDescriptor { get; set; }
-        public IEnumerable<EngineDescriptor> FrontendEngines { get; set; }
+        public IEnumerable<IEngineDescriptor> FrontendEngines { get; set; }
 
         #region Settings
         public bool UseCache
@@ -38,10 +38,10 @@ namespace Associativy.Administration.Models.Pages.Admin
             set { SettingsRecord.MaxDistance = value; }
         }
 
-        public int MaxNodeCount
+        public int MaxConnectionCount
         {
-            get { return SettingsRecord.MaxNodeCount; }
-            set { SettingsRecord.MaxNodeCount = value; }
+            get { return SettingsRecord.MaxConnectionCount; }
+            set { SettingsRecord.MaxConnectionCount = value; }
         }
 
         private readonly LazyField<GraphSettingsRecord> _settingsRecord = new LazyField<GraphSettingsRecord>();

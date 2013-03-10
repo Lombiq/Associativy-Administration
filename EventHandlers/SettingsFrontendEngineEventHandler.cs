@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Associativy.Administration.Models;
 using Associativy.Frontends;
+using Associativy.Frontends.Models;
 using Associativy.Frontends.Models.Pages.Frontends;
 using Orchard.ContentManagement;
 using Orchard.Data;
@@ -29,14 +30,15 @@ namespace Associativy.Administration.EventHandlers
         {
             if (pageContext.Group != FrontendsPageConfigs.Group) return;
 
-            var commonPart = pageContext.Page.As<AssociativyFrontendCommonPart>();
-            var settings = _settingsRepository.Fetch(record => record.GraphName == commonPart.GraphContext.Name).SingleOrDefault();
+            var config = pageContext.Page.As<IEngineConfigurationAspect>();
+            var settings = _settingsRepository.Fetch(record => record.GraphName == config.GraphDescriptor.Name).SingleOrDefault();
             if (settings == null) return;
-            var customMindSettings = settings.AsMindSettings();
-            commonPart.MindSettings.UseCache = customMindSettings.UseCache;
-            commonPart.MindSettings.ZoomLevel = customMindSettings.ZoomLevel;
-            commonPart.MindSettings.ZoomLevelCount = customMindSettings.ZoomLevelCount;
-            commonPart.MindSettings.MaxDistance = customMindSettings.MaxDistance;
+
+            config.MindSettings.UseCache = settings.UseCache;
+            config.MindSettings.MaxDistance = settings.MaxDistance;
+            config.GraphSettings.InitialZoomLevel = settings.InitialZoomLevel;
+            config.GraphSettings.ZoomLevelCount = settings.ZoomLevelCount;
+            config.GraphSettings.MaxConnectionCount = settings.MaxConnectionCount;
         }
 
         public void OnPageBuilt(PageContext pageContext)

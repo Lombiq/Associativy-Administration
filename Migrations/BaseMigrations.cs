@@ -22,7 +22,7 @@ namespace Associativy.Administration.Migrations
                     .Column<int>("InitialZoomLevel")
                     .Column<int>("ZoomLevelCount")
                     .Column<int>("MaxDistance")
-                    .Column<int>("MaxNodeCount")
+                    .Column<int>("MaxConnectionCount")
             ).AlterTable(typeof(GraphSettingsRecord).Name,
                 table => table
                     .CreateIndex("GraphName", new string[] { "GraphName" })
@@ -36,7 +36,7 @@ namespace Associativy.Administration.Migrations
         {
             SchemaBuilder.AlterTable(typeof(GraphSettingsRecord).Name,
                 table => table
-                    .AddColumn<int>("MaxNodeCount")
+                    .AddColumn<int>("MaxConnectionCount")
             );
 
 
