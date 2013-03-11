@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Associativy.Models.Services;
 
 namespace Associativy.Administration.Services
 {
@@ -117,7 +118,16 @@ namespace Associativy.Administration.Services
 
         public virtual int GetNeighbourCount(int nodeId)
         {
+            TryLoadConnections();
+
             return _memoryConnectionManager.GetNeighbourCount(nodeId);
+        }
+
+        public virtual IGraphInfo GetGraphInfo()
+        {
+            TryLoadConnections();
+
+            return _memoryConnectionManager.GetGraphInfo();
         }
     }
 }
