@@ -21,10 +21,11 @@ namespace Associativy.Administration.Models
         {
             var def = MindSettings.Default;
 
-            UseCache = true;
+            UseCache = false;
             InitialZoomLevel = 0;
             ZoomLevelCount = 10;
             MaxDistance = def.MaxDistance;
+            MaxConnectionCount = 50;
         }
     }
 }
