@@ -4,7 +4,7 @@
 @{
     Layout.Title = Model.GraphDescriptor.DisplayName.ToString();
     Script.Require("jQuery").AtFoot();
-    var graphInfo = Model.GraphDescriptor.Services.GraphStatisticsService.GetGraphInfo();
+    var graphInfo = Model.GraphDescriptor.Services.ConnectionManager.GetGraphInfo();
 }
 
 <h2>

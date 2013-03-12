@@ -8,7 +8,7 @@ using Orchard;
 
 namespace Associativy.Administration.Services
 {
-    public interface IAdhocGraphConnectionManager : ISqlConnectionManager<AdhocGraphNodeConnector>, IGraphStatisticsService, ITransientDependency
+    public interface IAdhocGraphConnectionManager : ISqlConnectionManager<AdhocGraphNodeConnector>, ITransientDependency
     {
     }
 }

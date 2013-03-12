@@ -26,7 +26,7 @@ namespace Associativy.Administration
 
 
         public AdhocGraphProvider(
-            IGraphServicesFactory<IStandardMind, IAdhocGraphConnectionManager, IStandardPathFinder, IStandardNodeManager, IAdhocGraphConnectionManager> graphServicesFactory,
+            IGraphServicesFactory<IStandardMind, IAdhocGraphConnectionManager, IStandardPathFinder, IStandardNodeManager> graphServicesFactory,
             IContentManager contentManager,
             ICacheManager cacheManager,
             ISignals signals)

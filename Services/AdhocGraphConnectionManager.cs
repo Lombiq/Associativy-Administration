@@ -14,7 +14,7 @@ using Associativy.Models.Services;
 namespace Associativy.Administration.Services
 {
     [OrchardFeature("Associativy.Administration.AdhocGraphs")]
-    public class AdhocGraphConnectionManager : GraphServiceBase, IAdhocGraphConnectionManager
+    public class AdhocGraphConnectionManager : GraphAwareServiceBase, IAdhocGraphConnectionManager
     {
         protected readonly IRepository<AdhocGraphNodeConnector> _nodeToNodeRecordRepository;
         protected readonly IMemoryConnectionManager _memoryConnectionManager;
