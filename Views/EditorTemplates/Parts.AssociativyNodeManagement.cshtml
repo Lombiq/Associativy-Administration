@@ -10,7 +10,7 @@
         <ul>
             @foreach (var provider in Model.GraphDescriptors)
             {
-                <text><li><a href="#associativy-tabs-@provider.GraphName">@provider.DisplayGraphName.Text</a></li></text>
+                <text><li><a href="#associativy-tabs-@provider.Name">@provider.DisplayName.Text</a></li></text>
             }
         </ul>
         @{
@@ -19,7 +19,7 @@
         @foreach (var provider in Model.GraphDescriptors)
         {
             <text>
-            <div id="associativy-tabs-@provider.GraphName">
+            <div id="associativy-tabs-@provider.Name">
                 <fieldset>
                     <legend>@T("Edit connections")</legend>
                     <ol>
@@ -36,7 +36,7 @@
                 <script type="text/javascript">
                     $(function () {
                         @*Is there a better way to get the textbox's id? *@
-                        $.associativy.autoComplete.labels("#" + $("#associativy-tabs-@provider.GraphName").find("input[type=text]").attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { GraphName = provider.GraphName })");
+                        $.associativy.autoComplete.labels("#" + $("#associativy-tabs-@provider.Name").find("input[type=text]").attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { GraphName = provider.Name })");
                     });
                 </script>
             }
