@@ -18,7 +18,7 @@ using Piedone.HelpfulLibraries.Contents.DynamicPages;
 
 namespace Associativy.Administration.Controllers
 {
-    [Admin, OrchardFeature("Associativy.Administration")]
+    [Admin]
     public class AdminController : Controller, IUpdateModel
     {
         private readonly IOrchardServices _orchardServices;

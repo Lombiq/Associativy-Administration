@@ -6,7 +6,6 @@ using Orchard.UI.Navigation;
 
 namespace Associativy.Administration
 {
-    [OrchardFeature("Associativy.Administration")]
     public class AdminMenu : INavigationProvider
     {
         private readonly IGraphManager _graphManager;

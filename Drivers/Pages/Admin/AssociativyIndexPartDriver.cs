@@ -7,7 +7,6 @@ using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
 {
-    [OrchardFeature("Associativy.Administration")]
     public class AssociativyIndexPartDriver : ContentPartDriver<AssociativyIndexPart>
     {
         private readonly IAssociativyServices _associativyServices;

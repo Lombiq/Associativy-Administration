@@ -4,7 +4,6 @@ using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Models
 {
-    [OrchardFeature("Associativy.Administration")]
     public class GraphSettingsRecord
     {
         public virtual int Id { get; set; }

@@ -5,7 +5,6 @@ using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Models
 {
-    [OrchardFeature("Associativy.Administration")]
     public class AssociativyNodeManagementPart : ContentPart
     {
         public IEnumerable<IGraphDescriptor> GraphDescriptors { get; set; }

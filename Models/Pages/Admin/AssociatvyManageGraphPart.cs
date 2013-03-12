@@ -7,7 +7,6 @@ using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Models.Pages.Admin
 {
-    [OrchardFeature("Associativy.Administration")]
     public class AssociatvyManageGraphPart : ContentPart
     {
         public IGraphDescriptor GraphDescriptor { get; set; }

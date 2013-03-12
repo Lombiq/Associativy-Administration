@@ -10,7 +10,6 @@ using Piedone.HelpfulLibraries.Contents.DynamicPages;
 
 namespace Associativy.Administration.EventHandlers
 {
-    [OrchardFeature("Associativy.Administration")]
     public class SettingsFrontendEngineEventHandler : IPageEventHandler
     {
         private readonly IRepository<GraphSettingsRecord> _settingsRepository;

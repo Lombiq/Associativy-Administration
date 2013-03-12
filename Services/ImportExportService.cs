@@ -5,7 +5,6 @@ using Piedone.HelpfulLibraries.Serialization;
 
 namespace Associativy.Administration.Services
 {
-    [OrchardFeature("Associativy.Administration")]
     public class ImportExportService : IImportExportService
     {
         private readonly IGraphManager _graphManager;

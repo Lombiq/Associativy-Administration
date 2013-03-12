@@ -4,7 +4,6 @@ using Piedone.HelpfulLibraries.Contents.DynamicPages;
 
 namespace Associativy.Administration.EventHandlers
 {
-    [OrchardFeature("Associativy.Administration")]
     public class DefaultAdminEventHandler : IPageEventHandler
     {
         public void OnPageInitializing(PageContext pageContext)

@@ -13,7 +13,6 @@ using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
 {
-    [OrchardFeature("Associativy.Administration")]
     public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
     {
         private readonly IGraphManager _graphManager;

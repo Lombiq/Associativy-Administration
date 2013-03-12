@@ -11,7 +11,6 @@ using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Drivers
 {
-    [OrchardFeature("Associativy.Administration")]
     public class AssociativyNodeManagementPartDriver : ContentPartDriver<AssociativyNodeManagementPart>
     {
         private readonly IGraphManager _graphManager;
