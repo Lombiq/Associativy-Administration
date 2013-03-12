@@ -7,7 +7,6 @@ using Associativy.Models;
 using Associativy.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Drivers
 {

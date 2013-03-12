@@ -8,7 +8,6 @@ using Associativy.GraphDiscovery;
 using Orchard;
 using Orchard.ContentManagement;
 using Orchard.Core.Contents.Controllers;
-using Orchard.Environment.Extensions;
 using Orchard.Exceptions;
 using Orchard.Localization;
 using Orchard.Mvc;

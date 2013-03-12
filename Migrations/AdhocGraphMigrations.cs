@@ -1,14 +1,11 @@
-﻿using Associativy.Administration.Models;
+﻿using System.Linq;
+using Associativy.Administration.Models;
 using Associativy.Extensions;
-using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData;
-using Orchard.Core.Contents.Extensions;
 using Orchard.Data;
 using Orchard.Data.Migration;
-using Orchard.Environment;
 using Orchard.Environment.Extensions;
 using Piedone.HelpfulLibraries.Libraries.Utilities;
-using System.Linq;
 
 namespace Associativy.Administration.Migrations
 {

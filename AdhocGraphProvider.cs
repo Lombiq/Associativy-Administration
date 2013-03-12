@@ -1,14 +1,12 @@
-﻿using System;
-using Associativy.Administration.Models;
+﻿using Associativy.Administration.Models;
+using Associativy.Administration.Services;
 using Associativy.GraphDiscovery;
 using Associativy.Services;
 using Orchard.Caching;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
-using Orchard.Environment;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using Associativy.Administration.Services;
 
 namespace Associativy.Administration
 {

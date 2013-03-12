@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Associativy.Models.Services;
-using Orchard.Environment.Extensions;
 
 namespace Associativy.Administration.Models
 {
