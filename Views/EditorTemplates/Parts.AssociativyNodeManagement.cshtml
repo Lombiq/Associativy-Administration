@@ -23,10 +23,24 @@
                 <fieldset>
                     <legend>@T("Edit connections")</legend>
                     <ol>
-                        <li>
-                            @Html.Label("NeighbourLabels[" + labelsIndex + "]", T("Neighbours").Text)
-                            @Html.TextBox("NeighbourLabels[" + labelsIndex + "]", Model.NeighbourLabels[labelsIndex], new { @class = "text large" })
-                        </li>
+                        @if (Model.NeighbourValues[labelsIndex].ShowLabels)
+                        {
+                            <li>
+                                @Html.Label("NeighbourValues[" + labelsIndex + "].Labels", T("Neighbours").Text)
+                                @Html.TextBox("NeighbourValues[" + labelsIndex + "].Labels", Model.NeighbourValues[labelsIndex].Labels, new { @class = "text large" })
+                            </li>
+                        }
+                        else
+                        {
+                            <li>
+                                @Html.Label("NeighbourValues[" + labelsIndex + "].AddLabels", T("Add neighbours").Text)
+                                @Html.TextBox("NeighbourValues[" + labelsIndex + "].AddLabels", Model.NeighbourValues[labelsIndex].AddLabels, new { @class = "text large" })
+                            </li>
+                            <li>
+                                @Html.Label("NeighbourValues[" + labelsIndex + "].RemoveLabels", T("Remove neighbours").Text)
+                                @Html.TextBox("NeighbourValues[" + labelsIndex + "].RemoveLabels", Model.NeighbourValues[labelsIndex].RemoveLabels, new { @class = "text large" })
+                            </li>
+                        }
                     </ol>
                     <span class="hint">@T("Type labels of neighbours here, separate by commas. After the first few letters the labels are auto-completed.")</span>
                 </fieldset>
@@ -35,8 +49,9 @@
             {
                 <script type="text/javascript">
                     $(function () {
-                        @*Is there a better way to get the textbox's id? *@
-                        $.associativy.autoComplete.labels("#" + $("#associativy-tabs-@provider.Name").find("input[type=text]").attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { GraphName = provider.Name })");
+                        $("#associativy-tabs-@provider.Name").find("input[type=text]").each(function () {
+                            $.associativy.autoComplete.labels("#" + $(this).attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { GraphName = provider.Name })");
+                        });
                     });
                 </script>
             }

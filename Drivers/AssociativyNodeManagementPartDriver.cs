@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Associativy.Administration.Models;
+using Associativy.Administration.Services;
 using Associativy.GraphDiscovery;
 using Associativy.Models;
 using Associativy.Services;
@@ -14,6 +15,7 @@ namespace Associativy.Administration.Drivers
     {
         private readonly IGraphManager _graphManager;
         private readonly IAssociativyServices _associativyServices;
+        private readonly IGraphSettingsService _settingsService;
 
         protected override string Prefix
         {
@@ -23,10 +25,12 @@ namespace Associativy.Administration.Drivers
 
         public AssociativyNodeManagementPartDriver(
             IGraphManager graphManager,
-            IAssociativyServices associativyServices)
+            IAssociativyServices associativyServices,
+            IGraphSettingsService settingsService)
         {
             _graphManager = graphManager;
             _associativyServices = associativyServices;
+            _settingsService = settingsService;
         }
 
 
@@ -39,26 +43,30 @@ namespace Associativy.Administration.Drivers
         {
             return ContentShape("Parts_AssociativyNodeManagement_Edit",
                 () =>
+                {
+                    FillGraphDescriptors(part);
+
+                    part.NeighbourValues = new List<NeighbourValues>();
+
+                    foreach (var descriptor in part.GraphDescriptors)
                     {
-                        FillGraphDescriptors(part);
+                        var services = descriptor.Services;
+                        var values = new NeighbourValues { NeighbourCount = services.ConnectionManager.GetNeighbourCount(part) };
 
-                        part.GraphContexts = new Dictionary<IGraphDescriptor, IGraphContext>();
-                        part.NeighbourLabels = new List<string>();
-
-                        var context = new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } };
-
-                        foreach (var descriptor in part.GraphDescriptors)
+                        if (values.NeighbourCount <= _settingsService.GetSettings(descriptor.Name).MaxConnectionCount)
                         {
-                            context.Name = descriptor.Name;
-                            part.GraphContexts[descriptor] = context;
-                            part.NeighbourLabels.Add(String.Join(", ", descriptor.Services.NodeManager.GetManyQuery(descriptor.Services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label)));
+                            values.ShowLabels = true;
+                            values.Labels = string.Join(", ", services.NodeManager.GetManyQuery(services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label));
                         }
 
-                        return shapeHelper.EditorTemplate(
-                                    TemplateName: "Parts.AssociativyNodeManagement",
-                                    Model: part,
-                                    Prefix: Prefix);
-                    });
+                        part.NeighbourValues.Add(values);
+                    }
+
+                    return shapeHelper.EditorTemplate(
+                                TemplateName: "Parts.AssociativyNodeManagement",
+                                Model: part,
+                                Prefix: Prefix);
+                });
         }
 
         // POST
@@ -67,36 +75,56 @@ namespace Associativy.Administration.Drivers
             updater.TryUpdateModel(part, Prefix, null, null);
 
             FillGraphDescriptors(part);
-            var context = new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } };
 
             int labelsIndex = 0;
             foreach (var descriptor in part.GraphDescriptors)
             {
-                // provider.ProduceContext() could be erroneous as the context with only the current content type is needed,
-                // not all content types stored by the graph.
-                context.Name = descriptor.Name;
+                var connectionManager = descriptor.Services.ConnectionManager;
+                var nodeManager = descriptor.Services.NodeManager;
+                var neighbourValues = part.NeighbourValues[labelsIndex];
+                neighbourValues.NeighbourCount = connectionManager.GetNeighbourCount(part);
 
-                var newNeighbourLabels = part.NeighbourLabels[labelsIndex].Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim());
-                var newNeighbours = descriptor.Services.NodeManager.GetManyByLabelQuery(newNeighbourLabels).List();
-                
-                if (newNeighbourLabels.Count() == newNeighbours.Count()) // All nodes were found
+                if (neighbourValues.NeighbourCount <= _settingsService.GetSettings(descriptor.Name).MaxConnectionCount)
                 {
-                    var newNeighbourIds = new HashSet<int>(newNeighbours.Select(node => node.Id));
-                    var oldNeighbourIds = descriptor.Services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id);
+                    neighbourValues.ShowLabels = true;
 
-                    foreach (var oldNeighbourId in oldNeighbourIds)
-                    {
-                        if (!newNeighbourIds.Contains(oldNeighbourId))
+                    ProcessLabels(neighbourValues.Labels, nodeManager, newNeighbours =>
                         {
-                            descriptor.Services.ConnectionManager.Disconnect(part.ContentItem.Id, oldNeighbourId);
-                        }
-                        else newNeighbourIds.Remove(oldNeighbourId); // So newNeighbourIds will contain only really new node ids
-                    }
+                            var newNeighbourIds = new HashSet<int>(newNeighbours.Select(node => node.Id));
+                            var oldNeighbourIds = connectionManager.GetNeighbourIds(part.ContentItem.Id);
 
-                    foreach (var neighbourId in newNeighbourIds)
+                            foreach (var oldNeighbourId in oldNeighbourIds)
+                            {
+                                if (!newNeighbourIds.Contains(oldNeighbourId))
+                                {
+                                    connectionManager.Disconnect(part.ContentItem.Id, oldNeighbourId);
+                                }
+                                else newNeighbourIds.Remove(oldNeighbourId); // So newNeighbourIds will contain only really new node ids
+                            }
+
+                            foreach (var neighbourId in newNeighbourIds)
+                            {
+                                connectionManager.Connect(part.ContentItem.Id, neighbourId);
+                            }
+                        });
+                }
+                else
+                {
+                    ProcessLabels(neighbourValues.AddLabels, nodeManager, addNeighbours =>
+                        {
+                            foreach (var neighbour in addNeighbours)
+                            {
+                                connectionManager.Connect(part, neighbour);
+                            }
+                        });
+
+                    ProcessLabels(neighbourValues.RemoveLabels, nodeManager, removeNeighbours =>
                     {
-                        descriptor.Services.ConnectionManager.Connect(part.ContentItem.Id, neighbourId);
-                    }
+                        foreach (var neighbour in removeNeighbours)
+                        {
+                            connectionManager.Disconnect(part, neighbour);
+                        }
+                    });
                 }
 
                 labelsIndex++;
@@ -112,6 +140,18 @@ namespace Associativy.Administration.Drivers
         private void FillGraphDescriptors(AssociativyNodeManagementPart part)
         {
             part.GraphDescriptors = _graphManager.FindDistinctGraphs(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
+        }
+
+        private static void ProcessLabels(string labels, INodeManager nodeManager, Action<IEnumerable<ContentItem>> processor)
+        {
+            if (string.IsNullOrEmpty(labels)) return;
+
+            var trimmedLabels = labels.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim());
+            var neighbours = nodeManager.GetManyByLabelQuery(trimmedLabels).List();
+
+            if (trimmedLabels.Count() != neighbours.Count()) return;
+
+            processor(neighbours);
         }
     }
 }

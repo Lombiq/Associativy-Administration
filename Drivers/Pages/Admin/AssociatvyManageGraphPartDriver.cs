@@ -63,7 +63,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
             updater.TryUpdateModel(part, Prefix, null, null);
 
-            if (part.Settings.InitialZoomLevel > part.Settings.ZoomLevelCount) part.Settings.InitialZoomLevel = part.Settings.ZoomLevelCount - 1;
+            if (part.GraphSettings.InitialZoomLevel > part.GraphSettings.ZoomLevelCount) part.GraphSettings.InitialZoomLevel = part.GraphSettings.ZoomLevelCount - 1;
 
             return Display(part, "Detail", shapeHelper);
         }

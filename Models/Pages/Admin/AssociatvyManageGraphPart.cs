@@ -13,7 +13,7 @@ namespace Associativy.Administration.Models.Pages.Admin
 
         private readonly LazyField<IGraphSettings> _settings = new LazyField<IGraphSettings>();
         public LazyField<IGraphSettings> SettingsField { get { return _settings; } }
-        public IGraphSettings Settings
+        public IGraphSettings GraphSettings
         {
             get { return _settings.Value; }
             set { _settings.Value = value; }
