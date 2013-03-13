@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Associativy.Administration.Models;
 using Associativy.Administration.Models.Pages.Admin;
+using Associativy.Administration.Services;
 using Associativy.Frontends.EngineDiscovery;
 using Associativy.GraphDiscovery;
 using Orchard;
@@ -15,7 +16,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
         private readonly IGraphManager _graphManager;
         private readonly IEngineManager _engineManager;
         private readonly IWorkContextAccessor _workContextAccessor;
-        private readonly IRepository<GraphSettingsRecord> _settingsRepository;
+        private readonly IGraphSettingsService _settingsService;
 
         protected override string Prefix
         {
@@ -27,12 +28,12 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             IGraphManager graphManager,
             IEngineManager engineManager,
             IWorkContextAccessor workContextAccessor,
-            IRepository<GraphSettingsRecord> settingsRepository)
+            IGraphSettingsService settingsService)
         {
             _graphManager = graphManager;
             _engineManager = engineManager;
             _workContextAccessor = workContextAccessor;
-            _settingsRepository = settingsRepository;
+            _settingsService = settingsService;
         }
 
 
@@ -62,7 +63,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
             updater.TryUpdateModel(part, Prefix, null, null);
 
-            if (part.InitialZoomLevel > part.ZoomLevelCount) part.InitialZoomLevel = part.ZoomLevelCount - 1;
+            if (part.Settings.InitialZoomLevel > part.Settings.ZoomLevelCount) part.Settings.InitialZoomLevel = part.Settings.ZoomLevelCount - 1;
 
             return Display(part, "Detail", shapeHelper);
         }
@@ -74,21 +75,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         private void SetupSettingsLoader(AssociatvyManageGraphPart part)
         {
-            part.SettingsRecordField.Loader(() =>
-            {
-                var graphName = GetGraphContext().Name;
-                var settings = _settingsRepository.Fetch(record => record.GraphName == graphName).SingleOrDefault();
-                if (settings == null)
-                {
-                    settings = new GraphSettingsRecord
-                    {
-                        GraphName = graphName
-                    };
-                    _settingsRepository.Create(settings);
-                }
-
-                return settings;
-            });
+            part.SettingsField.Loader(() =>_settingsService.GetSettings(GetGraphContext().Name));
         }
     }
 }

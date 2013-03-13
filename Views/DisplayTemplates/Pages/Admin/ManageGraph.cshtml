@@ -66,27 +66,27 @@
             <legend>@T("Graph settings")</legend>
             <ol>
                 <li>
-                    @Html.CheckBoxFor(m => m.UseCache, T("Use caching"))
-                    <label for="@Html.FieldIdFor(m => m.UseCache)" class="forcheckbox">@T("Use cache")</label>
+                    @Html.CheckBoxFor(m => m.Settings.UseCache, T("Use caching"))
+                    <label for="@Html.FieldIdFor(m => m.Settings.UseCache)" class="forcheckbox">@T("Use cache")</label>
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.InitialZoomLevel, T("Initial zoom level"))
-                    @Html.TextBoxFor(m => m.InitialZoomLevel, new { @class = "text text-small" })
+                    @Html.LabelFor(m => m.Settings.InitialZoomLevel, T("Initial zoom level"))
+                    @Html.TextBoxFor(m => m.Settings.InitialZoomLevel, new { @class = "text text-small" })
                     <span class="hint">@T("The zoom level the graph is initially displayed on (should be zoom level count - 1).")</span>
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.ZoomLevelCount, T("Zoom level count"))
-                    @Html.TextBoxFor(m => m.ZoomLevelCount, new { @class = "text text-small" })
+                    @Html.LabelFor(m => m.Settings.ZoomLevelCount, T("Zoom level count"))
+                    @Html.TextBoxFor(m => m.Settings.ZoomLevelCount, new { @class = "text text-small" })
                     <span class="hint">@T("The number of zoom levels for the graph.")</span>
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.MaxDistance, T("Maximal distance"))
-                    @Html.TextBoxFor(m => m.MaxDistance, new { @class = "text text-small" })
+                    @Html.LabelFor(m => m.Settings.MaxDistance, T("Maximal distance"))
+                    @Html.TextBoxFor(m => m.Settings.MaxDistance, new { @class = "text text-small" })
                     <span class="hint">@T("Maximal distance (in hops) between two nodes that should be considered in an associativy connection.")</span>
                 </li>
                 <li>
-                    @Html.LabelFor(m => m.MaxConnectionCount, T("Maximal connection count"))
-                    @Html.TextBoxFor(m => m.MaxConnectionCount, new { @class = "text text-small" })
+                    @Html.LabelFor(m => m.Settings.MaxConnectionCount, T("Maximal connection count"))
+                    @Html.TextBoxFor(m => m.Settings.MaxConnectionCount, new { @class = "text text-small" })
                     <span class="hint">@T("Maximal number of connections displayed from the graph.")</span>
                 </li>
             </ol>

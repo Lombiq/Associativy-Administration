@@ -3,7 +3,7 @@ using Associativy.Models.Services;
 
 namespace Associativy.Administration.Models
 {
-    public class GraphSettingsRecord
+    public class GraphSettingsRecord : IGraphSettings
     {
         public virtual int Id { get; set; }
         [StringLength(1024)]

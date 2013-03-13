@@ -94,6 +94,10 @@
       <Project>{A8EE4964-4880-4EE1-AC0A-75492D89BBE8}</Project>
       <Name>Associativy</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Orchard.Caching\Orchard.Caching.csproj">
+      <Project>{7528bf74-25c7-4abe-883a-443b4eec4776}</Project>
+      <Name>Orchard.Caching</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Orchard.Roles\Orchard.Roles.csproj">
       <Project>{D10AD48F-407D-4DB5-A328-173EC7CB010F}</Project>
       <Name>Orchard.Roles</Name>
@@ -127,6 +131,7 @@
     <Compile Include="Migrations\FrontendAuthorizationMigrations.cs" />
     <Compile Include="Models\FrontendAuthorizationRecord.cs" />
     <Compile Include="Models\GraphSettingsRecord.cs" />
+    <Compile Include="Models\IGraphSettings.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyIndexPart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyManageGraphAuthorizationPart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyManageGraphAdhocGraphPart.cs" />
@@ -139,8 +144,10 @@
     <Compile Include="Permissions.cs" />
     <Compile Include="Services\AdhocGraphConnectionManager.cs" />
     <Compile Include="Services\FrontendAuthorizer.cs" />
+    <Compile Include="Services\GraphSettingsService.cs" />
     <Compile Include="Services\IAdhocGraphConnectionManager.cs" />
     <Compile Include="Services\IFrontendAuthorizer.cs" />
+    <Compile Include="Services\IGraphSettingsService.cs" />
     <Compile Include="Services\IImportExportService.cs" />
     <Compile Include="Services\ImportExportService.cs" />
     <Compile Include="Migrations\AdhocGraphMigrations.cs" />

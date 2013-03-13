@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Associativy.Administration.Models;
+using Associativy.Administration.Services;
 using Associativy.Frontends;
 using Associativy.Frontends.Models;
 using Orchard.ContentManagement;
@@ -10,12 +11,12 @@ namespace Associativy.Administration.EventHandlers
 {
     public class SettingsFrontendEngineEventHandler : IPageEventHandler
     {
-        private readonly IRepository<GraphSettingsRecord> _settingsRepository;
+        private readonly IGraphSettingsService _settingsService;
 
 
-        public SettingsFrontendEngineEventHandler(IRepository<GraphSettingsRecord> settingsRepository)
+        public SettingsFrontendEngineEventHandler(IGraphSettingsService settingsService)
         {
-            _settingsRepository = settingsRepository;
+            _settingsService = settingsService;
         }
 
 
@@ -28,7 +29,7 @@ namespace Associativy.Administration.EventHandlers
             if (pageContext.Group != FrontendsPageConfigs.Group) return;
 
             var config = pageContext.Page.As<IEngineConfigurationAspect>();
-            var settings = _settingsRepository.Fetch(record => record.GraphName == config.GraphDescriptor.Name).SingleOrDefault();
+            var settings = _settingsService.GetSettings(config.GraphDescriptor.Name);
             if (settings == null) return;
 
             config.MindSettings.UseCache = settings.UseCache;
