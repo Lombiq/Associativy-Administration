@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Associativy.Administration.Models;
 using Associativy.EventHandlers;
@@ -22,12 +23,12 @@ namespace Associativy.Administration.Services
         public AdhocGraphConnectionManager(
             IGraphDescriptor graphDescriptor,
             IRepository<AdhocGraphNodeConnector> nodeToNodeRecordRepository,
-            IMemoryConnectionManager memoryConnectionManager,
+            Func<IGraphDescriptor, IMemoryConnectionManager> memoryConnectionManagerFactory,
             IGraphEventHandler graphEventHandler)
             : base(graphDescriptor)
         {
             _nodeToNodeRecordRepository = nodeToNodeRecordRepository;
-            _memoryConnectionManager = memoryConnectionManager;
+            _memoryConnectionManager = memoryConnectionManagerFactory(graphDescriptor);
             _graphEventHandler = graphEventHandler;
         }
 
