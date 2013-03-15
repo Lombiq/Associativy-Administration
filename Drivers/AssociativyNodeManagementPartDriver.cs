@@ -88,6 +88,11 @@ namespace Associativy.Administration.Drivers
                 {
                     neighbourValues.ShowLabels = true;
 
+                    if (string.IsNullOrEmpty(neighbourValues.Labels))
+                    {
+                        connectionManager.DeleteFromNode(part);
+                    }
+
                     ProcessLabels(neighbourValues.Labels, nodeManager, newNeighbours =>
                         {
                             var newNeighbourIds = new HashSet<int>(newNeighbours.Select(node => node.Id));
