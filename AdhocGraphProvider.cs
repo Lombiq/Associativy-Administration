@@ -3,6 +3,7 @@ using Associativy.Administration.Services;
 using Associativy.GraphDiscovery;
 using Associativy.Services;
 using Orchard.Caching;
+using Orchard.Caching.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
@@ -15,10 +16,9 @@ namespace Associativy.Administration
     {
         private readonly IGraphServicesFactory _graphServicesFactory;
         private readonly IContentManager _contentManager;
-        private readonly ICacheManager _cacheManager;
-        private readonly ISignals _signals;
+        private readonly ICacheService _cacheService;
 
-        private const string _graphChangedSignal = "Associativy.Administration.AdhocGraphs.GraphsChanged";
+        private const string CacheKey = "Associativy.Administration.AdhocGraph";
 
         public Localizer T { get; set; }
 
@@ -26,13 +26,11 @@ namespace Associativy.Administration
         public AdhocGraphProvider(
             IGraphServicesFactory<IStandardMind, IAdhocGraphConnectionManager, IStandardPathFinder, IStandardNodeManager> graphServicesFactory,
             IContentManager contentManager,
-            ICacheManager cacheManager,
-            ISignals signals)
+            ICacheService cacheService)
         {
             _graphServicesFactory = graphServicesFactory;
             _contentManager = contentManager;
-            _cacheManager = cacheManager;
-            _signals = signals;
+            _cacheService = cacheService;
 
             T = NullLocalizer.Instance;
         }
@@ -40,9 +38,8 @@ namespace Associativy.Administration
 
         public void Describe(DescribeContext describeContext)
         {
-            var graphs = _cacheManager.Get("Associativy.Administration.AdhocGraph", ctx =>
+            var graphs = _cacheService.Get(CacheKey, () =>
             {
-                ctx.Monitor(_signals.When(_graphChangedSignal));
                 return _contentManager.Query("AssociativyGraph").Join<AssociativyGraphPartRecord>().List();
             });
 
@@ -175,7 +172,7 @@ namespace Associativy.Administration
         private void TriggerIfGraph(ContentContextBase context)
         {
             if (context.ContentType != "AssociativyGraph") return;
-            _signals.Trigger(_graphChangedSignal);
+            _cacheService.Remove(CacheKey);
         }
     }
 }
