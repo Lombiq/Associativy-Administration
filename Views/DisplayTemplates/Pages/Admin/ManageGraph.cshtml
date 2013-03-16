@@ -87,7 +87,7 @@
                 <li>
                     @Html.LabelFor(m => m.GraphSettings.MaxConnectionCount, T("Maximal connection count"))
                     @Html.TextBoxFor(m => m.GraphSettings.MaxConnectionCount, new { @class = "text text-small" })
-                    <span class="hint">@T("Maximal number of connections displayed from the graph.")</span>
+                    <span class="hint">@T("Maximal number of connections displayed from the graph. Keep in mind that since only nodes with at least one neighbour are displayed this means that the maximal amount of displayed nodes is twice the connection count.")</span>
                 </li>
             </ol>
         </fieldset>

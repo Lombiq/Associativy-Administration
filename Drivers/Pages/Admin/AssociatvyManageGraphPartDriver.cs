@@ -8,14 +8,14 @@ using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Data;
+using Orchard.Mvc;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
 {
     public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
     {
-        private readonly IGraphManager _graphManager;
+        private readonly IHttpContextAccessor _hca;
         private readonly IEngineManager _engineManager;
-        private readonly IWorkContextAccessor _workContextAccessor;
         private readonly IGraphSettingsService _settingsService;
 
         protected override string Prefix
@@ -25,14 +25,12 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
 
         public AssociatvyMageGraphPartDriver(
-            IGraphManager graphManager,
+            IHttpContextAccessor hca,
             IEngineManager engineManager,
-            IWorkContextAccessor workContextAccessor,
             IGraphSettingsService settingsService)
         {
-            _graphManager = graphManager;
+            _hca = hca;
             _engineManager = engineManager;
-            _workContextAccessor = workContextAccessor;
             _settingsService = settingsService;
         }
 
@@ -44,11 +42,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             {
                 SetupSettingsLoader(part);
 
-                var graphContext = GetGraphContext();
-
-                part.GraphDescriptor = _graphManager.FindGraph(graphContext);
                 part.FrontendEngines = _engineManager.GetEngines();
-                
 
                 return shapeHelper.DisplayTemplate(
                             TemplateName: "Pages/Admin/ManageGraph",
@@ -70,7 +64,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         private GraphContext GetGraphContext()
         {
-            return new GraphContext { Name = _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"] };
+            return new GraphContext { Name = _hca.Current().Request.QueryString["GraphName"] };
         }
 
         private void SetupSettingsLoader(AssociatvyManageGraphPart part)
