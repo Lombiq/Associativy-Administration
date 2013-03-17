@@ -3,6 +3,7 @@ using Associativy.Administration.Models;
 using Associativy.Administration.Services;
 using Associativy.Frontends;
 using Associativy.Frontends.Models;
+using Associativy.Services;
 using Orchard.ContentManagement;
 using Orchard.Data;
 using Piedone.HelpfulLibraries.Contents.DynamicPages;
@@ -12,11 +13,13 @@ namespace Associativy.Administration.EventHandlers
     public class SettingsFrontendEngineEventHandler : IPageEventHandler
     {
         private readonly IGraphSettingsService _settingsService;
+        private readonly IGraphCacheService _cacheService;
 
 
-        public SettingsFrontendEngineEventHandler(IGraphSettingsService settingsService)
+        public SettingsFrontendEngineEventHandler(IGraphSettingsService settingsService, IGraphCacheService cacheService)
         {
             _settingsService = settingsService;
+            _cacheService = cacheService;
         }
 
 
@@ -32,7 +35,7 @@ namespace Associativy.Administration.EventHandlers
             var settings = _settingsService.GetSettings(config.GraphDescriptor.Name);
             if (settings == null) return;
 
-            config.MindSettings.UseCache = settings.UseCache;
+            _cacheService.SetEnabledStateForRequest(config.GraphDescriptor, settings.UseCache);
             config.MindSettings.MaxDistance = settings.MaxDistance;
             config.GraphSettings.InitialZoomLevel = settings.InitialZoomLevel;
             config.GraphSettings.ZoomLevelCount = settings.ZoomLevelCount;
