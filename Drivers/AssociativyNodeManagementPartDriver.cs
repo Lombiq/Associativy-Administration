@@ -151,10 +151,10 @@ namespace Associativy.Administration.Drivers
         {
             if (string.IsNullOrEmpty(labels)) return;
 
-            var trimmedLabels = labels.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim());
-            var neighbours = nodeManager.GetManyByLabelQuery(trimmedLabels).List();
+            var trimmedLabels = labels.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim()).ToArray();
+            var neighbours = nodeManager.GetByLabelQuery(trimmedLabels).List();
 
-            if (trimmedLabels.Count() != neighbours.Count()) return;
+            if (trimmedLabels.Length != neighbours.Count()) return;
 
             processor(neighbours);
         }
