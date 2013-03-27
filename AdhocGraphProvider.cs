@@ -2,7 +2,6 @@
 using Associativy.Administration.Services;
 using Associativy.GraphDiscovery;
 using Associativy.Services;
-using Orchard.Caching;
 using Orchard.Caching.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
