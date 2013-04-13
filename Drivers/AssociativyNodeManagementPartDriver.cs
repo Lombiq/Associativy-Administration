@@ -56,7 +56,7 @@ namespace Associativy.Administration.Drivers
                         if (values.NeighbourCount <= _settingsService.GetSettings(descriptor.Name).MaxConnectionCount)
                         {
                             values.ShowLabels = true;
-                            values.Labels = string.Join(", ", services.NodeManager.GetManyQuery(services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label));
+                            values.Labels = string.Join(", ", services.NodeManager.GetQuery().ForContentItems(services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label));
                         }
 
                         part.NeighbourValues.Add(values);
