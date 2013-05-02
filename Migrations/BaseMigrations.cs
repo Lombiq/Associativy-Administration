@@ -2,15 +2,27 @@ using Associativy.Administration.Models;
 using Orchard.ContentManagement.MetaData;
 using Orchard.Core.Contents.Extensions;
 using Orchard.Data.Migration;
+using Orchard.Localization;
 
 namespace Associativy.Administration.Migrations
 {
     public class BaseMigrations : DataMigrationImpl
     {
+        public Localizer T { get; set; }
+
+
+        public BaseMigrations()
+        {
+            T = NullLocalizer.Instance;
+        }
+
+
         public int Create()
         {
             ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
-                builder => builder.Attachable());
+                builder => builder
+                    .Attachable()
+                    .WithDescription(T("Provides functionality to edit the connections of the node in each Associativy graph it's part of.").Text));
 
             SchemaBuilder.CreateTable(typeof(GraphSettingsRecord).Name,
                 table => table
@@ -36,6 +48,10 @@ namespace Associativy.Administration.Migrations
                 table => table
                     .AddColumn<int>("MaxConnectionCount")
             );
+
+            ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
+                builder => builder
+                    .WithDescription(T("Provides functionality to edit the connections of the node in each Associativy graph it's part of.").Text));
 
 
             return 2;

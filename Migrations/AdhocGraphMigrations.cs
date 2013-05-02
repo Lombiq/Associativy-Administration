@@ -5,7 +5,9 @@ using Orchard.ContentManagement.MetaData;
 using Orchard.Data;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
+using Orchard.Localization;
 using Piedone.HelpfulLibraries.Libraries.Utilities;
+using Orchard.Core.Contents.Extensions;
 
 namespace Associativy.Administration.Migrations
 {
@@ -16,6 +18,8 @@ namespace Associativy.Administration.Migrations
         private readonly IRepository<AdhocGraphNodeConnector> _connectorRepository;
         private readonly IRepository<AssociativyGraphPartRecord> _graphPartRepository;
 
+        public Localizer T { get; set; }
+
 
         public AdhocGraphMigrations(
             IMappingsManager mappingsManager,
@@ -25,6 +29,8 @@ namespace Associativy.Administration.Migrations
             _mappingsManager = mappingsManager;
             _connectorRepository = connectorRepository;
             _graphPartRepository = graphPartRepository;
+
+            T = NullLocalizer.Instance;
         }
 
 
@@ -50,6 +56,10 @@ namespace Associativy.Administration.Migrations
                     .Column<string>("ContainedContentTypes", column => column.Unlimited())
             );
 
+            ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyGraphPart).Name,
+                builder => builder
+                    .WithDescription(T("Stores settings of an ad-hoc Associativy graph.").Text));
+
             ContentDefinitionManager.AlterTypeDefinition("AssociativyGraph",
                 cfg => cfg
                     .WithPart("CommonPart")
@@ -57,7 +67,7 @@ namespace Associativy.Administration.Migrations
             );
 
 
-            return 3;
+            return 4;
         }
 
         public int UpdateFrom1()
@@ -96,6 +106,16 @@ namespace Associativy.Administration.Migrations
 
 
             return 3;
+        }
+
+        public int UpdateFrom3()
+        {
+            ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyGraphPart).Name,
+                builder => builder
+                    .WithDescription(T("Stores settings of an ad-hoc Associativy graph.").Text));
+
+
+            return 4;
         }
     }
 }
