@@ -2,12 +2,12 @@
 using Associativy.Administration.Models;
 using Associativy.Extensions;
 using Orchard.ContentManagement.MetaData;
+using Orchard.Core.Contents.Extensions;
 using Orchard.Data;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
 using Piedone.HelpfulLibraries.Libraries.Utilities;
-using Orchard.Core.Contents.Extensions;
 
 namespace Associativy.Administration.Migrations
 {
