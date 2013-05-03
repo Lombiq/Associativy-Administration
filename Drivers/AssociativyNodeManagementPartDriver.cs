@@ -34,10 +34,6 @@ namespace Associativy.Administration.Drivers
         }
 
 
-        //protected override DriverResult Display(AssociativyNodeManagementPart part, string displayType, dynamic shapeHelper)
-        //{
-        //}
-
         // GET
         protected override DriverResult Editor(AssociativyNodeManagementPart part, dynamic shapeHelper)
         {
@@ -141,6 +137,7 @@ namespace Associativy.Administration.Drivers
             return null;
             //return Editor(part, shapeHelper);
         }
+
 
         private void FillGraphDescriptors(AssociativyNodeManagementPart part)
         {

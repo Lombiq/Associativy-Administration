@@ -10,7 +10,6 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 {
     public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
     {
-        private readonly IHttpContextAccessor _hca;
         private readonly IEngineManager _engineManager;
         private readonly IGraphSettingsService _settingsService;
 
@@ -21,11 +20,9 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
 
         public AssociatvyMageGraphPartDriver(
-            IHttpContextAccessor hca,
             IEngineManager engineManager,
             IGraphSettingsService settingsService)
         {
-            _hca = hca;
             _engineManager = engineManager;
             _settingsService = settingsService;
         }
@@ -58,14 +55,9 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             return Display(part, "Detail", shapeHelper);
         }
 
-        private GraphContext GetGraphContext()
-        {
-            return new GraphContext { Name = _hca.Current().Request.QueryString["GraphName"] };
-        }
-
         private void SetupSettingsLoader(AssociatvyManageGraphPart part)
         {
-            part.SettingsField.Loader(() =>_settingsService.GetSettings(GetGraphContext().Name));
+            part.SettingsField.Loader(() =>_settingsService.GetSettings(part.GraphDescriptor.Name));
         }
     }
 }
