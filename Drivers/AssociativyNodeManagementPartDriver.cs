@@ -16,6 +16,7 @@ namespace Associativy.Administration.Drivers
         private readonly IGraphManager _graphManager;
         private readonly IAssociativyServices _associativyServices;
         private readonly IGraphSettingsService _settingsService;
+        private readonly IContentManager _contentManager;
 
         protected override string Prefix
         {
@@ -26,11 +27,13 @@ namespace Associativy.Administration.Drivers
         public AssociativyNodeManagementPartDriver(
             IGraphManager graphManager,
             IAssociativyServices associativyServices,
-            IGraphSettingsService settingsService)
+            IGraphSettingsService settingsService,
+            IContentManager contentManager)
         {
             _graphManager = graphManager;
             _associativyServices = associativyServices;
             _settingsService = settingsService;
+            _contentManager = contentManager;
         }
 
 
@@ -77,10 +80,11 @@ namespace Associativy.Administration.Drivers
             {
                 var connectionManager = descriptor.Services.ConnectionManager;
                 var nodeManager = descriptor.Services.NodeManager;
+                var settings = _settingsService.GetSettings(descriptor.Name);
                 var neighbourValues = part.NeighbourValues[labelsIndex];
                 neighbourValues.NeighbourCount = connectionManager.GetNeighbourCount(part);
 
-                if (neighbourValues.NeighbourCount <= _settingsService.GetSettings(descriptor.Name).MaxConnectionCount)
+                if (neighbourValues.NeighbourCount <= settings.MaxConnectionCount)
                 {
                     neighbourValues.ShowLabels = true;
 
@@ -89,7 +93,7 @@ namespace Associativy.Administration.Drivers
                         connectionManager.DeleteFromNode(part);
                     }
 
-                    ProcessLabels(neighbourValues.Labels, nodeManager, newNeighbours =>
+                    ProcessLabels(neighbourValues.Labels, nodeManager, settings, newNeighbours =>
                         {
                             var newNeighbourIds = new HashSet<int>(newNeighbours.Select(node => node.Id));
                             var oldNeighbourIds = connectionManager.GetNeighbourIds(part.ContentItem.Id);
@@ -111,7 +115,7 @@ namespace Associativy.Administration.Drivers
                 }
                 else
                 {
-                    ProcessLabels(neighbourValues.AddLabels, nodeManager, addNeighbours =>
+                    ProcessLabels(neighbourValues.AddLabels, nodeManager, settings, addNeighbours =>
                         {
                             foreach (var neighbour in addNeighbours)
                             {
@@ -119,7 +123,7 @@ namespace Associativy.Administration.Drivers
                             }
                         });
 
-                    ProcessLabels(neighbourValues.RemoveLabels, nodeManager, removeNeighbours =>
+                    ProcessLabels(neighbourValues.RemoveLabels, nodeManager, settings, removeNeighbours =>
                     {
                         foreach (var neighbour in removeNeighbours)
                         {
@@ -144,14 +148,27 @@ namespace Associativy.Administration.Drivers
             part.GraphDescriptors = _graphManager.FindDistinctGraphs(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
         }
 
-        private static void ProcessLabels(string labels, INodeManager nodeManager, Action<IEnumerable<ContentItem>> processor)
+        private void ProcessLabels(string labels, INodeManager nodeManager, IGraphSettings settings, Action<IEnumerable<ContentItem>> processor)
         {
             if (string.IsNullOrEmpty(labels)) return;
 
             var trimmedLabels = labels.Trim().Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries).Select(label => label.Trim()).ToArray();
-            var neighbours = nodeManager.GetByLabelQuery(trimmedLabels).List();
+            var neighbours = nodeManager.GetByLabelQuery(trimmedLabels).List().ToList();
 
-            if (trimmedLabels.Length != neighbours.Count()) return;
+            if (trimmedLabels.Length != neighbours.Count())
+            {
+                if (string.IsNullOrEmpty(settings.ImplicitlyCreatableContentType)) return;
+
+                var implicitlyCreatedLabels = trimmedLabels.Except(neighbours.Select(item => item.As<IAssociativyNodeLabelAspect>().Label));
+                foreach (var label in implicitlyCreatedLabels)
+                {
+                    var item = _contentManager.New(settings.ImplicitlyCreatableContentType);
+                    _contentManager.Create(item);
+                    item.As<IImplicitlyCreatableAssociativyNodeAspect>().Label = label;
+                    _contentManager.Publish(item);
+                    neighbours.Add(item);
+                }
+            }
 
             processor(neighbours);
         }

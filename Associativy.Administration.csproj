@@ -114,6 +114,7 @@
     <Compile Include="AdministrationPageConfigs.cs" />
     <Compile Include="AdminMenu.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Drivers\ImplicitlyCreatableAssociativyNodePartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexPartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphAuthorizationPartDiver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphAdhocGraphPartDriver.cs" />
@@ -127,11 +128,14 @@
     <Compile Include="EventHandlers\AdhocGraphsAdminEventHandler.cs" />
     <Compile Include="EventHandlers\SettingsFrontendEngineEventHandler.cs" />
     <Compile Include="Handlers\AssociativyGraphPartHandler.cs" />
+    <Compile Include="Handlers\ImplicitlyCreatableAssociativyNodePartHandler.cs" />
     <Compile Include="Migrations\BaseMigrations.cs" />
     <Compile Include="Migrations\FrontendAuthorizationMigrations.cs" />
     <Compile Include="Models\FrontendAuthorizationRecord.cs" />
     <Compile Include="Models\GraphSettingsRecord.cs" />
     <Compile Include="Models\IGraphSettings.cs" />
+    <Compile Include="Models\IImplicitlyCreatableAssociativyNodeAspect.cs" />
+    <Compile Include="Models\ImplicitlyCreatableAssociativyNodePart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyIndexPart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyManageGraphAuthorizationPart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyManageGraphAdhocGraphPart.cs" />

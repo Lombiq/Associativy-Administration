@@ -19,6 +19,11 @@ namespace Associativy.Administration.Migrations
 
         public int Create()
         {
+            ContentDefinitionManager.AlterPartDefinition(typeof(ImplicitlyCreatableAssociativyNodePart).Name,
+                builder => builder
+                    .Attachable()
+                    .WithDescription(T("When attached it's possible to create its content item through Associativy Administration services by specifying a non-existent label.").Text));
+
             ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
                 builder => builder
                     .Attachable()
@@ -33,6 +38,7 @@ namespace Associativy.Administration.Migrations
                     .Column<int>("ZoomLevelCount")
                     .Column<int>("MaxDistance")
                     .Column<int>("MaxConnectionCount")
+                    .Column<string>("ImplicitlyCreatableContentType", column => column.WithLength(1024))
             ).AlterTable(typeof(GraphSettingsRecord).Name,
                 table => table
                     .CreateIndex("GraphName", new string[] { "GraphName" })
@@ -45,9 +51,17 @@ namespace Associativy.Administration.Migrations
         public int UpdateFrom1()
         {
             SchemaBuilder.AlterTable(typeof(GraphSettingsRecord).Name,
-                table => table
-                    .AddColumn<int>("MaxConnectionCount")
+                table =>
+                {
+                    table.AddColumn<int>("MaxConnectionCount");
+                    table.AddColumn<string>("ImplicitlyCreatableContentType", column => column.WithLength(1024));
+                }
             );
+
+            ContentDefinitionManager.AlterPartDefinition(typeof(ImplicitlyCreatableAssociativyNodePart).Name,
+                builder => builder
+                    .Attachable()
+                    .WithDescription(T("When attached it's possible to create its content item through Associativy Administration services by specifying a non-existent label.").Text));
 
             ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
                 builder => builder

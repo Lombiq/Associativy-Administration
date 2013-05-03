@@ -13,17 +13,20 @@ namespace Associativy.Administration.Models
         public virtual int ZoomLevelCount { get; set; }
         public virtual int MaxDistance { get; set; }
         public virtual int MaxConnectionCount { get; set; }
+        [StringLength(1024)]
+        public virtual string ImplicitlyCreatableContentType { get; set; }
 
 
         public GraphSettingsRecord()
         {
-            var def = MindSettings.Default;
+            var defaultSettings = MindSettings.Default;
 
             UseCache = false;
             InitialZoomLevel = 0;
             ZoomLevelCount = 10;
-            MaxDistance = def.MaxDistance;
+            MaxDistance = defaultSettings.MaxDistance;
             MaxConnectionCount = 50;
+            ImplicitlyCreatableContentType = null;
         }
     }
 }

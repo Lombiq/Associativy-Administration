@@ -89,6 +89,11 @@
                     @Html.TextBoxFor(m => m.GraphSettings.MaxConnectionCount, new { @class = "text text-small" })
                     <span class="hint">@T("Maximal number of connections displayed from the graph. Keep in mind that since only nodes with at least one neighbour are displayed this means that the maximal amount of displayed nodes is twice the connection count.")</span>
                 </li>
+                <li>
+                    @Html.LabelFor(m => m.GraphSettings.ImplicitlyCreatableContentType, T("Implicitly creatable content type"))
+                    @Html.TextBoxFor(m => m.GraphSettings.ImplicitlyCreatableContentType, new { @class = "text textMedium" })
+                    <span class="hint">@T("You'll be able to create new items from the content type specified here through the Node Management Part by specifying a not existing label.")</span>
+                </li>
             </ol>
         </fieldset>
 </div>

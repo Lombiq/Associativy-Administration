@@ -9,5 +9,6 @@ namespace Associativy.Administration.Models
         int ZoomLevelCount { get; set; }
         int MaxDistance { get; set; }
         int MaxConnectionCount { get; set; }
+        string ImplicitlyCreatableContentType { get; set; }
     }
 }
