@@ -3,7 +3,8 @@ using Associativy.Administration.Models;
 using Orchard.Caching.Services;
 using Orchard.Data;
 
-namespace Associativy.Administration.Services {
+namespace Associativy.Administration.Services
+{
     public class GraphSettingsService : IGraphSettingsService
     {
         private readonly ICacheService _cacheService;
