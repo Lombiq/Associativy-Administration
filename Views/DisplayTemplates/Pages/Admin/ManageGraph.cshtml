@@ -3,8 +3,14 @@
            
 @{
     Layout.Title = Model.GraphDescriptor.DisplayName.ToString();
+    
     Script.Require("jQuery").AtFoot();
+    
     var graphInfo = Model.GraphDescriptor.Services.ConnectionManager.GetGraphInfo();
+    var implicitlyCreatableTypesSelectListItems = new List<SelectListItem> { new SelectListItem { Text = T("None").Text, Value = string.Empty } };
+    implicitlyCreatableTypesSelectListItems
+        .AddRange(Model.ImplicitlyCreatableContentTypes
+            .Select(type => new SelectListItem { Text = type.DisplayName, Value = type.Name }));
 }
 
 <h2>
@@ -91,8 +97,9 @@
                 </li>
                 <li>
                     @Html.LabelFor(m => m.GraphSettings.ImplicitlyCreatableContentType, T("Implicitly creatable content type"))
-                    @Html.TextBoxFor(m => m.GraphSettings.ImplicitlyCreatableContentType, new { @class = "text textMedium" })
-                    <span class="hint">@T("You'll be able to create new items from the content type specified here through the Node Management Part by specifying a not existing label.")</span>
+                    @Html.DropDownListFor(m => m.GraphSettings.ImplicitlyCreatableContentType, implicitlyCreatableTypesSelectListItems)
+                    @*@Html.TextBoxFor(m => m.GraphSettings.ImplicitlyCreatableContentType, new { @class = "text textMedium" })*@
+                    <span class="hint">@T("You'll be able to create new items from the content type specified here through the Node Management Part by specifying a not existing label. Only types that have a part capable of handling implicit creation are listed.")</span>
                 </li>
             </ol>
         </fieldset>

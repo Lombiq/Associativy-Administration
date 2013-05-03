@@ -1,9 +1,12 @@
-﻿using Associativy.Administration.Models.Pages.Admin;
+﻿using System.Collections.Generic;
+using Associativy.Administration.Models.Pages.Admin;
 using Associativy.Administration.Services;
 using Associativy.Frontends.EngineDiscovery;
 using Associativy.GraphDiscovery;
+using Associativy.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Orchard.ContentManagement.MetaData.Models;
 using Orchard.Mvc;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
@@ -12,6 +15,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
     {
         private readonly IEngineManager _engineManager;
         private readonly IGraphSettingsService _settingsService;
+        private readonly IContentManager _contentManager;
 
         protected override string Prefix
         {
@@ -21,10 +25,12 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         public AssociatvyMageGraphPartDriver(
             IEngineManager engineManager,
-            IGraphSettingsService settingsService)
+            IGraphSettingsService settingsService,
+            IContentManager contentManager)
         {
             _engineManager = engineManager;
             _settingsService = settingsService;
+            _contentManager = contentManager;
         }
 
 
@@ -33,7 +39,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             return ContentShape("Pages_AssociatvyManageGraph",
             () =>
             {
-                SetupSettingsLoader(part);
+                SetupLazyLoaders(part);
 
                 part.FrontendEngines = _engineManager.GetEngines();
 
@@ -46,7 +52,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         protected override DriverResult Editor(AssociatvyManageGraphPart part, IUpdateModel updater, dynamic shapeHelper)
         {
-            SetupSettingsLoader(part);
+            SetupLazyLoaders(part);
 
             updater.TryUpdateModel(part, Prefix, null, null);
 
@@ -55,9 +61,25 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             return Display(part, "Detail", shapeHelper);
         }
 
-        private void SetupSettingsLoader(AssociatvyManageGraphPart part)
+        private void SetupLazyLoaders(AssociatvyManageGraphPart part)
         {
-            part.SettingsField.Loader(() =>_settingsService.GetSettings(part.GraphDescriptor.Name));
+            part.SettingsField.Loader(() => _settingsService.GetSettings(part.GraphDescriptor.Name));
+            part.ImplicitlyCreatableContentTypesField.Loader(() =>
+                {
+                    var implicitlyCreatableTypes = new List<ContentTypeDefinition>();
+
+                    foreach (var type in part.GraphDescriptor.ContentTypes)
+                    {
+                        // This seems to be the only way to check the existence of an aspect
+                        var item = _contentManager.New(type);
+                        if (item.As<IImplicitlyCreatableAssociativyNodeAspect>() != null)
+                        {
+                            implicitlyCreatableTypes.Add(item.TypeDefinition);
+                        }
+                    }
+
+                    return implicitlyCreatableTypes;
+                });
         }
     }
 }
