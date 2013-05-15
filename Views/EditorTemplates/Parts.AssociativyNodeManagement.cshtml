@@ -50,7 +50,7 @@
                 <script type="text/javascript">
                     $(function () {
                         $("#associativy-tabs-@provider.Name").find("input[type=text]").each(function () {
-                            $.associativy.autoComplete.labels("#" + $(this).attr("id"), "@Url.RouteUrl("Associativy.Frontends.AutoComplete.FetchSimilarLabels", new { GraphName = provider.Name })");
+                            $.associativy.autoComplete.labels("#" + $(this).attr("id"), "@Url.Action("FetchSimilarLabels", "AutoComplete", new { Area = "Associativy.Frontends", GraphName = provider.Name })");
                         });
                     });
                 </script>
