@@ -8,26 +8,17 @@ namespace Associativy.Administration.Migrations
 {
     public class BaseMigrations : DataMigrationImpl
     {
-        public Localizer T { get; set; }
-
-
-        public BaseMigrations()
-        {
-            T = NullLocalizer.Instance;
-        }
-
-
         public int Create()
         {
             ContentDefinitionManager.AlterPartDefinition(typeof(ImplicitlyCreatableAssociativyNodePart).Name,
                 builder => builder
                     .Attachable()
-                    .WithDescription(T("When attached it's possible to create its content item through Associativy Administration services by specifying a non-existent label.").Text));
+                    .WithDescription("When attached it's possible to create its content item through Associativy Administration services by specifying a non-existent label."));
 
             ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
                 builder => builder
                     .Attachable()
-                    .WithDescription(T("Provides functionality to edit the connections of the node in each Associativy graph it's part of.").Text));
+                    .WithDescription("Provides functionality to edit the connections of the node in each Associativy graph it's part of."));
 
             SchemaBuilder.CreateTable(typeof(GraphSettingsRecord).Name,
                 table => table
@@ -61,11 +52,11 @@ namespace Associativy.Administration.Migrations
             ContentDefinitionManager.AlterPartDefinition(typeof(ImplicitlyCreatableAssociativyNodePart).Name,
                 builder => builder
                     .Attachable()
-                    .WithDescription(T("When attached it's possible to create its content item through Associativy Administration services by specifying a non-existent label.").Text));
+                    .WithDescription("When attached it's possible to create its content item through Associativy Administration services by specifying a non-existent label."));
 
             ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
                 builder => builder
-                    .WithDescription(T("Provides functionality to edit the connections of the node in each Associativy graph it's part of.").Text));
+                    .WithDescription("Provides functionality to edit the connections of the node in each Associativy graph it's part of."));
 
 
             return 2;

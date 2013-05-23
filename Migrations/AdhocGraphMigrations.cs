@@ -18,8 +18,6 @@ namespace Associativy.Administration.Migrations
         private readonly IRepository<AdhocGraphNodeConnector> _connectorRepository;
         private readonly IRepository<AssociativyGraphPartRecord> _graphPartRepository;
 
-        public Localizer T { get; set; }
-
 
         public AdhocGraphMigrations(
             IMappingsManager mappingsManager,
@@ -29,8 +27,6 @@ namespace Associativy.Administration.Migrations
             _mappingsManager = mappingsManager;
             _connectorRepository = connectorRepository;
             _graphPartRepository = graphPartRepository;
-
-            T = NullLocalizer.Instance;
         }
 
 
@@ -58,7 +54,7 @@ namespace Associativy.Administration.Migrations
 
             ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyGraphPart).Name,
                 builder => builder
-                    .WithDescription(T("Stores settings of an ad-hoc Associativy graph.").Text));
+                    .WithDescription("Stores settings of an ad-hoc Associativy graph."));
 
             ContentDefinitionManager.AlterTypeDefinition("AssociativyGraph",
                 cfg => cfg
@@ -112,7 +108,7 @@ namespace Associativy.Administration.Migrations
         {
             ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyGraphPart).Name,
                 builder => builder
-                    .WithDescription(T("Stores settings of an ad-hoc Associativy graph.").Text));
+                    .WithDescription("Stores settings of an ad-hoc Associativy graph."));
 
 
             return 4;
