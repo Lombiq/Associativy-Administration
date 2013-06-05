@@ -22,7 +22,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             return ContentShape("Pages_AssociativyIndex",
             () =>
             {
-                part.GraphCount = _associativyServices.GraphManager.FindDistinctGraphs(new GraphContext()).Count();
+                part.GraphCount = _associativyServices.GraphManager.FindDistinctGraphs(GraphContext.Empty).Count();
 
                 return shapeHelper.DisplayTemplate(
                             TemplateName: "Pages/Admin/Index",

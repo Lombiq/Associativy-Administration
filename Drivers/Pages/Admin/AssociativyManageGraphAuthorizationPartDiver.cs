@@ -6,6 +6,7 @@ using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Environment.Extensions;
+using Orchard.Mvc;
 using Orchard.Roles.Services;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
@@ -15,7 +16,6 @@ namespace Associativy.Administration.Drivers.Pages.Admin
     {
         private readonly IFrontendAuthorizer _frontendAuthorizer;
         private readonly IRoleService _roleService;
-        private readonly IWorkContextAccessor _workContextAccessor;
 
         protected override string Prefix
         {
@@ -25,12 +25,10 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         public AssociativyManageGraphAuthorizationPartDiver(
             IFrontendAuthorizer frontendAuthorizer,
-            IRoleService roleService,
-            IWorkContextAccessor workContextAccessor)
+            IRoleService roleService)
         {
             _frontendAuthorizer = frontendAuthorizer;
             _roleService = roleService;
-            _workContextAccessor = workContextAccessor;
         }
 
 
@@ -39,7 +37,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             return ContentShape("Pages_AssociativyManageGraphAuthorization",
             () =>
             {
-                var authorizedRoles = _frontendAuthorizer.GetAuthorizedToView(CurrentContext());
+                var authorizedRoles = _frontendAuthorizer.GetAuthorizedToView(CurrentContext(part));
                 part.Roles = _roleService.GetRoles().Select(role => new RoleEntry { Name = role.Name, IsAuthorized = authorizedRoles.Contains(role.Name) }).ToList();
 
                 return shapeHelper.DisplayTemplate(
@@ -53,15 +51,15 @@ namespace Associativy.Administration.Drivers.Pages.Admin
         {
             if (updater.TryUpdateModel(part, Prefix, null, null))
             {
-                _frontendAuthorizer.SetAuthorizedToView(CurrentContext(), part.Roles.Where(role => role.IsAuthorized).Select(role => role.Name));
+                _frontendAuthorizer.SetAuthorizedToView(CurrentContext(part), part.Roles.Where(role => role.IsAuthorized).Select(role => role.Name));
             }
 
             return Display(part, "Detail", shapeHelper);
         }
 
-        private IGraphContext CurrentContext()
+        private static IGraphContext CurrentContext(AssociativyManageGraphAuthorizationPart part)
         {
-            return new GraphContext { Name = _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"] };
+            return part.As<AssociatvyManageGraphPart>().GraphDescriptor.MaximalContext();
         }
     }
 }

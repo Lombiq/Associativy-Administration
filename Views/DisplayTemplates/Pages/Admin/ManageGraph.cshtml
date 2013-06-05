@@ -72,7 +72,7 @@
             <legend>@T("Graph settings")</legend>
             <ol>
                 <li>
-                    @Html.CheckBoxFor(m => m.GraphSettings.UseCache, T("Use caching"))
+                    @Html.CheckBoxFor(m => m.GraphSettings.UseCache)
                     <label for="@Html.FieldIdFor(m => m.GraphSettings.UseCache)" class="forcheckbox">@T("Use cache")</label>
                 </li>
                 <li>
