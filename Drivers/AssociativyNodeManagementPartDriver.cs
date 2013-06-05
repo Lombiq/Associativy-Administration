@@ -145,7 +145,7 @@ namespace Associativy.Administration.Drivers
 
         private void FillGraphDescriptors(AssociativyNodeManagementPart part)
         {
-            part.GraphDescriptors = _graphManager.FindDistinctGraphs(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
+            part.GraphDescriptors = _graphManager.FindGraphs(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
         }
 
         private void ProcessLabels(string labels, INodeManager nodeManager, IGraphSettings settings, Action<IEnumerable<ContentItem>> processor)
