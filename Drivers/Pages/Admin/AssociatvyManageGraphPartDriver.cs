@@ -34,18 +34,23 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         protected override DriverResult Display(AssociatvyManageGraphPart part, string displayType, dynamic shapeHelper)
         {
+            return Editor(part, shapeHelper);
+        }
+
+        protected override DriverResult Editor(AssociatvyManageGraphPart part, dynamic shapeHelper)
+        {
             return ContentShape("Pages_AssociatvyManageGraph",
-            () =>
-            {
-                SetupLazyLoaders(part);
+                () =>
+                {
+                    SetupLazyLoaders(part);
 
-                part.FrontendEngines = _engineManager.GetEngines();
+                    part.FrontendEngines = _engineManager.GetEngines();
 
-                return shapeHelper.DisplayTemplate(
-                            TemplateName: "Pages/Admin/ManageGraph",
-                            Model: part,
-                            Prefix: Prefix);
-            });
+                    return shapeHelper.DisplayTemplate(
+                                TemplateName: "Pages/Admin/ManageGraph",
+                                Model: part,
+                                Prefix: Prefix);
+                });
         }
 
         protected override DriverResult Editor(AssociatvyManageGraphPart part, IUpdateModel updater, dynamic shapeHelper)

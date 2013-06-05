@@ -34,17 +34,22 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         protected override DriverResult Display(AssociativyManageGraphAuthorizationPart part, string displayType, dynamic shapeHelper)
         {
-            return ContentShape("Pages_AssociativyManageGraphAuthorization",
-            () =>
-            {
-                var authorizedRoles = _frontendAuthorizer.GetAuthorizedToView(CurrentContext(part));
-                part.Roles = _roleService.GetRoles().Select(role => new RoleEntry { Name = role.Name, IsAuthorized = authorizedRoles.Contains(role.Name) }).ToList();
+            return Editor(part, shapeHelper);
+        }
 
-                return shapeHelper.DisplayTemplate(
-                            TemplateName: "Pages/Admin/ManageGraphAuthorization",
-                            Model: part,
-                            Prefix: Prefix);
-            });
+        protected override DriverResult Editor(AssociativyManageGraphAuthorizationPart part, dynamic shapeHelper)
+        {
+            return ContentShape("Pages_AssociativyManageGraphAuthorization",
+                () =>
+                {
+                    var authorizedRoles = _frontendAuthorizer.GetAuthorizedToView(CurrentContext(part));
+                    part.Roles = _roleService.GetRoles().Select(role => new RoleEntry { Name = role.Name, IsAuthorized = authorizedRoles.Contains(role.Name) }).ToList();
+
+                    return shapeHelper.DisplayTemplate(
+                                TemplateName: "Pages/Admin/ManageGraphAuthorization",
+                                Model: part,
+                                Prefix: Prefix);
+                });
         }
 
         protected override DriverResult Editor(AssociativyManageGraphAuthorizationPart part, IUpdateModel updater, dynamic shapeHelper)
@@ -54,7 +59,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
                 _frontendAuthorizer.SetAuthorizedToView(CurrentContext(part), part.Roles.Where(role => role.IsAuthorized).Select(role => role.Name));
             }
 
-            return Display(part, "Detail", shapeHelper);
+            return Editor(part, shapeHelper);
         }
 
         private static IGraphContext CurrentContext(AssociativyManageGraphAuthorizationPart part)
