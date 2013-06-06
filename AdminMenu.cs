@@ -21,7 +21,9 @@ namespace Associativy.Administration
 
         public void GetNavigation(NavigationBuilder builder)
         {
-            builder/*.AddImageSet("associativy")*/.Add(T("Associativy"), "1.5", BuildMenu);
+            builder
+                .AddImageSet("associativy")
+                .Add(T("Associativy"), "1.5", BuildMenu);
 
             // This is for tabs (LocalNav)
             //builder//.AddImageSet("associativy")
