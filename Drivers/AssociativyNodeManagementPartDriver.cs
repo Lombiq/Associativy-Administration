@@ -8,8 +8,6 @@ using Associativy.Models;
 using Associativy.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
-using Piedone.HelpfulLibraries.KeyValueStore;
-using Associativy.Administration;
 
 namespace Associativy.Administration.Drivers
 {

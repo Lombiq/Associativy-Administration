@@ -6,7 +6,6 @@ using Orchard.Core.Contents.Extensions;
 using Orchard.Data;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
-using Orchard.Localization;
 using Piedone.HelpfulLibraries.Libraries.Utilities;
 
 namespace Associativy.Administration.Migrations
