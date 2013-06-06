@@ -8,6 +8,8 @@ using Associativy.Models;
 using Associativy.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
+using Piedone.HelpfulLibraries.KeyValueStore;
+using Associativy.Administration;
 
 namespace Associativy.Administration.Drivers
 {
@@ -15,7 +17,7 @@ namespace Associativy.Administration.Drivers
     {
         private readonly IGraphManager _graphManager;
         private readonly IAssociativyServices _associativyServices;
-        private readonly IGraphSettingsService _settingsService;
+        private readonly IKeyValueStore _keyValueStore;
         private readonly IContentManager _contentManager;
 
         protected override string Prefix
@@ -27,12 +29,12 @@ namespace Associativy.Administration.Drivers
         public AssociativyNodeManagementPartDriver(
             IGraphManager graphManager,
             IAssociativyServices associativyServices,
-            IGraphSettingsService settingsService,
+            IKeyValueStore keyValueStore,
             IContentManager contentManager)
         {
             _graphManager = graphManager;
             _associativyServices = associativyServices;
-            _settingsService = settingsService;
+            _keyValueStore = keyValueStore;
             _contentManager = contentManager;
         }
 
@@ -52,7 +54,7 @@ namespace Associativy.Administration.Drivers
                         var services = descriptor.Services;
                         var values = new NeighbourValues { NeighbourCount = services.ConnectionManager.GetNeighbourCount(part) };
 
-                        if (values.NeighbourCount <= _settingsService.GetSettings(descriptor.Name).MaxConnectionCount)
+                        if (values.NeighbourCount <= _keyValueStore.GetGraphSettings(descriptor.Name).NeighboursDisplayedMaxCount)
                         {
                             values.ShowLabels = true;
                             values.Labels = string.Join(", ", services.NodeManager.GetQuery().ForContentItems(services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label));
@@ -80,11 +82,11 @@ namespace Associativy.Administration.Drivers
             {
                 var connectionManager = descriptor.Services.ConnectionManager;
                 var nodeManager = descriptor.Services.NodeManager;
-                var settings = _settingsService.GetSettings(descriptor.Name);
+                var settings = _keyValueStore.GetGraphSettings(descriptor.Name);
                 var neighbourValues = part.NeighbourValues[labelsIndex];
                 neighbourValues.NeighbourCount = connectionManager.GetNeighbourCount(part);
 
-                if (neighbourValues.NeighbourCount <= settings.MaxConnectionCount)
+                if (neighbourValues.NeighbourCount <= settings.NeighboursDisplayedMaxCount)
                 {
                     neighbourValues.ShowLabels = true;
 
@@ -148,7 +150,7 @@ namespace Associativy.Administration.Drivers
             part.GraphDescriptors = _graphManager.FindGraphs(new GraphContext { ContentTypes = new string[] { part.ContentItem.ContentType } });
         }
 
-        private void ProcessLabels(string labels, INodeManager nodeManager, IGraphSettings settings, Action<IEnumerable<ContentItem>> processor)
+        private void ProcessLabels(string labels, INodeManager nodeManager, GraphSettings settings, Action<IEnumerable<ContentItem>> processor)
         {
             if (string.IsNullOrEmpty(labels)) return;
 

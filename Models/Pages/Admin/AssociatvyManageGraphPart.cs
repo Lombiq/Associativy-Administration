@@ -10,9 +10,9 @@ namespace Associativy.Administration.Models.Pages.Admin
     {
         public IGraphDescriptor GraphDescriptor { get; set; }
 
-        private readonly LazyField<IGraphSettings> _settings = new LazyField<IGraphSettings>();
-        public LazyField<IGraphSettings> SettingsField { get { return _settings; } }
-        public IGraphSettings GraphSettings
+        private readonly LazyField<GraphSettings> _settings = new LazyField<GraphSettings>();
+        public LazyField<GraphSettings> SettingsField { get { return _settings; } }
+        public GraphSettings GraphSettings
         {
             get { return _settings.Value; }
             set { _settings.Value = value; }

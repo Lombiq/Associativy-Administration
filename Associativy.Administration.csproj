@@ -117,9 +117,9 @@
     <Compile Include="EventHandlers\AdhocGraphsAdminEventHandler.cs" />
     <Compile Include="Handlers\AssociativyGraphPartHandler.cs" />
     <Compile Include="Handlers\ImplicitlyCreatableAssociativyNodePartHandler.cs" />
+    <Compile Include="KeyValueStoreExtensions.cs" />
     <Compile Include="Migrations\BaseMigrations.cs" />
-    <Compile Include="Models\GraphSettingsRecord.cs" />
-    <Compile Include="Models\IGraphSettings.cs" />
+    <Compile Include="Models\GraphSettings.cs" />
     <Compile Include="Models\IImplicitlyCreatableAssociativyNodeAspect.cs" />
     <Compile Include="Models\ImplicitlyCreatableAssociativyNodePart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyIndexPart.cs" />
@@ -132,9 +132,7 @@
     <Compile Include="Models\AdhocGraphNodeConnector.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="Services\AdhocGraphConnectionManager.cs" />
-    <Compile Include="Services\GraphSettingsService.cs" />
     <Compile Include="Services\IAdhocGraphConnectionManager.cs" />
-    <Compile Include="Services\IGraphSettingsService.cs" />
     <Compile Include="Services\IImportExportService.cs" />
     <Compile Include="Services\ImportExportService.cs" />
     <Compile Include="Migrations\AdhocGraphMigrations.cs" />

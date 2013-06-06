@@ -20,35 +20,12 @@ namespace Associativy.Administration.Migrations
                     .Attachable()
                     .WithDescription("Provides functionality to edit the connections of the node in each Associativy graph it's part of."));
 
-            SchemaBuilder.CreateTable(typeof(GraphSettingsRecord).Name,
-                table => table
-                    .Column<int>("Id", column => column.PrimaryKey().Identity())
-                    .Column<string>("GraphName", column => column.NotNull().Unique().WithLength(1024))
-                    .Column<bool>("UseCache")
-                    .Column<int>("InitialZoomLevel")
-                    .Column<int>("ZoomLevelCount")
-                    .Column<int>("MaxDistance")
-                    .Column<int>("MaxConnectionCount")
-                    .Column<string>("ImplicitlyCreatableContentType", column => column.WithLength(1024))
-            ).AlterTable(typeof(GraphSettingsRecord).Name,
-                table => table
-                    .CreateIndex("GraphName", new string[] { "GraphName" })
-            );
 
-
-            return 2;
+            return 3;
         }
 
         public int UpdateFrom1()
         {
-            SchemaBuilder.AlterTable(typeof(GraphSettingsRecord).Name,
-                table =>
-                {
-                    table.AddColumn<int>("MaxConnectionCount");
-                    table.AddColumn<string>("ImplicitlyCreatableContentType", column => column.WithLength(1024));
-                }
-            );
-
             ContentDefinitionManager.AlterPartDefinition(typeof(ImplicitlyCreatableAssociativyNodePart).Name,
                 builder => builder
                     .Attachable()
@@ -60,6 +37,14 @@ namespace Associativy.Administration.Migrations
 
 
             return 2;
+        }
+
+        public int UpdateFrom2()
+        {
+            SchemaBuilder.DropTable("GraphSettingsRecord");
+            SchemaBuilder.DropTable("FrontendAuthorizationRecord");
+
+            return 3;
         }
     }
 }

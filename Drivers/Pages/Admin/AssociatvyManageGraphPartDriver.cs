@@ -5,12 +5,14 @@ using Associativy.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.MetaData.Models;
+using Piedone.HelpfulLibraries.KeyValueStore;
+using Associativy.Administration;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
 {
     public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
     {
-        private readonly IGraphSettingsService _settingsService;
+        private readonly IKeyValueStore _keyValueStore;
         private readonly IContentManager _contentManager;
 
         protected override string Prefix
@@ -20,10 +22,10 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
 
         public AssociatvyMageGraphPartDriver(
-            IGraphSettingsService settingsService,
+            IKeyValueStore keyValueStore,
             IContentManager contentManager)
         {
-            _settingsService = settingsService;
+            _keyValueStore = keyValueStore;
             _contentManager = contentManager;
         }
 
@@ -61,15 +63,14 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             SetupLazyLoaders(part);
 
             updater.TryUpdateModel(part, Prefix, null, null);
-
-            if (part.GraphSettings.InitialZoomLevel > part.GraphSettings.ZoomLevelCount) part.GraphSettings.InitialZoomLevel = part.GraphSettings.ZoomLevelCount - 1;
+            _keyValueStore.SetGraphSettings(part.GraphDescriptor.Name, part.GraphSettings);
 
             return Editor(part, shapeHelper);
         }
 
         private void SetupLazyLoaders(AssociatvyManageGraphPart part)
         {
-            part.SettingsField.Loader(() => _settingsService.GetSettings(part.GraphDescriptor.Name));
+            part.SettingsField.Loader(() => _keyValueStore.GetGraphSettings(part.GraphDescriptor.Name));
             part.ImplicitlyCreatableContentTypesField.Loader(() =>
                 {
                     var implicitlyCreatableTypes = new List<ContentTypeDefinition>();
