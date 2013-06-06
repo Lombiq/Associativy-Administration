@@ -1,0 +1,15 @@
+﻿@model Associativy.Administration.Models.Pages.Admin.AssociatvyManageGraphPart
+           
+@{
+    Layout.Title = Model.GraphDescriptor.DisplayName.ToString();
+    
+    var graphInfo = Model.GraphDescriptor.Services.ConnectionManager.GetGraphInfo();
+}
+
+<div id="associativy-administration-graph-info-container">
+    <h3>@T("Graph info")</h3>
+    
+    <p>
+        @T("Number of nodes in the graph: {0}", graphInfo.NodeCount) @T("Number of connections: {0}", graphInfo.ConnectionCount)
+    </p>
+</div>

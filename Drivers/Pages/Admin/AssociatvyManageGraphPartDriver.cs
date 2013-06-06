@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Associativy.Administration.Models.Pages.Admin;
 using Associativy.Administration.Services;
-using Associativy.Frontends.EngineDiscovery;
 using Associativy.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
@@ -11,7 +10,6 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 {
     public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
     {
-        private readonly IEngineManager _engineManager;
         private readonly IGraphSettingsService _settingsService;
         private readonly IContentManager _contentManager;
 
@@ -22,11 +20,9 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
 
         public AssociatvyMageGraphPartDriver(
-            IEngineManager engineManager,
             IGraphSettingsService settingsService,
             IContentManager contentManager)
         {
-            _engineManager = engineManager;
             _settingsService = settingsService;
             _contentManager = contentManager;
         }
@@ -39,18 +35,25 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
         protected override DriverResult Editor(AssociatvyManageGraphPart part, dynamic shapeHelper)
         {
-            return ContentShape("Pages_AssociatvyManageGraph",
-                () =>
-                {
-                    SetupLazyLoaders(part);
+            SetupLazyLoaders(part);
 
-                    part.FrontendEngines = _engineManager.GetEngines();
-
-                    return shapeHelper.DisplayTemplate(
-                                TemplateName: "Pages/Admin/ManageGraph",
-                                Model: part,
-                                Prefix: Prefix);
-                });
+            return Combined(
+                ContentShape("Pages_AssociatvyManageGraph_GraphInfo",
+                    () => shapeHelper.DisplayTemplate(
+                                    TemplateName: "Pages/Admin/ManageGraph.GraphInfo",
+                                    Model: part,
+                                    Prefix: Prefix)),
+                ContentShape("Pages_AssociatvyManageGraph_Settings",
+                    () => shapeHelper.DisplayTemplate(
+                                    TemplateName: "Pages/Admin/ManageGraph.Settings",
+                                    Model: part,
+                                    Prefix: Prefix)),
+                ContentShape("Pages_AssociatvyManageGraph_ImportExport",
+                    () => shapeHelper.DisplayTemplate(
+                                    TemplateName: "Pages/Admin/ManageGraph.ImportExport",
+                                    Model: part,
+                                    Prefix: Prefix))
+                );
         }
 
         protected override DriverResult Editor(AssociatvyManageGraphPart part, IUpdateModel updater, dynamic shapeHelper)
@@ -61,7 +64,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
             if (part.GraphSettings.InitialZoomLevel > part.GraphSettings.ZoomLevelCount) part.GraphSettings.InitialZoomLevel = part.GraphSettings.ZoomLevelCount - 1;
 
-            return Display(part, "Detail", shapeHelper);
+            return Editor(part, shapeHelper);
         }
 
         private void SetupLazyLoaders(AssociatvyManageGraphPart part)

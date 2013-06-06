@@ -1,71 +1,11 @@
 ﻿@model Associativy.Administration.Models.Pages.Admin.AssociatvyManageGraphPart
-@using Associativy.Frontends.Extensions
            
 @{
-    Layout.Title = Model.GraphDescriptor.DisplayName.ToString();
-    
-    Script.Require("jQuery").AtFoot();
-    
-    var graphInfo = Model.GraphDescriptor.Services.ConnectionManager.GetGraphInfo();
     var implicitlyCreatableTypesSelectListItems = new List<SelectListItem> { new SelectListItem { Text = T("None").Text, Value = string.Empty } };
     implicitlyCreatableTypesSelectListItems
         .AddRange(Model.ImplicitlyCreatableContentTypes
             .Select(type => new SelectListItem { Text = type.DisplayName, Value = type.Name }));
 }
-
-<h2>
-    @T("Graph management")
-</h2>
-
-
-<div id="associativy-administration-graph-info-container">
-    <h3>@T("Graph info")</h3>
-    
-    <p>
-        @T("Number of nodes in the graph: {0}", graphInfo.NodeCount) @T("Number of connections: {0}", graphInfo.ConnectionCount)
-    </p>
-</div>
-
-<div id="associativy-administration-frontend-engines-container">
-    <h3>@T("View graph")</h3>
-    <ul>
-    @foreach (var engine in Model.FrontendEngines)
-    {
-        <li>
-            @Html.Link(T("View with the {0} frontend engine", engine.DisplayEngineName.Text).Text, @Url.RouteEngineUrl(engine, Model.GraphDescriptor.Name))
-        </li>
-    }
-    </ul>
-</div>
-
-<div id="associativy-administration-export-container">
-    <h3>@T("Export")</h3>
-    @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.GraphDescriptor.Name }, new { @class = "button" })
-    <span class="hint">@T("This only exports connection data. The nodes (i.e. the content items stored in the graph) have to be exported with the built-in Import/Export feature.")</span>
-</div>
-
-<div id="associativy-administration-import-container">
-        <fieldset>
-            <legend>@T("Import")</legend>
-            @Html.Label("ConnectionsFile", T("Select a connections file").ToString())
-            @Html.TextBox("ConnectionsFile", "", new { type = "file", @class = "text" })
-            <span class="hint">@T("This only imports connections. Content items have to be be imported separately with the built-in Import/Export feature.")</span>
-        </fieldset>
-        <button type="submit" name="submit.ImportConnections" class="button" value="yes please">@T("Import connections")</button>
-    @*Trick taken from Contrib.FileField*@
-    @using (Script.Foot())
-    {
-        <script type="text/javascript">
-            (function ($) {
-                $(document).ready(function () {
-                    $($("button[name='submit.ImportConnections']")[0].form)
-		                .attr('enctype', 'multipart/form-data')
-		                .attr('encoding', 'multipart/form-data'); // ie issue
-                });
-            })(jQuery);
-        </script>
-    }
-</div>
 
 <div id="associativy-administration-graph-settings-container">
         <fieldset>

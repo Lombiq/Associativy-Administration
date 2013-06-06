@@ -1,0 +1,39 @@
+﻿@model Associativy.Administration.Models.Pages.Admin.AssociatvyManageGraphPart
+           
+@{
+    Script.Require("jQuery").AtFoot();
+    
+    var implicitlyCreatableTypesSelectListItems = new List<SelectListItem> { new SelectListItem { Text = T("None").Text, Value = string.Empty } };
+    implicitlyCreatableTypesSelectListItems
+        .AddRange(Model.ImplicitlyCreatableContentTypes
+            .Select(type => new SelectListItem { Text = type.DisplayName, Value = type.Name }));
+}
+
+<div id="associativy-administration-export-container">
+    <h3>@T("Export")</h3>
+    @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.GraphDescriptor.Name }, new { @class = "button" })
+    <span class="hint">@T("This only exports connection data. The nodes (i.e. the content items stored in the graph) have to be exported with the built-in Import/Export feature.")</span>
+</div>
+
+<div id="associativy-administration-import-container">
+        <fieldset>
+            <legend>@T("Import")</legend>
+            @Html.Label("ConnectionsFile", T("Select a connections file").ToString())
+            @Html.TextBox("ConnectionsFile", "", new { type = "file", @class = "text" })
+            <span class="hint">@T("This only imports connections. Content items have to be be imported separately with the built-in Import/Export feature.")</span>
+        </fieldset>
+        <button type="submit" name="submit.ImportConnections" class="button" value="yes please">@T("Import connections")</button>
+    @*Trick taken from Contrib.FileField*@
+    @using (Script.Foot())
+    {
+        <script type="text/javascript">
+            (function ($) {
+                $(document).ready(function () {
+                    $($("button[name='submit.ImportConnections']")[0].form)
+		                .attr('enctype', 'multipart/form-data')
+		                .attr('encoding', 'multipart/form-data'); // ie issue
+                });
+            })(jQuery);
+        </script>
+    }
+</div>
