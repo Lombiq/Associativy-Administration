@@ -10,9 +10,6 @@ namespace Associativy.Administration.Models
         public int NeighboursDisplayedMaxCount { get; set; }
         public string ImplicitlyCreatableContentType { get; set; }
 
-        private static readonly GraphSettings _default = new GraphSettings();
-        public static GraphSettings Default { get { return _default; } }
-
 
         public GraphSettings()
         {

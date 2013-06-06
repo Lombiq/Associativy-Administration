@@ -17,7 +17,7 @@ namespace Associativy.Administration.Drivers
     {
         private readonly IGraphManager _graphManager;
         private readonly IAssociativyServices _associativyServices;
-        private readonly IKeyValueStore _keyValueStore;
+        private readonly IGraphSettingsService _settingsService;
         private readonly IContentManager _contentManager;
 
         protected override string Prefix
@@ -29,12 +29,12 @@ namespace Associativy.Administration.Drivers
         public AssociativyNodeManagementPartDriver(
             IGraphManager graphManager,
             IAssociativyServices associativyServices,
-            IKeyValueStore keyValueStore,
+            IGraphSettingsService settingsService,
             IContentManager contentManager)
         {
             _graphManager = graphManager;
             _associativyServices = associativyServices;
-            _keyValueStore = keyValueStore;
+            _settingsService = settingsService;
             _contentManager = contentManager;
         }
 
@@ -54,7 +54,7 @@ namespace Associativy.Administration.Drivers
                         var services = descriptor.Services;
                         var values = new NeighbourValues { NeighbourCount = services.ConnectionManager.GetNeighbourCount(part) };
 
-                        if (values.NeighbourCount <= _keyValueStore.GetGraphSettings(descriptor.Name).NeighboursDisplayedMaxCount)
+                        if (values.NeighbourCount <= _settingsService.GetNotNull<GraphSettings>(descriptor.Name).NeighboursDisplayedMaxCount)
                         {
                             values.ShowLabels = true;
                             values.Labels = string.Join(", ", services.NodeManager.GetQuery().ForContentItems(services.ConnectionManager.GetNeighbourIds(part.ContentItem.Id)).List().Select(node => node.As<IAssociativyNodeLabelAspect>().Label));
@@ -82,7 +82,7 @@ namespace Associativy.Administration.Drivers
             {
                 var connectionManager = descriptor.Services.ConnectionManager;
                 var nodeManager = descriptor.Services.NodeManager;
-                var settings = _keyValueStore.GetGraphSettings(descriptor.Name);
+                var settings = _settingsService.GetNotNull<GraphSettings>(descriptor.Name);
                 var neighbourValues = part.NeighbourValues[labelsIndex];
                 neighbourValues.NeighbourCount = connectionManager.GetNeighbourCount(part);
 

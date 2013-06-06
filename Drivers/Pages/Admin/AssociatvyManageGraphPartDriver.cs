@@ -7,12 +7,14 @@ using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.MetaData.Models;
 using Piedone.HelpfulLibraries.KeyValueStore;
 using Associativy.Administration;
+using Associativy.Administration.Models;
+using Associativy.Administration.Services;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
 {
     public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
     {
-        private readonly IKeyValueStore _keyValueStore;
+        private readonly IGraphSettingsService _settingsService;
         private readonly IContentManager _contentManager;
 
         protected override string Prefix
@@ -22,10 +24,10 @@ namespace Associativy.Administration.Drivers.Pages.Admin
 
 
         public AssociatvyMageGraphPartDriver(
-            IKeyValueStore keyValueStore,
+            IGraphSettingsService settingsService,
             IContentManager contentManager)
         {
-            _keyValueStore = keyValueStore;
+            _settingsService = settingsService;
             _contentManager = contentManager;
         }
 
@@ -63,14 +65,14 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             SetupLazyLoaders(part);
 
             updater.TryUpdateModel(part, Prefix, null, null);
-            _keyValueStore.SetGraphSettings(part.GraphDescriptor.Name, part.GraphSettings);
+            _settingsService.Set(part.GraphDescriptor.Name, part.GraphSettings);
 
             return Editor(part, shapeHelper);
         }
 
         private void SetupLazyLoaders(AssociatvyManageGraphPart part)
         {
-            part.SettingsField.Loader(() => _keyValueStore.GetGraphSettings(part.GraphDescriptor.Name));
+            part.SettingsField.Loader(() => _settingsService.GetNotNull<GraphSettings>(part.GraphDescriptor.Name));
             part.ImplicitlyCreatableContentTypesField.Loader(() =>
                 {
                     var implicitlyCreatableTypes = new List<ContentTypeDefinition>();
