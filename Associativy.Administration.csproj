@@ -160,10 +160,13 @@
     <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraphAdhocGraph.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.Settings.cshtml" />
+    <Content Include="Views\Pages.AssociatvyManageGraph.Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.GraphInfo.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.Settings.ImplicitlyCreatableContentType.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

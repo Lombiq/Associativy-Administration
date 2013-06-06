@@ -1,11 +1,20 @@
-﻿<div id="associativy-administration-manage-graph-container">
+﻿@{
+    // Adding a sub-local zone to the settings shape. This way settings can be collectively placed too.
+    var settings = ((Orchard.DisplayManagement.Shapes.Shape)Model.Content)
+        .Items
+        .Where(shape => shape.Metadata.Type == "Pages_AssociatvyManageGraph_Settings")
+        .FirstOrDefault();
+    ((dynamic)settings).Settings(Model.Settings);
+}
+
+<div id="associativy-administration-manage-graph-container">
     <h2>
         @T("Graph management")
     </h2>
 
     @using (Html.BeginFormAntiForgeryPost())
     {
-        @Display(Model.Child)
+        @Display(Model.Content)
 
         <fieldset class="save-button">
             <button class="primaryAction" type="submit" name="submit.Save" value="submit.Save">@T("Save changes")</button>
