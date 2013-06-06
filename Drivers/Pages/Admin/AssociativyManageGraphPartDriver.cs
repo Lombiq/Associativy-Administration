@@ -8,22 +8,21 @@ using Orchard.ContentManagement.MetaData.Models;
 using Piedone.HelpfulLibraries.KeyValueStore;
 using Associativy.Administration;
 using Associativy.Administration.Models;
-using Associativy.Administration.Services;
 
 namespace Associativy.Administration.Drivers.Pages.Admin
 {
-    public class AssociatvyMageGraphPartDriver : ContentPartDriver<AssociatvyManageGraphPart>
+    public class AssociativyManageGraphPartDriver : ContentPartDriver<AssociativyManageGraphPart>
     {
         private readonly IGraphSettingsService _settingsService;
         private readonly IContentManager _contentManager;
 
         protected override string Prefix
         {
-            get { return "Associativy.Administration.AssociatvyManageGraphPart"; }
+            get { return "Associativy.Administration.AssociativyManageGraphPart"; }
         }
 
 
-        public AssociatvyMageGraphPartDriver(
+        public AssociativyManageGraphPartDriver(
             IGraphSettingsService settingsService,
             IContentManager contentManager)
         {
@@ -32,27 +31,27 @@ namespace Associativy.Administration.Drivers.Pages.Admin
         }
 
 
-        protected override DriverResult Display(AssociatvyManageGraphPart part, string displayType, dynamic shapeHelper)
+        protected override DriverResult Display(AssociativyManageGraphPart part, string displayType, dynamic shapeHelper)
         {
             return Editor(part, shapeHelper);
         }
 
-        protected override DriverResult Editor(AssociatvyManageGraphPart part, dynamic shapeHelper)
+        protected override DriverResult Editor(AssociativyManageGraphPart part, dynamic shapeHelper)
         {
             SetupLazyLoaders(part);
 
             return Combined(
-                ContentShape("Pages_AssociatvyManageGraph_GraphInfo",
+                ContentShape("Pages_AssociativyManageGraph_GraphInfo",
                     () => shapeHelper.DisplayTemplate(
                                     TemplateName: "Pages/Admin/ManageGraph.GraphInfo",
                                     Model: part,
                                     Prefix: Prefix)),
-                ContentShape("Pages_AssociatvyManageGraph_AdminSettings",
+                ContentShape("Pages_AssociativyManageGraph_AdminSettings",
                     () => shapeHelper.DisplayTemplate(
                                     TemplateName: "Pages/Admin/ManageGraph.AdminSettings",
                                     Model: part,
                                     Prefix: Prefix)),
-                ContentShape("Pages_AssociatvyManageGraph_ImportExport",
+                ContentShape("Pages_AssociativyManageGraph_ImportExport",
                     () => shapeHelper.DisplayTemplate(
                                     TemplateName: "Pages/Admin/ManageGraph.ImportExport",
                                     Model: part,
@@ -60,7 +59,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
                 );
         }
 
-        protected override DriverResult Editor(AssociatvyManageGraphPart part, IUpdateModel updater, dynamic shapeHelper)
+        protected override DriverResult Editor(AssociativyManageGraphPart part, IUpdateModel updater, dynamic shapeHelper)
         {
             SetupLazyLoaders(part);
 
@@ -70,7 +69,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             return Editor(part, shapeHelper);
         }
 
-        private void SetupLazyLoaders(AssociatvyManageGraphPart part)
+        private void SetupLazyLoaders(AssociativyManageGraphPart part)
         {
             part.SettingsField.Loader(() => _settingsService.GetNotNull<GraphSettings>(part.GraphDescriptor.Name));
             part.ImplicitlyCreatableContentTypesField.Loader(() =>

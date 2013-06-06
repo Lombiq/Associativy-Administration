@@ -6,7 +6,7 @@ using Orchard.Core.Common.Utilities;
 
 namespace Associativy.Administration.Models.Pages.Admin
 {
-    public class AssociatvyManageGraphPart : ContentPart
+    public class AssociativyManageGraphPart : ContentPart
     {
         public IGraphDescriptor GraphDescriptor { get; set; }
 

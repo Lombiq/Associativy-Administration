@@ -111,7 +111,7 @@
     <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphAdhocGraphPartDriver.cs" />
     <Compile Include="Drivers\AssociativyGraphPartDriver.cs" />
     <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
-    <Compile Include="Drivers\Pages\Admin\AssociatvyManageGraphPartDriver.cs" />
+    <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphPartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexAdhocGraphPartDriver.cs" />
     <Compile Include="EventHandlers\DefaultAdminEventHandler.cs" />
     <Compile Include="EventHandlers\AdhocGraphsAdminEventHandler.cs" />
@@ -126,7 +126,7 @@
     <Compile Include="Models\AssociativyGraphPart.cs" />
     <Compile Include="Models\AssociativyGraphPartRecord.cs" />
     <Compile Include="Models\AssociativyNodeManagementPart.cs" />
-    <Compile Include="Models\Pages\Admin\AssociatvyManageGraphPart.cs" />
+    <Compile Include="Models\Pages\Admin\AssociativyManageGraphPart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyIndexAdhocGraphPart.cs" />
     <Compile Include="Models\AdhocGraphNodeConnector.cs" />
     <Compile Include="Permissions.cs" />
