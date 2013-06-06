@@ -43,9 +43,9 @@ namespace Associativy.Administration.Drivers.Pages.Admin
                                     TemplateName: "Pages/Admin/ManageGraph.GraphInfo",
                                     Model: part,
                                     Prefix: Prefix)),
-                ContentShape("Pages_AssociatvyManageGraph_Settings",
+                ContentShape("Pages_AssociatvyManageGraph_AdminSettings",
                     () => shapeHelper.DisplayTemplate(
-                                    TemplateName: "Pages/Admin/ManageGraph.Settings",
+                                    TemplateName: "Pages/Admin/ManageGraph.AdminSettings",
                                     Model: part,
                                     Prefix: Prefix)),
                 ContentShape("Pages_AssociatvyManageGraph_ImportExport",

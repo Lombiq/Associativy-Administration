@@ -160,7 +160,7 @@
     <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraphAdhocGraph.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.Settings.cshtml" />
+    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.AdminSettings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.GraphInfo.cshtml" />

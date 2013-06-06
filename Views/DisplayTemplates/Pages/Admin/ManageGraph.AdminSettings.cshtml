@@ -9,7 +9,7 @@
 
 <div id="associativy-administration-graph-settings-container">
         <fieldset>
-            <legend>@T("Graph settings")</legend>
+            <legend>@T("Administration settings")</legend>
             <ol>
                 <li>
                     @Html.CheckBoxFor(m => m.GraphSettings.UseCache)
@@ -38,7 +38,6 @@
                 <li>
                     @Html.LabelFor(m => m.GraphSettings.ImplicitlyCreatableContentType, T("Implicitly creatable content type"))
                     @Html.DropDownListFor(m => m.GraphSettings.ImplicitlyCreatableContentType, implicitlyCreatableTypesSelectListItems)
-                    @*@Html.TextBoxFor(m => m.GraphSettings.ImplicitlyCreatableContentType, new { @class = "text textMedium" })*@
                     <span class="hint">@T("You'll be able to create new items from the content type specified here through the Node Management Part by specifying a not existing label. Only types that have a part capable of handling implicit creation are listed.")</span>
                 </li>
             </ol>
