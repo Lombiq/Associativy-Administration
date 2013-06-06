@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Associativy.Frontends.EngineDiscovery;
 using Associativy.GraphDiscovery;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData.Models;
@@ -7,14 +6,13 @@ using Orchard.Core.Common.Utilities;
 
 namespace Associativy.Administration.Models.Pages.Admin
 {
-    public class AssociatvyManageGraphPart : ContentPart
+    public class AssociativyManageGraphPart : ContentPart
     {
         public IGraphDescriptor GraphDescriptor { get; set; }
-        public IEnumerable<IEngineDescriptor> FrontendEngines { get; set; }
 
-        private readonly LazyField<IGraphSettings> _settings = new LazyField<IGraphSettings>();
-        public LazyField<IGraphSettings> SettingsField { get { return _settings; } }
-        public IGraphSettings GraphSettings
+        private readonly LazyField<GraphSettings> _settings = new LazyField<GraphSettings>();
+        public LazyField<GraphSettings> SettingsField { get { return _settings; } }
+        public GraphSettings GraphSettings
         {
             get { return _settings.Value; }
             set { _settings.Value = value; }

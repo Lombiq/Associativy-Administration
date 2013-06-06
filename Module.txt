@@ -10,14 +10,9 @@ Features:
 		Name: Associativy Administration
         Description: Dashboard-based administration tools for Associativy
 		Category: Associativy
-		Dependencies: Associativy.Frontends, Piedone.HelpfulLibraries.Serialization, Piedone.HelpfulLibraries.Contents
+		Dependencies: Piedone.HelpfulLibraries.Contents, Piedone.HelpfulLibraries.KeyValueStore, Piedone.HelpfulLibraries.Serialization
 	Associativy.Administration.AdhocGraphs:
 		Name: Associativy Ad-hoc Graphs
         Description: Users can create simple Associativy graphs from the backend
 		Category: Associativy
 		Dependencies: Associativy.Administration, Piedone.HelpfulLibraries.Utilities
-	Associativy.Administration.FrontendAuthorization:
-		Name: Associativy Frontend Authorization Administration
-        Description: Administrate who can view graphs with the frontend engines
-		Category: Associativy
-		Dependencies: Associativy.Administration, Orchard.Roles

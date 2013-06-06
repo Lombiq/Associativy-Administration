@@ -86,10 +86,6 @@
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Associativy.Frontends\Associativy.Frontends.csproj">
-      <Project>{78ACE1AE-F7AE-4342-A83F-8FAB64514F52}</Project>
-      <Name>Associativy.Frontends</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Associativy\Associativy.csproj">
       <Project>{A8EE4964-4880-4EE1-AC0A-75492D89BBE8}</Project>
       <Name>Associativy</Name>
@@ -98,17 +94,13 @@
       <Project>{7528bf74-25c7-4abe-883a-443b4eec4776}</Project>
       <Name>Orchard.Caching</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Orchard.Roles\Orchard.Roles.csproj">
-      <Project>{D10AD48F-407D-4DB5-A328-173EC7CB010F}</Project>
-      <Name>Orchard.Roles</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Piedone.HelpfulLibraries\Piedone.HelpfulLibraries.csproj">
       <Project>{EA61AD10-39D6-41A9-B12B-227F50C54158}</Project>
       <Name>Piedone.HelpfulLibraries</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.cshtml" />
+    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.ImportExport.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AdministrationPageConfigs.cs" />
@@ -116,48 +108,37 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Drivers\ImplicitlyCreatableAssociativyNodePartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexPartDriver.cs" />
-    <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphAuthorizationPartDiver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphAdhocGraphPartDriver.cs" />
     <Compile Include="Drivers\AssociativyGraphPartDriver.cs" />
     <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
-    <Compile Include="Drivers\Pages\Admin\AssociatvyManageGraphPartDriver.cs" />
+    <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphPartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexAdhocGraphPartDriver.cs" />
-    <Compile Include="EventHandlers\AuthorizationAdminEventHandler.cs" />
-    <Compile Include="EventHandlers\AuthorizationFrontendEngineEventHandler.cs" />
     <Compile Include="EventHandlers\DefaultAdminEventHandler.cs" />
     <Compile Include="EventHandlers\AdhocGraphsAdminEventHandler.cs" />
-    <Compile Include="EventHandlers\SettingsFrontendEngineEventHandler.cs" />
     <Compile Include="Handlers\AssociativyGraphPartHandler.cs" />
     <Compile Include="Handlers\ImplicitlyCreatableAssociativyNodePartHandler.cs" />
     <Compile Include="Migrations\BaseMigrations.cs" />
-    <Compile Include="Migrations\FrontendAuthorizationMigrations.cs" />
-    <Compile Include="Models\FrontendAuthorizationRecord.cs" />
-    <Compile Include="Models\GraphSettingsRecord.cs" />
-    <Compile Include="Models\IGraphSettings.cs" />
+    <Compile Include="Models\GraphSettings.cs" />
     <Compile Include="Models\IImplicitlyCreatableAssociativyNodeAspect.cs" />
     <Compile Include="Models\ImplicitlyCreatableAssociativyNodePart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyIndexPart.cs" />
-    <Compile Include="Models\Pages\Admin\AssociativyManageGraphAuthorizationPart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyManageGraphAdhocGraphPart.cs" />
     <Compile Include="Models\AssociativyGraphPart.cs" />
     <Compile Include="Models\AssociativyGraphPartRecord.cs" />
     <Compile Include="Models\AssociativyNodeManagementPart.cs" />
-    <Compile Include="Models\Pages\Admin\AssociatvyManageGraphPart.cs" />
+    <Compile Include="Models\Pages\Admin\AssociativyManageGraphPart.cs" />
     <Compile Include="Models\Pages\Admin\AssociativyIndexAdhocGraphPart.cs" />
     <Compile Include="Models\AdhocGraphNodeConnector.cs" />
     <Compile Include="Permissions.cs" />
     <Compile Include="Services\AdhocGraphConnectionManager.cs" />
-    <Compile Include="Services\FrontendAuthorizer.cs" />
     <Compile Include="Services\GraphSettingsService.cs" />
     <Compile Include="Services\IAdhocGraphConnectionManager.cs" />
-    <Compile Include="Services\IFrontendAuthorizer.cs" />
     <Compile Include="Services\IGraphSettingsService.cs" />
     <Compile Include="Services\IImportExportService.cs" />
     <Compile Include="Services\ImportExportService.cs" />
     <Compile Include="Migrations\AdhocGraphMigrations.cs" />
     <Compile Include="AdhocGraphProvider.cs" />
     <Content Include="Views\DisplayTemplates\Pages\Admin\IndexAdhocGraph.cshtml" />
-    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraphAuthorization.cshtml" />
     <Content Include="Views\PageWrapper.AssociativyAdministrationManageGraphPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +157,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraphAdhocGraph.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.AdminSettings.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\DisplayTemplates\Pages\Admin\ManageGraph.GraphInfo.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
