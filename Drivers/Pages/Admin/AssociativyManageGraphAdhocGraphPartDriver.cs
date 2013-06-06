@@ -12,15 +12,11 @@ namespace Associativy.Administration.Drivers.Pages.Admin
     public class AssociativyManageGraphAdhocGraphPartDriver : ContentPartDriver<AssociativyManageGraphAdhocGraphPart>
     {
         private readonly IContentManager _contentManager;
-        private readonly IWorkContextAccessor _workContextAccessor;
 
 
-        public AssociativyManageGraphAdhocGraphPartDriver(
-            IContentManager contentManager,
-            IWorkContextAccessor workContextAccessor)
+        public AssociativyManageGraphAdhocGraphPartDriver(IContentManager contentManager)
         {
             _contentManager = contentManager;
-            _workContextAccessor = workContextAccessor;
         }
 
 
@@ -31,7 +27,7 @@ namespace Associativy.Administration.Drivers.Pages.Admin
             {
                 part.AdhocGraph = _contentManager
                     .Query("AssociativyGraph")
-                    .Where<AssociativyGraphPartRecord>(record => record.GraphName == _workContextAccessor.GetContext().HttpContext.Request.QueryString["GraphName"])
+                    .Where<AssociativyGraphPartRecord>(record => record.GraphName == part.As<AssociativyManageGraphPart>().GraphDescriptor.Name)
                     .List()
                     .FirstOrDefault();
 
