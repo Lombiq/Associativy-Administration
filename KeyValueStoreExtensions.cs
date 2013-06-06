@@ -7,7 +7,7 @@ using Piedone.HelpfulLibraries.KeyValueStore;
 
 namespace Associativy.Administration
 {
-    public static class KeyValueStoreExtensions
+    internal static class KeyValueStoreExtensions
     {
         private const string KeyPrefix = "Associativy.Administration.GraphSettings.";
 
