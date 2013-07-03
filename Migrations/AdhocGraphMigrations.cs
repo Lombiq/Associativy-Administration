@@ -49,7 +49,7 @@ namespace Associativy.Administration.Migrations
                     .Column<string>("GraphName")
                     .Column<string>("DisplayGraphName")
                     .Column<string>("ContainedContentTypes", column => column.Unlimited())
-            );
+                );
 
             ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyGraphPart).Name,
                 builder => builder
@@ -59,7 +59,7 @@ namespace Associativy.Administration.Migrations
                 cfg => cfg
                     .WithPart("CommonPart")
                     .WithPart(typeof(AssociativyGraphPart).Name)
-            );
+                );
 
 
             return 4;
