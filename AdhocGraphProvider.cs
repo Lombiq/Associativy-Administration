@@ -1,4 +1,5 @@
-﻿using Associativy.Administration.Models;
+﻿using System.Collections.Generic;
+using Associativy.Administration.Models;
 using Associativy.Administration.Services;
 using Associativy.GraphDiscovery;
 using Associativy.Services;
@@ -7,6 +8,7 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
+using System.Linq;
 
 namespace Associativy.Administration
 {
@@ -39,16 +41,24 @@ namespace Associativy.Administration
         {
             var graphs = _cacheService.Get(CacheKey, () =>
             {
-                return _contentManager.Query("AssociativyGraph").Join<AssociativyGraphPartRecord>().List();
+                return _contentManager
+                    .Query("AssociativyGraph")
+                    .Join<AssociativyGraphPartRecord>()
+                    .List<AssociativyGraphPart>()
+                    .Select(item => new Graph
+                    {
+                        GraphName = item.GraphName,
+                        DisplayGraphName = item.DisplayGraphName,
+                        ContainedContentTypes = item.ContainedContentTypes
+                    });
             });
 
             foreach (var graph in graphs)
             {
-                var graphPart = graph.As<AssociativyGraphPart>();
                 describeContext.DescribeGraph(
-                    graphPart.GraphName,
-                    T(graphPart.DisplayGraphName),
-                    graphPart.ContainedContentTypes,
+                    graph.GraphName,
+                    T(graph.DisplayGraphName),
+                    graph.ContainedContentTypes,
                     _graphServicesFactory.Factory);
             }
         }
@@ -172,6 +182,14 @@ namespace Associativy.Administration
         {
             if (context.ContentType != "AssociativyGraph") return;
             _cacheService.Remove(CacheKey);
+        }
+
+
+        private class Graph
+        {
+            public string GraphName { get; set; }
+            public string DisplayGraphName { get; set; }
+            public IList<string> ContainedContentTypes { get; set; }
         }
     }
 }
