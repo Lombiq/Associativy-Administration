@@ -42,7 +42,7 @@ namespace Associativy.Administration
             var graphs = _cacheService.Get(CacheKey, () =>
             {
                 return _contentManager
-                    .Query("AssociativyGraph")
+                    .Query(VersionOptions.Published, "AssociativyGraph")
                     .Join<AssociativyGraphPartRecord>()
                     .List<AssociativyGraphPart>()
                     .Select(item => new Graph
