@@ -7,7 +7,6 @@ using Associativy.Administration.Services;
 using Associativy.GraphDiscovery;
 using Orchard;
 using Orchard.ContentManagement;
-using Orchard.Core.Contents.Controllers;
 using Orchard.Exceptions;
 using Orchard.Localization;
 using Orchard.Mvc;

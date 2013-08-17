@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Associativy.Administration.Models;
 using Associativy.Administration.Services;
 using Associativy.GraphDiscovery;
@@ -8,7 +9,6 @@ using Orchard.ContentManagement;
 using Orchard.ContentManagement.Handlers;
 using Orchard.Environment.Extensions;
 using Orchard.Localization;
-using System.Linq;
 
 namespace Associativy.Administration
 {
