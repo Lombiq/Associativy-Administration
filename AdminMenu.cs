@@ -21,7 +21,9 @@ namespace Associativy.Administration
 
         public void GetNavigation(NavigationBuilder builder)
         {
-            builder/*.AddImageSet("associativy")*/.Add(T("Associativy"), "1.5", BuildMenu);
+            builder
+                .AddImageSet("associativy")
+                .Add(T("Associativy"), "1.5", BuildMenu);
 
             // This is for tabs (LocalNav)
             //builder//.AddImageSet("associativy")
@@ -36,7 +38,7 @@ namespace Associativy.Administration
             menu.LinkToFirstChild(false); // See: http://orchard.codeplex.com/workitem/18807
             menu.Action("Index", "Admin", new { area = "Associativy.Administration" }).Permission(Permissions.ManageAssociativyGraphs);
 
-            var graphs = _graphManager.FindDistinctGraphs(GraphContext.Empty).OrderBy(descriptor => descriptor.DisplayName.Text);
+            var graphs = _graphManager.FindGraphs(GraphContext.Empty).OrderBy(descriptor => descriptor.DisplayName.Text);
 
             int i = 0;
             foreach (var graph in graphs)

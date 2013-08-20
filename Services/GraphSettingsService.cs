@@ -1,44 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Associativy.Administration.Models;
-using Orchard.Caching.Services;
-using Orchard.Data;
+using Piedone.HelpfulLibraries.KeyValueStore;
 
-namespace Associativy.Administration.Services {
+namespace Associativy.Administration.Services
+{
     public class GraphSettingsService : IGraphSettingsService
     {
-        private readonly ICacheService _cacheService;
-        private readonly IRepository<GraphSettingsRecord> _repository;
+        private const string KeyPrefix = "Associativy.Administration.GraphSettings.";
 
-        private const string CacheKeyPrefix = "Associativy.Administration.GraphSettings.";
-        private const string GraphSettingsCacheKeyPrefix = CacheKeyPrefix + "Id";
+        private readonly IKeyValueStore _keyValueStore;
 
 
-        public GraphSettingsService(ICacheService cacheService, IRepository<GraphSettingsRecord> repository)
+        public GraphSettingsService(IKeyValueStore keyValueStore)
         {
-            _cacheService = cacheService;
-            _repository = repository;
+            _keyValueStore = keyValueStore;
+        }
+	
+			
+        public void Set(string graphName, object settings)
+        {
+            _keyValueStore.Set(Key(settings.GetType(), graphName), settings);
+        }
+
+        public T Get<T>(string graphName)
+        {
+            return _keyValueStore.Get<T>(Key(typeof(T), graphName));
         }
 
 
-        public IGraphSettings GetSettings(string graphName)
+        public static string Key(Type type, string graphName)
         {
-            var id = _cacheService.Get(GraphSettingsCacheKeyPrefix + "." + graphName, () =>
-            {
-                var record = _repository.Table.Where(r => r.GraphName == graphName).SingleOrDefault();
-
-                if (record == null)
-                {
-                    record = new GraphSettingsRecord { GraphName = graphName };
-                    _repository.Create(record);
-                }
-
-                return record.Id;
-            });
-
-            return _repository.Get(id);
+            return KeyPrefix + type.FullName + "." + graphName;
         }
     }
 }

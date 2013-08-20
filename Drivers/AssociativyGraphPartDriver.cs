@@ -2,6 +2,7 @@
 using System.Linq;
 using Associativy.Administration.Models;
 using Associativy.Models;
+using Associativy.Services;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.ContentManagement.Handlers;
@@ -14,11 +15,13 @@ namespace Associativy.Administration.Drivers
     public class AssociativyGraphPartDriver : ContentPartDriver<AssociativyGraphPart>
     {
         private readonly IContentDefinitionManager _contentDefinitionManager;
+        private readonly INodeIndexingService _nodeIndexingService;
 
 
-        public AssociativyGraphPartDriver(IContentDefinitionManager contentDefinitionManager)
+        public AssociativyGraphPartDriver(IContentDefinitionManager contentDefinitionManager, INodeIndexingService nodeIndexingService)
         {
             _contentDefinitionManager = contentDefinitionManager;
+            _nodeIndexingService = nodeIndexingService;
         }
 
 
@@ -55,6 +58,8 @@ namespace Associativy.Administration.Drivers
                         .WithPart(typeof(AssociativyNodeLabelPart).Name)
                     );
             }
+
+            _nodeIndexingService.SetupIndexingForGraph(part.GraphName);
 
             return Editor(part, shapeHelper);
         }

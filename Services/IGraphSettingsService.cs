@@ -1,14 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Associativy.Administration.Models;
-using Orchard;
+﻿using Orchard;
 
 namespace Associativy.Administration.Services
 {
     public interface IGraphSettingsService : IDependency
     {
-        IGraphSettings GetSettings(string graphName);
+        T Get<T>(string graphName);
+        void Set(string graphName, object settings);
+    }
+
+
+    public static class GraphSettingsServiceExtensions
+    {
+        public static T GetNotNull<T>(this IGraphSettingsService settingsService, string graphName) where T : new()
+        {
+            var value = settingsService.Get<T>(graphName);
+            if (value == null) return new T();
+            return value;
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace Associativy.Administration.EventHandlers
             var page = pageContext.Page;
             if (page.IsPage("ManageGraph", pageContext.Group))
             {
-                page.ContentItem.Weld(new AssociatvyManageGraphPart { GraphDescriptor = _graphManager.FindGraph(_hca.Current().Request.QueryString["GraphName"]) });
+                page.ContentItem.Weld(new AssociativyManageGraphPart { GraphDescriptor = _graphManager.FindGraphByName(_hca.Current().Request.QueryString["GraphName"]) });
             }
             else if (page.IsPage("Index", pageContext.Group))
             {

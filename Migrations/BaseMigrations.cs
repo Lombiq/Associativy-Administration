@@ -9,36 +9,41 @@ namespace Associativy.Administration.Migrations
     {
         public int Create()
         {
-            ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
-                builder => builder.Attachable());
+            ContentDefinitionManager.AlterPartDefinition(typeof(ImplicitlyCreatableAssociativyNodePart).Name,
+                builder => builder
+                    .Attachable()
+                    .WithDescription("When attached it's possible to create its content item through Associativy Administration services by specifying a non-existent label."));
 
-            SchemaBuilder.CreateTable(typeof(GraphSettingsRecord).Name,
-                table => table
-                    .Column<int>("Id", column => column.PrimaryKey().Identity())
-                    .Column<string>("GraphName", column => column.NotNull().Unique().WithLength(1024))
-                    .Column<bool>("UseCache")
-                    .Column<int>("InitialZoomLevel")
-                    .Column<int>("ZoomLevelCount")
-                    .Column<int>("MaxDistance")
-                    .Column<int>("MaxConnectionCount")
-            ).AlterTable(typeof(GraphSettingsRecord).Name,
-                table => table
-                    .CreateIndex("GraphName", new string[] { "GraphName" })
-            );
+            ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
+                builder => builder
+                    .Attachable()
+                    .WithDescription("Provides functionality to edit the connections of the node in each Associativy graph it's part of."));
+
+
+            return 3;
+        }
+
+        public int UpdateFrom1()
+        {
+            ContentDefinitionManager.AlterPartDefinition(typeof(ImplicitlyCreatableAssociativyNodePart).Name,
+                builder => builder
+                    .Attachable()
+                    .WithDescription("When attached it's possible to create its content item through Associativy Administration services by specifying a non-existent label."));
+
+            ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyNodeManagementPart).Name,
+                builder => builder
+                    .WithDescription("Provides functionality to edit the connections of the node in each Associativy graph it's part of."));
 
 
             return 2;
         }
 
-        public int UpdateFrom1()
+        public int UpdateFrom2()
         {
-            SchemaBuilder.AlterTable(typeof(GraphSettingsRecord).Name,
-                table => table
-                    .AddColumn<int>("MaxConnectionCount")
-            );
+            SchemaBuilder.DropTable("GraphSettingsRecord");
+            SchemaBuilder.DropTable("FrontendAuthorizationRecord");
 
-
-            return 2;
+            return 3;
         }
     }
 }

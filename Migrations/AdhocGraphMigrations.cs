@@ -2,10 +2,11 @@
 using Associativy.Administration.Models;
 using Associativy.Extensions;
 using Orchard.ContentManagement.MetaData;
+using Orchard.Core.Contents.Extensions;
 using Orchard.Data;
 using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
-using Piedone.HelpfulLibraries.Libraries.Utilities;
+using Piedone.HelpfulLibraries.Utilities;
 
 namespace Associativy.Administration.Migrations
 {
@@ -48,16 +49,20 @@ namespace Associativy.Administration.Migrations
                     .Column<string>("GraphName")
                     .Column<string>("DisplayGraphName")
                     .Column<string>("ContainedContentTypes", column => column.Unlimited())
-            );
+                );
+
+            ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyGraphPart).Name,
+                builder => builder
+                    .WithDescription("Stores settings of an ad-hoc Associativy graph."));
 
             ContentDefinitionManager.AlterTypeDefinition("AssociativyGraph",
                 cfg => cfg
                     .WithPart("CommonPart")
                     .WithPart(typeof(AssociativyGraphPart).Name)
-            );
+                );
 
 
-            return 3;
+            return 4;
         }
 
         public int UpdateFrom1()
@@ -96,6 +101,16 @@ namespace Associativy.Administration.Migrations
 
 
             return 3;
+        }
+
+        public int UpdateFrom3()
+        {
+            ContentDefinitionManager.AlterPartDefinition(typeof(AssociativyGraphPart).Name,
+                builder => builder
+                    .WithDescription("Stores settings of an ad-hoc Associativy graph."));
+
+
+            return 4;
         }
     }
 }

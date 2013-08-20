@@ -2,13 +2,14 @@
   <!--Node management-->
   <Place Parts_AssociativyNodeManagement_Edit="Content:10"/>
 
-  <!--User graphs-->
+  <!--Ad-hoc graphs-->
   <Place Parts_AssociativyGraph_Edit="Content:5"/>
   
   <!--Admin pages-->
-  <Place Pages_AssociativyIndexAdhocGraph="Content:5"/>
-  <Place Pages_AssociativyIndex="Content:6"/>
-  <Place Pages_AssociativyManageGraphAdhocGraph="Content:5"/>
-  <Place Pages_AssociatvyManageGraph="Content:6"/>
-  <Place Pages_AssociativyManageGraphAuthorization="Content:7"/>
+  <Place Pages_AssociativyIndexAdhocGraph="Content:5"
+         Pages_AssociativyIndex="Content:6"
+         Pages_AssociativyManageGraph_GraphInfo="Content:5"
+         Pages_AssociativyManageGraphAdhocGraph="Content:6"
+         Pages_AssociativyManageGraph_AdminSettings="Content:7"
+         Pages_AssociativyManageGraph_ImportExport="Content:8"/>
 </Placement>

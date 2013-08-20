@@ -48,7 +48,7 @@ namespace Associativy.Administration.Models
         }
 
         private readonly LazyField<IList<ContentType>> _allContentTypes = new LazyField<IList<ContentType>>();
-        public LazyField<IList<ContentType>> AllContentTypesField { get { return _allContentTypes; } }
+        internal LazyField<IList<ContentType>> AllContentTypesField { get { return _allContentTypes; } }
         public IList<ContentType> AllContentTypes
         {
             get { return _allContentTypes.Value; }
