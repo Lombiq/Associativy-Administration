@@ -7,9 +7,9 @@ using Associativy.Administration.Services;
 using Associativy.GraphDiscovery;
 using Orchard;
 using Orchard.ContentManagement;
+using Orchard.Core.Contents.Controllers;
 using Orchard.Exceptions;
 using Orchard.Localization;
-using Orchard.Mvc;
 using Orchard.UI.Admin;
 using Orchard.UI.Notify;
 using Piedone.HelpfulLibraries.Contents.DynamicPages;
@@ -145,9 +145,9 @@ namespace Associativy.Administration.Controllers
             return _contentManager.NewPage(pageName, AdministrationPageConfigs.Group, _eventHandler);
         }
 
-        private ShapeResult PageResult(IContent page)
+        private Orchard.Mvc.ShapeResult PageResult(IContent page)
         {
-            return new ShapeResult(this, _contentManager.BuildPageDisplay(page));
+            return new Orchard.Mvc.ShapeResult(this, _contentManager.BuildPageDisplay(page));
         }
 
         private GraphContext MakeContext(string graphName)
