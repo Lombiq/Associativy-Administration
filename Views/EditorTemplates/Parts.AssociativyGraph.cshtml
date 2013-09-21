@@ -5,12 +5,12 @@
     <ol>
         <li>
             @Html.LabelFor(m => m.DisplayGraphName, T("Display graph name"))
-            @Html.TextBoxFor(m => m.DisplayGraphName, new { @class = "text textMedium" })
+            @Html.TextBoxFor(m => m.DisplayGraphName, new { @class = "text text medium" })
             @Html.ValidationMessageFor(m => m.DisplayGraphName)
         </li>
         <li>
             @Html.LabelFor(m => m.GraphName, T("Technical graph name"))
-            @Html.TextBoxFor(m => m.GraphName, !String.IsNullOrEmpty(Model.GraphName) ? (object)new { @class = "text textMedium", disabled = "disabled" } : new { @class = "text textMedium" })
+            @Html.TextBoxFor(m => m.GraphName, !String.IsNullOrEmpty(Model.GraphName) ? (object)new { @class = "text text medium", disabled = "disabled" } : new { @class = "text text medium" })
             @Html.ValidationMessageFor(m => m.GraphName)
             <span class="hint">@T("The technical name is used internally to identify the graph. Once set it can't be changed.")</span>
         </li>
