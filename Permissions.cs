@@ -12,24 +12,27 @@ namespace Associativy.Administration
 
         public IEnumerable<Permission> GetPermissions()
         {
-            return new[] {
+            return new[]
+            {
                 ManageAssociativyGraphs
             };
         }
 
         public IEnumerable<PermissionStereotype> GetDefaultStereotypes()
         {
-            return new[] {
-                new PermissionStereotype {
+            return new[]
+            {
+                new PermissionStereotype
+                {
                     Name = "Administrator",
                     Permissions = new[] { ManageAssociativyGraphs }
                 },
-                new PermissionStereotype {
+                new PermissionStereotype
+                {
                     Name = "Editor",
                     Permissions = new[] { ManageAssociativyGraphs }
                 }
             };
         }
-
     }
 }
