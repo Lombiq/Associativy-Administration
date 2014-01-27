@@ -75,6 +75,10 @@ namespace Associativy.Administration
         {
         }
 
+        public void Initialized(InitializingContentContext context)
+        {
+        }
+
         public void Creating(CreateContentContext context)
         {
         }
