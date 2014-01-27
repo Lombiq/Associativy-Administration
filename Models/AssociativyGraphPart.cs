@@ -14,15 +14,15 @@ namespace Associativy.Administration.Models
         [Required]
         public string GraphName
         {
-            get { return Record.GraphName; }
-            set { Record.GraphName = value; }
+            get { return Retrieve(x => x.GraphName); }
+            set { Store(x => x.GraphName, value); }
         }
 
         [Required]
         public string DisplayGraphName
         {
-            get { return Record.DisplayGraphName; }
-            set { Record.DisplayGraphName = value; }
+            get { return Retrieve(x => x.DisplayGraphName); }
+            set { Store(x => x.DisplayGraphName, value); }
         }
 
         private IList<string> _containedContentTypes;
@@ -32,8 +32,8 @@ namespace Associativy.Administration.Models
             {
                 if (_containedContentTypes == null)
                 {
-                    if (Record.ContainedContentTypes == null) _containedContentTypes = new List<string>();
-                    else _containedContentTypes = new JavaScriptSerializer().Deserialize<string[]>(Record.ContainedContentTypes).ToList();
+                    if (ContainedContentTypesSerialized == null) _containedContentTypes = new List<string>();
+                    else _containedContentTypes = new JavaScriptSerializer().Deserialize<string[]>(ContainedContentTypesSerialized).ToList();
                 }
 
                 return _containedContentTypes;
@@ -42,9 +42,15 @@ namespace Associativy.Administration.Models
             set
             {
                 _containedContentTypes = value;
-                if (value == null) Record.ContainedContentTypes = null;
-                else Record.ContainedContentTypes = new JavaScriptSerializer().Serialize(_containedContentTypes.ToArray());
+                if (value == null) ContainedContentTypesSerialized = null;
+                else ContainedContentTypesSerialized = new JavaScriptSerializer().Serialize(_containedContentTypes.ToArray());
             }
+        }
+
+        public string ContainedContentTypesSerialized
+        {
+            get { return Retrieve(x => x.ContainedContentTypes); }
+            set { Store(x => x.ContainedContentTypes, value); }
         }
 
         private readonly LazyField<IList<ContentType>> _allContentTypes = new LazyField<IList<ContentType>>();
