@@ -55,8 +55,22 @@ namespace Associativy.Administration.Drivers
                 _contentDefinitionManager.AlterTypeDefinition(type,
                     cfg => cfg
                         .WithPart(typeof(AssociativyNodeManagementPart).Name)
-                        .WithPart(typeof(AssociativyNodeLabelPart).Name)
                     );
+
+                if (_contentDefinitionManager.GetTypeDefinition(type).Parts.Any(p => p.PartDefinition.Name == "TitlePart"))
+                {
+                    _contentDefinitionManager.AlterTypeDefinition(type,
+                        cfg => cfg
+                            .WithPart(typeof(AssociativyNodeTitleAdapterPart).Name)
+                        );
+                }
+                else
+                {
+                    _contentDefinitionManager.AlterTypeDefinition(type,
+                        cfg => cfg
+                            .WithPart(typeof(AssociativyNodeLabelPart).Name)
+                        );
+                }
             }
 
             _nodeIndexingService.SetupIndexingForGraph(part.GraphName);
