@@ -21,7 +21,6 @@ namespace Associativy.Administration.Controllers
     {
         private readonly IOrchardServices _orchardServices;
         private readonly IContentManager _contentManager;
-        private readonly IPageEventHandler _eventHandler;
         private readonly IImportExportService _importExportService;
 
         public Localizer T { get; set; }
@@ -29,12 +28,10 @@ namespace Associativy.Administration.Controllers
 
         public AdminController(
             IOrchardServices orchardServices,
-            IPageEventHandler eventHandler,
             IImportExportService importExportService)
         {
             _orchardServices = orchardServices;
             _contentManager = orchardServices.ContentManager;
-            _eventHandler = eventHandler;
             _importExportService = importExportService;
 
             T = NullLocalizer.Instance;
@@ -43,23 +40,21 @@ namespace Associativy.Administration.Controllers
 
         public ActionResult Index()
         {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
-                return new HttpUnauthorizedResult();
-            
             var page = NewPage("Index");
-            _eventHandler.OnPageBuilt(new PageContext(page, AdministrationPageConfigs.Group));
+
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, page, T("You're not allowed to manage Associativy settings.")))
+                return new HttpUnauthorizedResult();
 
             return PageResult(page);
         }
 
         public ActionResult ManageGraph()
         {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
-                return new HttpUnauthorizedResult();
-
             var page = NewPage("ManageGraph");
-            _eventHandler.OnPageBuilt(new PageContext(page, AdministrationPageConfigs.Group));
 
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, page, T("You're not allowed to manage Associativy settings.")))
+                return new HttpUnauthorizedResult();
+            
             return PageResult(page);
         }
 
@@ -67,11 +62,11 @@ namespace Associativy.Administration.Controllers
         [FormValueRequired("submit.Save")]
         public ActionResult ManageGraphPost()
         {
-            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, T("You're not allowed to manage Associativy settings.")))
+            var page = NewPage("ManageGraph");
+
+            if (!_orchardServices.Authorizer.Authorize(Permissions.ManageAssociativyGraphs, page, T("You're not allowed to manage Associativy settings.")))
                 return new HttpUnauthorizedResult();
 
-            var page = NewPage("ManageGraph");
-            _eventHandler.OnPageBuilt(new PageContext(page, AdministrationPageConfigs.Group));
             _contentManager.UpdateEditor(page, this);
 
             return Refresh();
@@ -142,7 +137,7 @@ namespace Associativy.Administration.Controllers
 
         private IContent NewPage(string pageName)
         {
-            return _contentManager.NewPage(pageName, AdministrationPageConfigs.Group, _eventHandler);
+            return _contentManager.NewPage(pageName, AdministrationPageConfigs.Group);
         }
 
         private Orchard.Mvc.ShapeResult PageResult(IContent page)
