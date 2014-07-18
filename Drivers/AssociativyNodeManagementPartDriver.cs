@@ -163,8 +163,9 @@ namespace Associativy.Administration.Drivers
                 foreach (var label in implicitlyCreatedLabels)
                 {
                     var item = _contentManager.New(settings.ImplicitlyCreatableContentType);
-                    _contentManager.Create(item);
+                    // Filling label before Create() is necessary because otherwise an empty item would be indexed in ImplicitlyCreatableAssociativyNodeHandler
                     item.As<IImplicitlyCreatableAssociativyNodeAspect>().Label = label;
+                    _contentManager.Create(item);
                     _contentManager.Publish(item);
                     neighbours.Add(item);
                 }

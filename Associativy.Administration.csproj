@@ -118,6 +118,7 @@
     <Compile Include="Drivers\AssociativyNodeManagementPartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyManageGraphPartDriver.cs" />
     <Compile Include="Drivers\Pages\Admin\AssociativyIndexAdhocGraphPartDriver.cs" />
+    <Compile Include="Handlers\ImplicitlyCreatableAssociativyNodeHandler.cs" />
     <Compile Include="Handlers\Pages\Admin\DefaultAdminPageHandler.cs" />
     <Compile Include="Handlers\Pages\Admin\AdhocGraphsAdminPageHandler.cs" />
     <Compile Include="Handlers\AssociativyGraphPartHandler.cs" />
