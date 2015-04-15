@@ -35,7 +35,7 @@ namespace Associativy.Administration
 
         private void BuildMenu(NavigationItemBuilder menu)
         {
-            menu.LinkToFirstChild(false); // See: http://orchard.codeplex.com/workitem/18807
+            menu.LinkToFirstChild(false); // See: https://github.com/OrchardCMS/Orchard/issues/2634
             menu.Action("Index", "Admin", new { area = "Associativy.Administration" }).Permission(Permissions.ManageAssociativyGraphs);
 
             var graphs = _graphManager.FindGraphs(GraphContext.Empty).OrderBy(descriptor => descriptor.DisplayName.Text);
