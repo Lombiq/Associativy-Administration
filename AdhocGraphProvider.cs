@@ -181,6 +181,22 @@ namespace Associativy.Administration
         {
         }
 
+        public void Restoring(RestoreContentContext context)
+        {
+        }
+
+        public void Restored(RestoreContentContext context)
+        {
+        }
+
+        public void Destroying(DestroyContentContext context)
+        {
+        }
+
+        public void Destroyed(DestroyContentContext context)
+        {
+        }
+
 
         private void TriggerIfGraph(ContentContextBase context)
         {
