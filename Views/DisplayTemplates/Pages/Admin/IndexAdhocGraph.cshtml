@@ -1,7 +1,7 @@
-﻿@model Associativy.Administration.Models.Pages.Admin.AssociativyIndexAdhocGraphPart
+@model Associativy.Administration.Models.Pages.Admin.AssociativyIndexAdhocGraphPart
 
 <div>
     @*Html.RouteLink seems not to work properly...*@
     @Html.Link(T("Create graph").Text, Url.RouteUrl(Model.CreateAdhocGraphRouteValues), new { @class = "button" })
-    <span class="hint">@T("Graphs created from the dashboard are easy to create but customization is limited. Full customization can be done from <a href='http://associativy.com/documentation/how-to-create-a-graph-provider'>a graph provider</a>.")</span>
+    @Html.Hint(T("Graphs created from the dashboard are easy to create but customization is limited. Full customization can be done from <a href='http://associativy.com/documentation/how-to-create-a-graph-provider'>a graph provider</a>."))
 </div>

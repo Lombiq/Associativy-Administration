@@ -1,4 +1,4 @@
-﻿@model Associativy.Administration.Models.AssociativyNodeManagementPart
+@model Associativy.Administration.Models.AssociativyNodeManagementPart
 @{
     Script.Require("jQueryUI_Tabs").AtFoot();
     Script.Require("AssociativyFrontends_AutoComplete").AtFoot();
@@ -42,7 +42,7 @@
                             </li>
                         }
                     </ol>
-                    <span class="hint">@T("Type labels of neighbours here, separate by commas. After the first few letters the labels are auto-completed.")</span>
+                    @Html.Hint(T("Type labels of neighbours here, separate by commas. After the first few letters the labels are auto-completed."))
                 </fieldset>
             </div>
             @using (Script.Foot())

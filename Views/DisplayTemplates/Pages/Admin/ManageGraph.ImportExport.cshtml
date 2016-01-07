@@ -1,4 +1,4 @@
-﻿@model Associativy.Administration.Models.Pages.Admin.AssociativyManageGraphPart
+@model Associativy.Administration.Models.Pages.Admin.AssociativyManageGraphPart
            
 @{
     Script.Require("jQuery").AtFoot();
@@ -12,7 +12,7 @@
 <div id="associativy-administration-export-container">
     <h3>@T("Export")</h3>
     @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.GraphDescriptor.Name }, new { @class = "button" })
-    <span class="hint">@T("This only exports connection data. The nodes (i.e. the content items stored in the graph) have to be exported with the built-in Import/Export feature.")</span>
+    @Html.Hint(T("This only exports connection data. The nodes (i.e. the content items stored in the graph) have to be exported with the built-in Import/Export feature."))
 </div>
 
 <div id="associativy-administration-import-container">
@@ -20,7 +20,7 @@
             <legend>@T("Import")</legend>
             @Html.Label("ConnectionsFile", T("Select a connections file").ToString())
             @Html.TextBox("ConnectionsFile", "", new { type = "file", @class = "text" })
-            <span class="hint">@T("This only imports connections. Content items have to be be imported separately with the built-in Import/Export feature.")</span>
+            @Html.Hint(T("This only imports connections. Content items have to be be imported separately with the built-in Import/Export feature."))
         </fieldset>
         <button type="submit" name="submit.ImportConnections" class="button" value="yes please">@T("Import connections")</button>
     @*Trick taken from Contrib.FileField*@
