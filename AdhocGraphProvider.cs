@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Associativy.Administration.Models;
 using Associativy.Administration.Services;
@@ -194,6 +195,18 @@ namespace Associativy.Administration
         }
 
         public void Destroyed(DestroyContentContext context)
+        {
+        }
+
+        public void Cloning(CloneContentContext context)
+        {
+        }
+
+        public void Cloned(CloneContentContext context)
+        {
+        }
+
+        public void ImportCompleted(ImportContentContext importContentContext)
         {
         }
 
