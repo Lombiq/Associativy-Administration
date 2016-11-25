@@ -2,7 +2,7 @@
 using Associativy.GraphDiscovery;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.MetaData.Models;
-using Orchard.Core.Common.Utilities;
+using Orchard.ContentManagement.Utilities;
 
 namespace Associativy.Administration.Models.Pages.Admin
 {
