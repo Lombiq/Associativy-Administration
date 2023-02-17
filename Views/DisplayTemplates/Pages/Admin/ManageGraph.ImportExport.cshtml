@@ -1,4 +1,5 @@
 @model Associativy.Administration.Models.Pages.Admin.AssociativyManageGraphPart
+@using Associativy.Handlers
            
 @{
     Script.Require("jQuery").AtFoot();
@@ -13,6 +14,7 @@
     <h3>@T("Export")</h3>
     @Html.ActionLink(T("Export connections").Text, "ExportConnections", new { GraphName = Model.GraphDescriptor.Name }, new { @class = "button" })
     @Html.Hint(T("This only exports connection data. The nodes (i.e. the content items stored in the graph) have to be exported with the built-in Import/Export feature."))
+    @Html.Hint(T("You don't need this if you want to export the graph to a different application. Using the built-in Import/Export feature, the exported the contents reference their neighbors in the &lt;{0}&gt; element, if there are any.", GraphMetadataContentHandler.ElementName))
 </div>
 
 <div id="associativy-administration-import-container">
